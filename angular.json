@@ -27,6 +27,7 @@
               }
             ],
             "styles": [
+              "src/styles/_cfdio-theme.scss",
               "src/styles.scss"
             ],
             "server": "src/main.server.ts",
