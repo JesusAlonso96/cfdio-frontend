@@ -1,0 +1,28 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f6f1f1; /* blanco muy tenue */
+
+    /* Cuadricula sutil */
+    background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px; /* tamaño de la cuadricula */
+}
+
+.login-card {
+    background-color: #fafafa;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-login {
+    // border-radius: 0px;
+}

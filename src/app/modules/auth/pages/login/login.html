@@ -1,5 +1,20 @@
-<p>login works!</p>
-<button
-  matButton="filled"
-  color="primary"
-  matTooltip="This is a tooltip!">Disabled button allowing interactivity</button>
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header class="d-flex justify-content-center">
+      <mat-card-title>Iniciar sesión</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="p-3">
+        <mat-form-field class="small-height w-100">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput type="email" placeholder="ejemplo@dominio.com" required>
+        </mat-form-field>
+        <mat-form-field class="small-height w-100">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" placeholder="••••••••" required>
+        </mat-form-field>
+        <button matButton="filled" class="btn-login w-100 rounded-3">Entrar</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,10 +1,19 @@
-@use '@angular/material' as mat;
-
+@use "@angular/material" as mat;
+@use "./buttons";
+@use "./inputs";
+/****************************** LIGHT THEME ******************************/
 html {
+  color-scheme: light;
+  @include mat.theme(
+    (
+      color: mat.$green-palette,
+      typography: Roboto,
+      density: 0
+    )
+  );
+}
+
+/****************************** DARK THEME ******************************/
+.dark-theme {
   color-scheme: light dark;
-  @include mat.theme((
-    color: mat.$violet-palette,
-    typography: Roboto,
-    density: 0
-  ));
 }
