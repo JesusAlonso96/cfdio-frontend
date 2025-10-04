@@ -1,0 +1,122 @@
+@use "variables" as *;
+@use "breakpoints" as *;
+
+.login-container {
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+    background: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--mat-sys-primary) 100%, $white) 0%,
+        color-mix(in srgb, var(--mat-sys-primary) 80%, $white) 15%,
+        color-mix(in srgb, var(--mat-sys-primary) 60%, $white) 30%,
+        color-mix(in srgb, var(--mat-sys-primary) 20%, $white) 60%,
+        $white 100%
+    );
+    &::before {
+        /* Cuadricula sutil */
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 50vh;
+        background-image:
+            linear-gradient(to right, $white 1px, transparent 1px),
+            linear-gradient(to bottom, $white 1px, transparent 1px);
+        background-size: 60px 60px; /* tamaño de la cuadricula */
+        z-index: 1;
+        opacity: 0.1;
+        //transform: rotate(45deg); /* rotar la cuadricula */
+    }
+    &::after {
+        /* Desvanecido verde */
+        content: "";
+        position: fixed;
+        top: 50vh;
+        left: 0;
+        width: 100vw;
+        height: 55vh; /* solo la parte superior */
+        background-image:
+            linear-gradient(to right, var(--mat-sys-primary) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--mat-sys-primary) 1px, transparent 1px);
+        background-size: 60px 60px;
+        opacity: 0.06;
+    }
+
+    .card-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        max-width: 450px;
+        transform: translate(-50%, -50%);
+        transition:
+            transform 0.5s ease,
+            opacity 0.5s ease;
+        opacity: 1;
+        z-index: 10;
+    }
+
+    .slide-in {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+        z-index: 2;
+    }
+
+    .slide-out {
+        transform: translate(-150%, -150%); // sale hacia la izquierda
+        opacity: 0;
+        z-index: 1;
+    }
+
+    .slide-in-right {
+        transform: translate(150%, -50%); // sale hacia la derecha
+        opacity: 0;
+        z-index: 1;
+    }
+}
+
+/* Animaciones */
+/* Base para ambas tarjetas */
+.login-card,
+.register-card {
+    padding: 2rem;
+    border-radius: $cards-border-radius;
+    background: $cards-background; /* fondo semi-transparente */
+    backdrop-filter: $cards-backdrop-blur; /* desenfoque del fondo */
+    -webkit-backdrop-filter: $cards-backdrop-blur; /* soporte Safari */
+    border: $cards-border; /* borde tenue */
+    box-shadow: $cards-shadow; /* sombra suave */
+    z-index: 10; /* aseguramos que quede encima del background */
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    //max-width: 45vw;
+    transform: translate(-50%, -50%);
+    transition:
+        transform 350ms ease-in-out,
+        opacity 350ms ease-in-out;
+    opacity: 1;
+    @include xs {
+        max-width: 90%;
+    }
+
+    @include sm {
+        max-width: 80%;
+    }
+
+    @include md {
+        max-width: 60%;
+    }
+
+    @include lg {
+        max-width: 50%;
+    }
+
+    @include xl {
+        max-width: 450px;
+    }
+}

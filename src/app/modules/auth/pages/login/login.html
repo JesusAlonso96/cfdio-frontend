@@ -1,63 +1,22 @@
-<div class="login-container d-flex justify-content-center align-items-center">
-
-  <mat-card [class.slide-out-left]="showRegister()" [class.slide-in-right]="!showRegister()"
-    class="login-card px-2 py-3">
-    <mat-card-header class="d-flex justify-content-center pb-4">
-      <mat-card-title>Iniciar sesión</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form class="p-1">
-        <mat-form-field class="small-height w-100">
-          <mat-label>Correo electrónico</mat-label>
-          <input matInput type="email" placeholder="ejemplo@dominio.com" required>
-        </mat-form-field>
-        <mat-form-field class="small-height w-100">
-          <mat-label>Contraseña</mat-label>
-          <input matInput type="password" placeholder="••••••••" required>
-        </mat-form-field>
-        <button matButton="filled" class="w-100 mb-3">Entrar</button>
-      </form>
-    </mat-card-content>
-    <mat-card-actions class="justify-content-center">
-      <p>¿Aún no tienes una cuenta? <span (click)="toggleRegistrationForm()" class="fw-medium"
-          style="cursor: pointer;">Registrate</span></p>
-    </mat-card-actions>
-  </mat-card>
-
-
-  <mat-card [class.slide-out-left]="!showRegister()" [class.slide-in-right]="showRegister()"
-    class="register-card px-2 py-3">
-    <mat-card-header class="d-flex justify-content-center pb-4">
-      <mat-card-title>Registro</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form class="p-1">
-        <mat-form-field class="small-height w-100">
-          <mat-label>Correo electrónico</mat-label>
-          <input matInput type="email" placeholder="ejemplo@dominio.com" required>
-        </mat-form-field>
-        <mat-form-field class="small-height w-100">
-          <mat-label>Teléfono</mat-label>
-          <input matInput type="text" placeholder="0000000000" required>
-        </mat-form-field>
-        <mat-form-field class="small-height w-100">
-          <mat-label>Contraseña</mat-label>
-          <input matInput type="password" placeholder="••••••••" required>
-        </mat-form-field>
-        <mat-form-field class="small-height w-100">
-          <mat-label>Confirmar contraseña</mat-label>
-          <input matInput type="password" placeholder="••••••••" required>
-        </mat-form-field>
-        <button matButton="filled" class="w-100 mb-3">Registrarse</button>
-      </form>
-    </mat-card-content>
-    <mat-card-actions class="justify-content-center">
-      <p>¿Ya tienes cuenta? <span (click)="toggleRegistrationForm()" class="fw-medium" style="cursor: pointer;">Iniciar
-          sesión</span></p>
-    </mat-card-actions>
-  </mat-card>
-
-
-
-
-</div>
+<mat-card class="login-card px-2 py-3">
+  <mat-card-header class="d-flex justify-content-center pb-4">
+    <mat-card-title>Iniciar sesión</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="p-1">
+      <mat-form-field class="small-height w-100">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput type="email" placeholder="ejemplo@dominio.com" required>
+      </mat-form-field>
+      <mat-form-field class="small-height w-100">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" placeholder="••••••••" required>
+      </mat-form-field>
+      <button matButton="filled" class="w-100 mb-3">Entrar</button>
+    </form>
+  </mat-card-content>
+  <mat-card-actions class="justify-content-center">
+    <p>¿Aún no tienes una cuenta? <span (click)="changeForm()" class="fw-medium"
+        style="cursor: pointer;">Registrate</span></p>
+  </mat-card-actions>
+</mat-card>

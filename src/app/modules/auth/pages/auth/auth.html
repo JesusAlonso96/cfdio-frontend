@@ -1,0 +1,12 @@
+<div class="login-container d-flex justify-content-center align-items-center">
+    <!-- FORMULARIO DE LOGIN -->
+    <div class="card-wrapper" [class.slide-in]="!showRegister()" [class.slide-out]="showRegister()">
+        <app-login (clicked)="toggleRegistrationForm()"></app-login>
+    </div>
+    <!-- FORMULARIO DE REGISTRO -->
+    <div class="card-wrapper" [class.slide-in]="showRegister()" [class.slide-out]="!showRegister()">
+        <app-register (clicked)="toggleRegistrationForm()"></app-register>
+
+    </div>
+
+</div>

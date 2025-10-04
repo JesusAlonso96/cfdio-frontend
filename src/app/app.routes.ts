@@ -3,14 +3,9 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'login',
+    path: 'auth',
     loadComponent: () =>
-      import('./modules/auth/pages/login/login').then(m => m.LoginComponent),
-  },
-  {
-    path: 'register',
-    loadComponent: () =>
-      import('./modules/auth/pages/register/register').then(m => m.RegisterComponent),
+      import('./modules/auth/pages/auth/auth').then(m => m.AuthComponent),
   },
   {
     path: 'dashboard',
@@ -18,5 +13,5 @@ export const routes: Routes = [
       import('./modules/dashboard/pages/dashboard/dashboard').then(m => m.DashboardComponent),
     //canActivate: [authGuard],
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
 ];
