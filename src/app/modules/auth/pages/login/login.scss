@@ -1,28 +1,57 @@
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
-    background-color: #f6f1f1; /* blanco muy tenue */
+    // background-color: #f6f1f1; /* blanco muy tenue */
+    position: relative;
+    // background: linear-gradient(to bottom, rgba(#026e00, 0.4), rgba(0, 200, 100, 0) 60vh /* se desvanece */);
+    background: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--mat-sys-primary) 100%, white) 0%,
 
-    /* Cuadricula sutil */
-    background-image:
-        linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px; /* tamaño de la cuadricula */
+        color-mix(in srgb, var(--mat-sys-primary) 80%, white) 15%,
+        color-mix(in srgb, var(--mat-sys-primary) 60%, white) 30%,
+        color-mix(in srgb, var(--mat-sys-primary) 20%, white) 60%,
+        white 100%
+    );
+    &::before {
+        /* Cuadricula sutil */
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 50vh;
+        background-image:
+            linear-gradient(to right, #fafafa 1px, transparent 1px),
+            linear-gradient(to bottom, #fafafa 1px, transparent 1px);
+        background-size: 60px 60px; /* tamaño de la cuadricula */
+        z-index: 1;
+        opacity: 0.1;
+        //transform: rotate(45deg); /* rotar la cuadricula */
+    }
+    &::after {
+        /* Desvanecido verde */
+        content: "";
+        position: fixed;
+        top: 50vh;
+        left: 0;
+        width: 100vw;
+        height: 55vh; /* solo la parte superior */
+        background-image:
+            linear-gradient(to right, var(--mat-sys-primary) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--mat-sys-primary) 1px, transparent 1px);
+        background-size: 60px 60px;
+        opacity: 0.06;
+    }
 }
 
 .login-card {
-    background-color: #fafafa;
-    width: 100%;
-    max-width: 400px;
+    position: relative;
+    padding: 2rem;
     border-radius: 16px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.btn-login {
-    // border-radius: 0px;
+    background: rgba(255, 255, 255, 0.35); /* fondo semi-transparente */
+    backdrop-filter: blur(20px); /* desenfoque del fondo */
+    -webkit-backdrop-filter: blur(20px); /* soporte Safari */
+    border: 1px solid rgba(255, 255, 255, 0.25); /* borde tenue */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* sombra suave */
+    z-index: 10; /* aseguramos que quede encima del background */
 }

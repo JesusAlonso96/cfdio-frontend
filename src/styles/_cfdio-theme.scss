@@ -1,6 +1,8 @@
 @use "@angular/material" as mat;
 @use "./buttons";
 @use "./inputs";
+@use "./variables";
+
 /****************************** LIGHT THEME ******************************/
 html {
   color-scheme: light;
@@ -11,6 +13,8 @@ html {
       density: 0
     )
   );
+  //Color de texto personalizado
+  --mat-sys-on-surface: #363636 !important;
 }
 
 /****************************** DARK THEME ******************************/

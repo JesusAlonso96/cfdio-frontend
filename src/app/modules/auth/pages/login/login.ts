@@ -13,6 +13,9 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class LoginComponent {
   isDark = false;
+  constructor() {
+    console.log("entre")
+  }
   toggleTheme() {
     this.isDark = !this.isDark;
 

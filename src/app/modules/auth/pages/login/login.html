@@ -1,10 +1,10 @@
-<div class="login-container">
-  <mat-card class="login-card">
-    <mat-card-header class="d-flex justify-content-center">
+<div class="login-container d-flex justify-content-center align-items-center">
+  <mat-card class="login-card px-2 py-3">
+    <mat-card-header class="d-flex justify-content-center pb-4">
       <mat-card-title>Iniciar sesión</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form class="p-3">
+      <form class="p-1">
         <mat-form-field class="small-height w-100">
           <mat-label>Correo electrónico</mat-label>
           <input matInput type="email" placeholder="ejemplo@dominio.com" required>
@@ -13,8 +13,12 @@
           <mat-label>Contraseña</mat-label>
           <input matInput type="password" placeholder="••••••••" required>
         </mat-form-field>
-        <button matButton="filled" class="btn-login w-100 rounded-3">Entrar</button>
+        <button matButton="filled" class="btn-login w-100 rounded-3 mb-3">Entrar</button>
       </form>
     </mat-card-content>
+    <mat-card-actions class="justify-content-center">
+      <p>¿Aún no tienes una cuenta? <span class="fw-medium">Registrate</span></p>
+
+    </mat-card-actions>
   </mat-card>
 </div>
