@@ -5,9 +5,22 @@
     --mat-form-field-container-text-size: 1.1em;
 }
 
-// .mdc-text-field--outlined {
-//     height: 56px;
-//     overflow: visible;
-//     padding-right: max(16px, var(--mat-form-field-outlined-container-shape, var(--mat-sys-corner-extra-small)));
-//     padding-left: max(16px, var(--mat-form-field-outlined-container-shape, var(--mat-sys-corner-extra-small)) + 4px);
+// //Texto dentro del input
+// .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+//     color: red !important;
+//     caret-color: red !important;
 // }
+
+// //bordes del input
+// .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mat-mdc-notch-piece {
+//     // border-color: var(--mat-form-field-outlined-outline-color, var(--mat-sys-outline));
+//     // border-width: var(--mat-form-field-outlined-outline-width, 1px);
+// }
+// //placeholder del input
+// .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label {
+//     color: var(--mat-form-field-outlined-label-text-color, var(--mat-sys-on-surface-variant));
+// }
+
+.mat-mdc-form-field-infix {
+    min-height: 0px !important;
+}

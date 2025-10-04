@@ -26,6 +26,11 @@
                 "input": "public"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
             "styles": [
               "src/styles/_cfdio-theme.scss",
               "src/styles.scss"

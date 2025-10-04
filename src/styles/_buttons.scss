@@ -1,3 +1,7 @@
-// .button-error {
-//     background-color: var(--mat-sys-error) !important;
-// }
+@use "general-styles" as *;
+
+@mixin general-buttons {
+    button {
+        @include rounded-button();
+    }
+}

@@ -1,16 +1,15 @@
+@use "variables" as *;
+@use "breakpoints" as *;
 .login-container {
     height: 100vh;
-    // background-color: #f6f1f1; /* blanco muy tenue */
     position: relative;
-    // background: linear-gradient(to bottom, rgba(#026e00, 0.4), rgba(0, 200, 100, 0) 60vh /* se desvanece */);
     background: linear-gradient(
         to bottom,
-        color-mix(in srgb, var(--mat-sys-primary) 100%, white) 0%,
-
-        color-mix(in srgb, var(--mat-sys-primary) 80%, white) 15%,
-        color-mix(in srgb, var(--mat-sys-primary) 60%, white) 30%,
-        color-mix(in srgb, var(--mat-sys-primary) 20%, white) 60%,
-        white 100%
+        color-mix(in srgb, var(--mat-sys-primary) 100%, $white) 0%,
+        color-mix(in srgb, var(--mat-sys-primary) 80%, $white) 15%,
+        color-mix(in srgb, var(--mat-sys-primary) 60%, $white) 30%,
+        color-mix(in srgb, var(--mat-sys-primary) 20%, $white) 60%,
+        $white 100%
     );
     &::before {
         /* Cuadricula sutil */
@@ -21,8 +20,8 @@
         width: 100vw;
         height: 50vh;
         background-image:
-            linear-gradient(to right, #fafafa 1px, transparent 1px),
-            linear-gradient(to bottom, #fafafa 1px, transparent 1px);
+            linear-gradient(to right, $white 1px, transparent 1px),
+            linear-gradient(to bottom, $white 1px, transparent 1px);
         background-size: 60px 60px; /* tamaño de la cuadricula */
         z-index: 1;
         opacity: 0.1;
@@ -44,14 +43,74 @@
     }
 }
 
-.login-card {
+.login-card,
+.register-card {
     position: relative;
     padding: 2rem;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.35); /* fondo semi-transparente */
-    backdrop-filter: blur(20px); /* desenfoque del fondo */
-    -webkit-backdrop-filter: blur(20px); /* soporte Safari */
-    border: 1px solid rgba(255, 255, 255, 0.25); /* borde tenue */
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* sombra suave */
+    border-radius: $cards-border-radius;
+    background: $cards-background; /* fondo semi-transparente */
+    backdrop-filter: $cards-backdrop-blur; /* desenfoque del fondo */
+    -webkit-backdrop-filter: $cards-backdrop-blur; /* soporte Safari */
+    border: $cards-border; /* borde tenue */
+    box-shadow: $cards-shadow; /* sombra suave */
     z-index: 10; /* aseguramos que quede encima del background */
+
+    overflow: hidden; /* necesario para animar altura */
+    transition: height 300ms ease-in-out;
+}
+
+/* Animaciones */
+/* Base para ambas tarjetas */
+.login-card,
+.register-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    //max-width: 45vw;
+    transform: translate(-50%, -50%);
+    transition:
+        transform 350ms ease-in-out,
+        opacity 350ms ease-in-out;
+    opacity: 1;
+    @include xs {
+        max-width: 90%;
+    }
+
+    @include sm {
+        max-width: 80%;
+    }
+
+    @include md {
+        max-width: 60%;
+    }
+
+    @include lg {
+        max-width: 50%;
+    }
+
+    @include xl {
+        max-width: 450px;
+    }
+}
+
+/* Estados de animación slide */
+.login-card.slide-out-left {
+    transform: translate(-150%, -50%);
+    opacity: 0;
+}
+
+.login-card.slide-in-right {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.register-card.slide-in-right {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.register-card.slide-out-left {
+    transform: translate(150%, -50%);
+    opacity: 0;
 }

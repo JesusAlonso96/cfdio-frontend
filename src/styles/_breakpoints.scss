@@ -1,0 +1,33 @@
+/* Breakpoints generales */
+$breakpoint-xs: 575.98px;
+$breakpoint-sm: 767.98px;
+$breakpoint-md: 991.98px;
+$breakpoint-lg: 1199.98px;
+$breakpoint-xl: 1399.98px;
+
+/* Mixins para reutilizar media queries */
+@mixin xs {
+    @media (max-width: #{$breakpoint-xs}) {
+        @content;
+    }
+}
+@mixin sm {
+    @media (min-width: #{$breakpoint-xs + 1}) and (max-width: #{$breakpoint-sm}) {
+        @content;
+    }
+}
+@mixin md {
+    @media (min-width: #{$breakpoint-sm + 1}) and (max-width: #{$breakpoint-md}) {
+        @content;
+    }
+}
+@mixin lg {
+    @media (min-width: #{$breakpoint-md + 1}) and (max-width: #{$breakpoint-lg}) {
+        @content;
+    }
+}
+@mixin xl {
+    @media (min-width: #{$breakpoint-lg + 1}) {
+        @content;
+    }
+}
