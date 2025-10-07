@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="297mm"
+   height="210mm"
+   viewBox="0 0 297 210"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="main-background.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.68862935"
+     inkscape:cx="514.79072"
+     inkscape:cy="562.712"
+     inkscape:window-width="2400"
+     inkscape:window-height="1261"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer4" />
+  <defs
+     id="defs1">
+    <linearGradient
+       id="swatch21"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#038c00;stop-opacity:1;"
+         offset="0"
+         id="stop21" />
+    </linearGradient>
+    <linearGradient
+       id="swatch15"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#038c00;stop-opacity:1;"
+         offset="0"
+         id="stop15" />
+    </linearGradient>
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect10"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect9"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect8"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect7"
+       is_visible="true"
+       lpeversion="1" />
+  </defs>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="rotate(-90,104.07091,139.29883)">
+    <path
+       style="opacity:0.9;fill:#014f00;fill-opacity:1;fill-rule:evenodd;stroke-width:0.449001;stroke-dasharray:none;paint-order:fill markers stroke"
+       d="M 259.73091,62.627425 C 243.37758,4.0307901 201.68001,-11.905604 145.61837,-21.51617 106.56476,-28.211075 52.284704,-34.557125 18.442432,-8.8369979 -35.409642,32.090578 -41.117768,299.96068 13.447607,345.79558 c 28.636161,24.05438 80.207169,26.38777 116.033633,31.50584 163.4814,23.35448 148.69211,-120.13751 148.69211,-248.2044 0,-15.1793 6.12071,-87.453215 -13.83183,-91.443721 -8.30099,-1.660199 -4.96302,16.51608 -4.61061,24.974126 z"
+       id="path42" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Capa 2"
+     transform="rotate(-90,104.07091,139.29883)">
+    <path
+       style="opacity:0.85;mix-blend-mode:normal;fill:#026e00;fill-opacity:1;fill-rule:evenodd;stroke-width:0.47945;stroke-dasharray:none;paint-order:fill markers stroke"
+       d="m 239.65223,15.752911 c 3.08143,77.868257 -96.24258,106.635339 -116.54348,171.446899 -9.12356,29.12739 -5.59471,60.02872 -15.09196,89.13632 -22.659849,69.44892 -58.275798,75.88632 56.17563,75.88632 17.9705,0 67.68866,8.24597 82.16735,-5.62118 14.31298,-13.70847 8.79636,-306.861402 -6.70754,-330.848359 z"
+       id="path43" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Capa 3"
+     transform="rotate(-90,104.07091,139.29883)">
+    <path
+       style="opacity:0.8;mix-blend-mode:normal;fill:#038c00;fill-opacity:1;fill-rule:evenodd;stroke-width:0.498815;stroke-dasharray:none;paint-order:fill markers stroke"
+       d="M 238.44566,9.6154574 C 249.64021,82.216435 180.97999,106.68008 145.27469,157.20132 c -21.13036,29.89844 -25.75766,64.87054 -29.88504,99.91065 -7.70237,65.39094 -80.425874,143.42469 -80.425874,81.25514 0,-68.6163 125.024474,-402.760564 203.481884,-328.7516526 z"
+       id="path44" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Capa 4"
+     transform="rotate(-90,104.07091,139.29883)">
+    <path
+       style="opacity:0.7;mix-blend-mode:normal;fill:#05b000;fill-opacity:1;fill-rule:evenodd;stroke-width:0.443045;stroke-dasharray:none;paint-order:fill markers stroke"
+       d="M 186.72962,13.517507 C 141.17275,25.946682 60.600887,-13.804697 20.551126,16.762712 c -5.464241,4.170503 0,64.757568 0,69.77187 0,38.889498 -20.72948789,226.349568 -6.377853,259.210618 17.19787,39.37808 36.952998,-73.29271 51.731472,-112.77082 C 83.91032,184.87563 145.79535,27.186102 186.72962,13.517507 Z"
+       id="path45" />
+  </g>
+</svg>

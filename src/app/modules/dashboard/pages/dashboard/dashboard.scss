@@ -1,0 +1,45 @@
+@use "variables" as *;
+
+.main-container {
+    background: url("../../../../../assets/main-background.svg");
+    background-size: cover; // ocupa toda la pantalla
+    width: 100vw;
+    height: 100vh;
+    background-attachment: fixed;
+}
+
+.main-sidenav {
+    background: rgba($dark-gray, 0.5);
+    backdrop-filter: $cards-backdrop-blur;
+    -webkit-backdrop-filter: $cards-backdrop-blur;
+
+    border-radius: 0px;
+    left: 1px;
+    color: $white;
+}
+
+.main-toolbar {
+    background: transparent;
+    top: 0;
+    left: 0;
+    color: $white;
+    button {
+        color: $white;
+    }
+}
+
+.main-content {
+    background: rgba($medium-gray, 0.25);
+    backdrop-filter: $cards-backdrop-blur;
+    -webkit-backdrop-filter: $cards-backdrop-blur;
+}
+
+.login-card {
+    padding: 2rem;
+    border-radius: $cards-border-radius;
+    background: $cards-background; /* fondo semi-transparente */
+    backdrop-filter: $cards-backdrop-blur; /* desenfoque del fondo */
+    -webkit-backdrop-filter: $cards-backdrop-blur; /* soporte Safari */
+    border: $cards-border; /* borde tenue */
+    box-shadow: $cards-shadow; /* sombra suave */
+}

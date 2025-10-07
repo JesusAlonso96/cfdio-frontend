@@ -31,5 +31,7 @@ body {
 }
 
 :root {
-  --mdc-theme-custom-secondary: #e91e63;
+  .mat-drawer-backdrop.mat-drawer-shown {
+    background-color: transparent;
+  }
 }

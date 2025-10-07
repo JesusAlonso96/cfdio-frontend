@@ -1,6 +1,13 @@
+// Color Variables
 $white: #fafafa;
+$light-gray: #f5f5f5;
+$medium-gray: #d8dbdf;
+$dark-gray: #a0a0a0;
+$black: #121212;
+$primary: #026e00;
+// Card Variables
 $cards-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 $cards-border: 1px solid rgba(255, 255, 255, 0.25);
 $cards-border-radius: 16px;
-$cards-backdrop-blur: blur(18px);
-$cards-background: rgba(255, 255, 255, 0.35);
+$cards-backdrop-blur: blur(20px);
+$cards-background: rgba($medium-gray, 0.35);
