@@ -14,7 +14,6 @@ export class AuthComponent {
   showRegister = signal(false);
 
   toggleRegistrationForm() {
-    console.log("entre aqui")
     this.showRegister.set(!this.showRegister());
   }
 }

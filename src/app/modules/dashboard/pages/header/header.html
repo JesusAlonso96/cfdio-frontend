@@ -1,1 +1,32 @@
-<p>header works!</p>
+<mat-toolbar [class.scrolled]="hasScrolled()" style="position: sticky; top: 0;"
+    class="main-toolbar d-flex justify-content-end align-items-center">
+
+
+    <div>
+        <button matIconButton>
+            <mat-icon class="material-symbols-outlined">notifications</mat-icon>
+        </button>
+        <button [matMenuTriggerFor]="menu" matIconButton>
+            <mat-icon class="material-symbols-outlined">account_circle</mat-icon>
+        </button>
+
+
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <span>Mi perfil</span>
+
+                <mat-icon class="material-symbols-outlined">location_away</mat-icon>
+            </button>
+            <button mat-menu-item>
+                <mat-icon class="material-symbols-outlined">settings</mat-icon>
+                <span>Configuración</span>
+            </button>
+            <button (click)="logout()" mat-menu-item>
+                <mat-icon class="material-symbols-outlined">exit_to_app</mat-icon>
+                <span>Cerrar sesión</span>
+            </button>
+        </mat-menu>
+
+
+    </div>
+</mat-toolbar>

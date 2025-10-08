@@ -6,6 +6,22 @@
     height: 100vh;
 }
 
+.main-content {
+    background: rgba($medium-gray, 0.25);
+    backdrop-filter: $cards-backdrop-blur;
+    -webkit-backdrop-filter: $cards-backdrop-blur;
+    width: auto;
+}
+
+.mini-icon {
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        transition: transform 0.1s ease;
+    }
+}
+
+/**************** SIDENAV ******************/
 mat-sidenav.main-sidenav {
     background: var(--mat-sys-primary);
     border-radius: 0px;
@@ -15,6 +31,9 @@ mat-sidenav.main-sidenav {
     &.collapsed {
         width: 60px;
         padding: 0 0;
+        mat-list-item {
+            border-radius: 0px;
+        }
     }
     .sidenav-content {
         display: flex;
@@ -35,29 +54,11 @@ mat-sidenav.main-sidenav {
     }
 }
 
-.main-toolbar {
-    background: transparent;
-    top: 0;
-    left: 0;
-    color: $black;
-    button {
-        color: $black;
-    }
-}
-
-.main-content {
-    background: rgba($medium-gray, 0.25);
-    backdrop-filter: $cards-backdrop-blur;
-    -webkit-backdrop-filter: $cards-backdrop-blur;
-    width: auto;
-}
-
-.menu-list,
-.logout-section {
+.menu-list {
     mat-list-item {
         cursor: pointer;
         position: relative;
-        border-radius: 8px;
+        border-radius: 6px;
         overflow: hidden;
         transition: background 0.3s ease;
 
@@ -78,19 +79,37 @@ mat-sidenav.main-sidenav {
     }
 }
 
-.mini-icon {
-    &:hover {
-        cursor: pointer;
-        transform: scale(1.1);
-        transition: transform 0.1s ease;
-    }
-}
-
 .logout-section {
     position: relative;
     margin-top: auto;
-}
 
+    button {
+        background-color: var(--mat-sys-primary);
+        color: $white;
+    }
+    &.collapsed {
+        display: flex;
+        justify-content: center;
+    }
+}
+/********* FIN SIDENAV **********/
+
+/***** BOTON SUBIR *****/
+.to-top-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    margin-left: 230px;
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50% !important;
+    &.collapsed {
+        margin-left: 62px;
+    }
+}
+/*** FIN BOTON SUBIR *****/
 /*ELIMINAR SOLO EJEMPLO*/
 .login-card {
     padding: 2rem;
