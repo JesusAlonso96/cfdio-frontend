@@ -59,9 +59,7 @@ mat-sidenav.main-sidenav {
         position: relative;
         border-radius: 8px;
         overflow: hidden;
-        transition:
-            background 0.3s ease,
-            transform 0.25s ease;
+        transition: background 0.3s ease;
 
         .menu-item-text,
         mat-icon {
@@ -71,7 +69,6 @@ mat-sidenav.main-sidenav {
 
         &:hover {
             background: $light-gray;
-            transform: translateX(1.5px);
 
             .menu-item-text,
             mat-icon {

@@ -23,8 +23,8 @@ export class DashboardComponent {
     { label: 'Inicio', icon: 'home_app_logo', route: '/inicio' },
     { label: 'Facturación', icon: 'receipt_long', route: '/usuarios' },
     { label: 'Reportes', icon: 'bar_chart', route: '/reportes' },
-    { label: 'Configuración', icon: 'settings', route: '/config' },
-    { label: 'Mi perfil', icon: 'account_circle', route: '/usuarios' },
+    // { label: 'Configuración', icon: 'settings', route: '/config' },
+    // { label: 'Mi perfil', icon: 'account_circle', route: '/usuarios' },
 
   ];
 
