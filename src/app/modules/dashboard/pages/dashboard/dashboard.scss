@@ -1,30 +1,47 @@
 @use "variables" as *;
 
 .main-container {
-    background: url("../../../../../assets/main-background.svg");
-    background-size: cover; // ocupa toda la pantalla
+    background-color: $white;
     width: 100vw;
     height: 100vh;
-    background-attachment: fixed;
 }
 
-.main-sidenav {
-    background: rgba($dark-gray, 0.5);
-    backdrop-filter: $cards-backdrop-blur;
-    -webkit-backdrop-filter: $cards-backdrop-blur;
-
+mat-sidenav.main-sidenav {
+    background: var(--mat-sys-primary);
     border-radius: 0px;
-    left: 1px;
-    color: $white;
+    width: 250px;
+    padding: 0 1rem;
+
+    &.collapsed {
+        width: 60px;
+        padding: 0 0;
+    }
+    .sidenav-content {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+        .sidebar-header {
+            .logo {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .menu-list {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
 }
 
 .main-toolbar {
     background: transparent;
     top: 0;
     left: 0;
-    color: $white;
+    color: $black;
     button {
-        color: $white;
+        color: $black;
     }
 }
 
@@ -32,8 +49,52 @@
     background: rgba($medium-gray, 0.25);
     backdrop-filter: $cards-backdrop-blur;
     -webkit-backdrop-filter: $cards-backdrop-blur;
+    width: auto;
 }
 
+.menu-list,
+.logout-section {
+    mat-list-item {
+        cursor: pointer;
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        transition:
+            background 0.3s ease,
+            transform 0.25s ease;
+
+        .menu-item-text,
+        mat-icon {
+            color: $white;
+            transition: color 0.1s ease;
+        }
+
+        &:hover {
+            background: $light-gray;
+            transform: translateX(1.5px);
+
+            .menu-item-text,
+            mat-icon {
+                color: var(--mat-sys-primary);
+            }
+        }
+    }
+}
+
+.mini-icon {
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        transition: transform 0.1s ease;
+    }
+}
+
+.logout-section {
+    position: relative;
+    margin-top: auto;
+}
+
+/*ELIMINAR SOLO EJEMPLO*/
 .login-card {
     padding: 2rem;
     border-radius: $cards-border-radius;

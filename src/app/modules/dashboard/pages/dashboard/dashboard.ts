@@ -7,6 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
+
 @Component({
   selector: 'app-dashboard',
   imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, MatCardModule],
@@ -15,9 +16,19 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   styleUrl: './dashboard.scss'
 })
 export class DashboardComponent {
-
   // Datos de ejemplo vacíos - solo para estructura
-  navigationItems = ['Home', 'Manage', 'Master', 'Reports', 'Action Planning'];
-  activityUsers = Array(6).fill({ name: '', type: '', category: '' });
-  ongoingSurveys = Array(4).fill({ study: '', name: '' });
+
+  isCollapsed = false;
+  menuItems = [
+    { label: 'Inicio', icon: 'home_app_logo', route: '/inicio' },
+    { label: 'Facturación', icon: 'receipt_long', route: '/usuarios' },
+    { label: 'Reportes', icon: 'bar_chart', route: '/reportes' },
+    { label: 'Configuración', icon: 'settings', route: '/config' },
+    { label: 'Mi perfil', icon: 'account_circle', route: '/usuarios' },
+
+  ];
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 }

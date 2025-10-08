@@ -1,19 +1,64 @@
-<mat-sidenav-container class="main-container">
+<mat-sidenav-container class="main-container" autosize>
 
-    <mat-sidenav #sidenav mode="side" opened class="main-sidenav">
-        AQUI ARRIBA EL CFDIO LOGO
+    <mat-sidenav #sidenav mode="side" opened class="main-sidenav" [class.collapsed]="isCollapsed">
+        <div class="sidenav-content">
+            <div class="sidebar-header mt-2">
+                @if (isCollapsed) {
+                <img class="ms-1 mini-icon" width="50px" height="50px" src="./assets/white-icon.png" alt="">
 
-        <span class="mt-5"> hasta abajo el perfil y cerrar sesión</span>
+
+
+                } @else {
+                <img class="logo" width="auto" height="50px" src="./assets/white-logo.png" alt="">
+                }
+            </div>
+
+            <mat-list class="menu-list mt-2" role="menu" [class.collapsed]="isCollapsed">
+                @for (item of menuItems; track $index) {
+                <mat-list-item class="my-1" role="listitem">
+                    <mat-icon class="material-symbols-outlined" matListItemIcon>{{item.icon}}</mat-icon>
+                    @if (!isCollapsed) {
+                    <div class="menu-item-text" matListItemTitle>{{item.label}}</div>
+                    }
+                </mat-list-item>
+                }
+            </mat-list>
+
+            <mat-list class="logout-section">
+                <mat-list-item class="my-2" role="listitem">
+                    <mat-icon class="material-symbols-outlined" matListItemIcon>logout</mat-icon>
+                    @if (!isCollapsed) {
+                    <div class="menu-item-text" matListItemTitle>Cerrar sesión</div>
+                    }
+                </mat-list-item>
+                <!-- 
+            <button matIconButton class="logout-btn">
+                <mat-icon class="material-symbols-outlined">logout</mat-icon>
+                @if (!isCollapsed) {
+                <span>Cerrar sesión</span>
+                }
+            </button> -->
+            </mat-list>
+        </div>
+
+        <!-- <span class="mt-5"> hasta abajo el perfil y cerrar sesión</span> -->
     </mat-sidenav>
 
     <mat-sidenav-content class="main-content">
-        <mat-toolbar class="main-toolbar">
-            <button mat-icon-button (click)="sidenav.toggle()">
-                <mat-icon>menu</mat-icon>
+        <mat-toolbar class="main-toolbar d-flex justify-content-between align-items-center">
+            <button matIconButton (click)="toggleSidebar()">
+                <mat-icon class="material-symbols-outlined">{{ isCollapsed ? 'chevron_right' : 'chevron_left'
+                    }}</mat-icon>
             </button>
-            <span>CFDIO Dashboard</span>
 
-            <span>a la derecha, icono notificacion, icono ayuda</span>
+            <div>
+                <button matIconButton (click)="toggleSidebar()">
+                    <mat-icon class="material-symbols-outlined">notifications</mat-icon>
+                </button>
+                <button matIconButton (click)="toggleSidebar()">
+                    <mat-icon class="material-symbols-outlined">account_circle</mat-icon>
+                </button>
+            </div>
         </mat-toolbar>
         <div class="container-fluid">
             <div class="row my-3">
