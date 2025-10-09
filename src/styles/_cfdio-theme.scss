@@ -3,12 +3,19 @@
 @use "./menus" as menus;
 @use "./inputs";
 /****************************** LIGHT THEME ******************************/
+// $my-custom-level: mat.m2-define-typography-level(
+//   $font-family: Roboto,
+//   $font-weight: 400,
+//   $font-size: 1rem,
+//   $line-height: 1,
+//   $letter-spacing: normal
+// );
 html {
   color-scheme: light;
   @include mat.theme(
     (
       color: mat.$green-palette,
-      typography: Roboto,
+      typography: "Open Sans",
       density: 0
     )
   );
