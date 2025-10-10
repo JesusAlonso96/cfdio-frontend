@@ -1,12 +1,34 @@
-<div class="login-container d-flex justify-content-center align-items-center">
-    <!-- FORMULARIO DE LOGIN -->
+<!-- <div class="login-container d-flex justify-content-center align-items-center">
+
     <div class="card-wrapper" [class.slide-in]="!showRegister()" [class.slide-out]="showRegister()">
         <app-login (clicked)="toggleRegistrationForm()"></app-login>
     </div>
-    <!-- FORMULARIO DE REGISTRO -->
+
     <div class="card-wrapper" [class.slide-in]="showRegister()" [class.slide-out]="!showRegister()">
         <app-register (clicked)="toggleRegistrationForm()"></app-register>
 
     </div>
 
+</div> -->
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div style="background-color: red;" class="col-6  h-100">
+            <h2>Bienvenido</h2>
+
+            <div class="card-wrapper" [class.slide-in]="!showRegister()" [class.slide-out]="showRegister()">
+                <app-login (clicked)="toggleRegistrationForm()"></app-login>
+            </div>
+
+            <div class="card-wrapper" [class.slide-in]="showRegister()" [class.slide-out]="!showRegister()">
+                <app-register (clicked)="toggleRegistrationForm()"></app-register>
+
+            </div>
+
+
+        </div>
+        <div class="col-6 bg-auth">
+
+            <img src="./assets/undraw_data-input_whqw.svg" alt="">
+        </div>
+    </div>
 </div>

@@ -6,7 +6,7 @@
     height: 100vh;
     position: relative;
 
-    background: rgba($dark-gray, 0.35);
+    background: $white;
 
     .card-wrapper {
         position: absolute;
@@ -50,11 +50,9 @@
 
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: $white;
 
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.06),
-        0 12px 28px rgba(0, 0, 0, 0.08);
+    box-shadow: none !important;
     z-index: 10;
     overflow: hidden;
     position: absolute;
@@ -70,16 +68,6 @@
     transition:
         transform 350ms ease-in-out,
         opacity 350ms ease-in-out;
-
-    &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background-color: var(--mat-sys-primary);
-    }
 
     .card-footer {
         p {
@@ -114,4 +102,22 @@
 
 .logo-container {
     padding-left: 2.8rem !important;
+}
+
+.bg-auth {
+    background-image: url("/assets/sun-tornado.svg");
+    background-color: var(--mat-sys-primary);
+
+    background-size: cover;
+    flex: 1;
+
+    display: flex;
+    justify-content: center; // centra horizontalmente
+    align-items: flex-end; // la empuja hacia abajo
+    padding-bottom: 2rem; // deja espacio si no quieres que toque el borde
+
+    img {
+        width: 80%;
+        max-width: 600px;
+    }
 }
