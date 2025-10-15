@@ -1,108 +1,8 @@
 @use "variables" as *;
 @use "breakpoints" as *;
 
-.login-container {
-    overflow: hidden;
-    height: 100vh;
-    position: relative;
-
-    background: $white;
-
-    .card-wrapper {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        max-width: 450px;
-        transform: translate(-50%, -50%);
-        transition:
-            transform 0.5s ease,
-            opacity 0.5s ease;
-        opacity: 1;
-        z-index: 10;
-    }
-
-    .slide-in {
-        transform: translate(-50%, -50%);
-        opacity: 1;
-        z-index: 2;
-    }
-
-    .slide-out {
-        transform: translate(-150%, -150%); // sale hacia la izquierda
-        opacity: 0;
-        z-index: 1;
-    }
-
-    .slide-in-right {
-        transform: translate(150%, -50%); // sale hacia la derecha
-        opacity: 0;
-        z-index: 1;
-    }
-}
-
 /* Animaciones */
 /* Base para ambas tarjetas */
-.login-card,
-.register-card {
-    padding: 2rem;
-    border-radius: 25px;
-
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    background-color: $white;
-
-    box-shadow: none !important;
-    z-index: 10;
-    overflow: hidden;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    .mat-mdc-card-title {
-        font-size: 1.8rem;
-        font-weight: 600;
-    }
-
-    transform: translate(-50%, -50%);
-    transition:
-        transform 350ms ease-in-out,
-        opacity 350ms ease-in-out;
-
-    .card-footer {
-        p {
-            font-size: 0.9rem;
-            span {
-                cursor: pointer;
-                font-weight: 600;
-            }
-        }
-    }
-
-    @include xs {
-        max-width: 90%;
-    }
-
-    @include sm {
-        max-width: 80%;
-    }
-
-    @include md {
-        max-width: 60%;
-    }
-
-    @include lg {
-        max-width: 50%;
-    }
-
-    @include xl {
-        max-width: 600px;
-    }
-}
-
-.logo-container {
-    padding-left: 2.8rem !important;
-}
 
 .bg-auth {
     background-image: url("/assets/sun-tornado.svg");
@@ -110,14 +10,81 @@
 
     background-size: cover;
     flex: 1;
-
     display: flex;
-    justify-content: center; // centra horizontalmente
-    align-items: flex-end; // la empuja hacia abajo
-    padding-bottom: 2rem; // deja espacio si no quieres que toque el borde
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-    img {
+    .data-logo {
+        bottom: 0;
         width: 80%;
+        max-width: 700px;
+        margin-bottom: 2rem;
+        // height: 100%;
+    }
+
+    .shapes {
+        width: 80%;
+        margin-top: 3rem;
+    }
+}
+
+.auth-wrapper {
+    width: 100%;
+}
+
+.form-section {
+    img {
+        margin-bottom: 14rem;
+    }
+}
+
+@include xs {
+    .bg-auth {
+        // padding-bottom: 8rem;
+        display: none;
+    }
+    .auth-wrapper {
+        max-width: 95%;
+    }
+}
+
+@include sm {
+    .bg-auth {
+        // padding-bottom: 8rem;
+        display: none;
+    }
+    .auth-wrapper {
+        max-width: 90%;
+    }
+}
+
+@include md {
+    .bg-auth {
+        display: none;
+    }
+
+    .auth-wrapper {
+        max-width: 80%;
+    }
+}
+
+@include lg {
+    .bg-auth {
+        // padding-bottom: 8rem;
+        display: flex;
+    }
+    .auth-wrapper {
+        max-width: 450px;
+    }
+}
+
+@include xl {
+    .bg-auth {
+        // padding-bottom: 8rem;
+        display: flex;
+    }
+    .auth-wrapper {
         max-width: 600px;
     }
 }

@@ -4,34 +4,24 @@
     --mat-form-field-container-vertical-padding: 6px;
     --mat-form-field-container-text-line-height: 2;
     --mat-form-field-container-text-size: 1.1em;
-    // --mat-form-field-outlined-outline-width: 2px;
-    // --mat-form-field-outlined-outline-color: $black;
-    // --mat-form-field-outlined-label-text-color: $black;
-    // --mat-form-field-outlined-input-text-placeholder-color: $black;
 }
 
-//Texto dentro del input
-// .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
-//     // color: $black !important;
-//     // caret-color: $black !important;
-//     font-weight: 600 !important;
-// }
-
-// //texto del input placeholder
-// .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input::placeholder {
-//     color: $black !important;
-// }
-
-// // //bordes del input
-// .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mat-mdc-notch-piece {
-//     border-color: var(--mat-form-field-outlined-outline-color, var(--mat-sys-outline));
-//     // border-width: var(--mat-form-field-outlined-outline-width, 10px);
-// }
-//placeholder del input
-.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label {
-    font-weight: 600 !important;
+/* CHECKBOX */
+.mat-mdc-checkbox .mat-mdc-checkbox-ripple,
+.mdc-checkbox__ripple {
+    display: none;
 }
 
-.mat-mdc-form-field-infix {
-    min-height: 0px !important;
+.mdc-checkbox__background {
+    border-radius: 4px !important;
+    border-width: 1px !important;
+    width: 15px !important;
+    height: 15px !important;
+}
+
+.mdc-checkbox {
+    width: 15px !important;
+    height: 15px !important;
+    padding: calc((var(--mat-checkbox-state-layer-size, 40px) - 20px) / 2) !important;
+    flex: 0 0 15px !important;
 }

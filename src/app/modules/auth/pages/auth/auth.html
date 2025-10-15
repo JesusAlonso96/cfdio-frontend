@@ -1,34 +1,28 @@
-<!-- <div class="login-container d-flex justify-content-center align-items-center">
-
-    <div class="card-wrapper" [class.slide-in]="!showRegister()" [class.slide-out]="showRegister()">
-        <app-login (clicked)="toggleRegistrationForm()"></app-login>
-    </div>
-
-    <div class="card-wrapper" [class.slide-in]="showRegister()" [class.slide-out]="!showRegister()">
-        <app-register (clicked)="toggleRegistrationForm()"></app-register>
-
-    </div>
-
-</div> -->
 <div class="container-fluid h-100">
+
     <div class="row h-100">
-        <div style="background-color: red;" class="col-6  h-100">
-            <h2>Bienvenido</h2>
+        <div class="col-lg-6 col-md-12 h-100 bg-white form-section">
+            <img src="./assets/transparent-logo.png" alt="">
 
-            <div class="card-wrapper" [class.slide-in]="!showRegister()" [class.slide-out]="showRegister()">
-                <app-login (clicked)="toggleRegistrationForm()"></app-login>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="auth-wrapper ">
+
+                    @if (!showRegister()) {
+                    <app-login (clicked)="toggleRegistrationForm()"></app-login>
+                    } @else {
+                    <app-register (clicked)="toggleRegistrationForm()"></app-register>
+                    }
+                </div>
             </div>
 
-            <div class="card-wrapper" [class.slide-in]="showRegister()" [class.slide-out]="!showRegister()">
-                <app-register (clicked)="toggleRegistrationForm()"></app-register>
-
-            </div>
 
 
         </div>
-        <div class="col-6 bg-auth">
+        <div class="col-lg-6 col-md-6 bg-auth">
+            <img class="shapes" src="./assets/FONDO1.png" alt="">
 
-            <img src="./assets/undraw_data-input_whqw.svg" alt="">
+
+            <img class="data-logo" src="./assets/undraw_data-input_whqw.svg" alt="">
         </div>
     </div>
 </div>

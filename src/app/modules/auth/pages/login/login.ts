@@ -4,13 +4,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule],
+  imports: [CommonModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatCheckboxModule],
   standalone: true,
   templateUrl: './login.html',
-  styleUrl: '../auth/auth.scss'
+  styleUrl: 'login.scss'
 })
 export class LoginComponent {
   @Output() clicked = new EventEmitter<void>();

@@ -1,0 +1,43 @@
+@use "variables" as *;
+
+.login-title {
+    margin-bottom: 3rem;
+    h1 {
+        color: $black;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        font-size: 3rem;
+    }
+    span {
+        color: $dark-gray-200;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+}
+
+.login-form {
+    p {
+        color: $dark-gray-200;
+        font-weight: 600;
+    }
+}
+
+.underline-option {
+    color: var(--mat-sys-primary);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.login-form-text {
+    color: $dark-gray-200;
+    font-weight: 600;
+}
+
+::ng-deep .mat-mdc-checkbox .mat-internal-form-field {
+    color: $black !important;
+    font-weight: 600 !important;
+}
+
+.options {
+    margin-bottom: 2rem;
+}

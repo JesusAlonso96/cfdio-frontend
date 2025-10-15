@@ -1,10 +1,20 @@
 // Color Variables
+/* system colors*/
+$primary: #026e00;
+
+/* light grays */
 $white: #fafafa;
 $light-gray: #f5f5f5;
 $medium-gray: #d8dbdf;
 $dark-gray: #a0a0a0;
+
+/* dark grays */
+$medium-dark-gray: #949494;
+$dark-gray-100: #8b8b8b;
+$dark-gray-200: #6e6e6e;
+
 $black: #121212;
-$primary: #026e00;
+
 // Card Variables
 $cards-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 $cards-border: 1px solid rgba(255, 255, 255, 0.25);
