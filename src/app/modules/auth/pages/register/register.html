@@ -1,22 +1,29 @@
-<form class="p-1">
+<form class="px-2 py-3">
+    <div class="register-title">
+        <h1>Registrate</h1>
+        <span>Por favor, ingresa tus datos</span>
+    </div>
+    <div class="register-form">
+        <mat-form-field class="w-100 mb-3">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput type="email" placeholder="ejemplo@dominio.com" required>
+        </mat-form-field>
+        <mat-form-field class="w-100 mb-3">
+            <mat-label>Teléfono</mat-label>
+            <input matInput type="text" placeholder="0000000000" required>
+        </mat-form-field>
+        <mat-form-field class="w-100 mb-3">
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" placeholder="••••••••" required>
+        </mat-form-field>
+        <mat-form-field class="w-100 mb-3">
+            <mat-label>Confirmar contraseña</mat-label>
+            <input matInput type="password" placeholder="••••••••" required>
+        </mat-form-field>
+        
+        <button matButton="filled" style="font-size: 1.2rem !important;" class="w-100 mb-3 py-4">Registrarse</button>
+        <p>¿Ya tienes cuenta? <span (click)="changeForm()">Iniciar
+                sesión</span></p>
+    </div>
 
-    <mat-form-field class="w-100">
-        <mat-label>Correo electrónico</mat-label>
-        <input matInput type="email" placeholder="ejemplo@dominio.com" required>
-    </mat-form-field>
-    <mat-form-field class="w-100">
-        <mat-label>Teléfono</mat-label>
-        <input matInput type="text" placeholder="0000000000" required>
-    </mat-form-field>
-    <mat-form-field class="w-100">
-        <mat-label>Contraseña</mat-label>
-        <input matInput type="password" placeholder="••••••••" required>
-    </mat-form-field>
-    <mat-form-field class="w-100">
-        <mat-label>Confirmar contraseña</mat-label>
-        <input matInput type="password" placeholder="••••••••" required>
-    </mat-form-field>
-    <button matButton="filled" style="font-size: 1.2rem !important;" class="w-100 mb-3 py-4">Registrarse</button>
-    <p>¿Ya tienes cuenta? <span (click)="changeForm()">Iniciar
-            sesión</span></p>
 </form>

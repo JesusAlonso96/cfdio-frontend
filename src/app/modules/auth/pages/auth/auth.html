@@ -1,28 +1,30 @@
-<div class="container-fluid h-100">
+<div class="d-flex overflow-hidden h-100">
 
-    <div class="row h-100">
-        <div class="col-lg-6 col-md-12 h-100 bg-white form-section">
-            <img src="./assets/transparent-logo.png" alt="">
 
-            <div class="d-flex justify-content-center align-items-center">
-                <div class="auth-wrapper ">
+    <div class="w-50 bg-white form-section">
 
-                    @if (!showRegister()) {
-                    <app-login (clicked)="toggleRegistrationForm()"></app-login>
-                    } @else {
-                    <app-register (clicked)="toggleRegistrationForm()"></app-register>
-                    }
-                </div>
+        <div class="d-flex justify-content-center align-items-center">
+
+            <div class="auth-wrapper">
+                <img  class="ms-1 mb-3" src="./assets/logos/logo4.svg" alt="">
+                
+                
+                @if (!showRegister()) {
+                <app-login (clicked)="toggleRegistrationForm()"></app-login>
+                } @else {
+                <app-register (clicked)="toggleRegistrationForm()"></app-register>
+                }
             </div>
-
-
-
         </div>
-        <div class="col-lg-6 col-md-6 bg-auth">
-            <img class="shapes" src="./assets/FONDO 1.svg" alt="">
 
 
-            <img class="data-logo" src="./assets/undraw_data-input_whqw.svg" alt="">
-        </div>
+
     </div>
+    <div class="w-50 bg-auth">
+
+
+
+        <img class="data-logo" src="./assets/bg-auth.svg" alt="">
+    </div>
+
 </div>

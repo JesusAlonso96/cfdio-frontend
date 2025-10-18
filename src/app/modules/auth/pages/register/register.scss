@@ -1,0 +1,25 @@
+@use "variables" as *;
+
+.register-title {
+    margin-bottom: 3rem;
+
+    h1 {
+        color: $black;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        font-size: 3rem;
+    }
+
+    span {
+        color: $dark-gray-200;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+}
+
+.register-form {
+     p {
+        color: $dark-gray-200;
+        font-weight: 600;
+    }
+}

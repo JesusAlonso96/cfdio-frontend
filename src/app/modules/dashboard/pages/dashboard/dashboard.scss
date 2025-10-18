@@ -13,11 +13,42 @@
     width: auto;
 }
 
-.mini-icon {
+.mini-icon-content {
+
+    .mini-icon {
+        height: 50px;
+        width: 85%;
+
+
+    }
+
+    transition: background 0.3s ease;
+
     &:hover {
         cursor: pointer;
-        transform: scale(1.1);
-        transition: transform 0.1s ease;
+        background: $light-gray;
+
+        .mini-icon {
+            content: url("/assets/logos/dashboard-mini-logo-green.svg");
+
+        }
+
+    }
+}
+
+.logo-content,
+.mini-icon-content {
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+
+}
+
+.logo-content {
+    .logo {
+        height: 50px;
+        width: 85%;
+
     }
 }
 
@@ -31,15 +62,18 @@ mat-sidenav.main-sidenav {
     &.collapsed {
         width: 60px;
         padding: 0 0;
+
         mat-list-item {
             border-radius: 0px;
         }
     }
+
     .sidenav-content {
         display: flex;
         flex-direction: column;
         height: 100vh;
         overflow: hidden;
+
         .sidebar-header {
             .logo {
                 cursor: pointer;
@@ -65,7 +99,6 @@ mat-sidenav.main-sidenav {
         .menu-item-text,
         mat-icon {
             color: $white;
-            transition: color 0.1s ease;
         }
 
         &:hover {
@@ -87,11 +120,13 @@ mat-sidenav.main-sidenav {
         background-color: var(--mat-sys-primary);
         color: $white;
     }
+
     &.collapsed {
         display: flex;
         justify-content: center;
     }
 }
+
 /********* FIN SIDENAV **********/
 
 /***** BOTON SUBIR *****/
@@ -105,18 +140,25 @@ mat-sidenav.main-sidenav {
     -webkit-backdrop-filter: blur(40px);
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 50% !important;
+
     &.collapsed {
         margin-left: 62px;
     }
 }
+
 /*** FIN BOTON SUBIR *****/
 /*ELIMINAR SOLO EJEMPLO*/
 .login-card {
     padding: 2rem;
     border-radius: $cards-border-radius;
-    background: $cards-background; /* fondo semi-transparente */
-    backdrop-filter: $cards-backdrop-blur; /* desenfoque del fondo */
-    -webkit-backdrop-filter: $cards-backdrop-blur; /* soporte Safari */
-    border: $cards-border; /* borde tenue */
-    box-shadow: $cards-shadow; /* sombra suave */
+    background: $cards-background;
+    /* fondo semi-transparente */
+    backdrop-filter: $cards-backdrop-blur;
+    /* desenfoque del fondo */
+    -webkit-backdrop-filter: $cards-backdrop-blur;
+    /* soporte Safari */
+    border: $cards-border;
+    /* borde tenue */
+    box-shadow: $cards-shadow;
+    /* sombra suave */
 }
