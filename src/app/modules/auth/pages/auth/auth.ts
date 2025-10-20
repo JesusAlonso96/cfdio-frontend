@@ -14,6 +14,15 @@ export class AuthComponent {
   showRegister = signal(false);
 
   toggleRegistrationForm() {
-    this.showRegister.set(!this.showRegister());
+
+    const form = document.querySelector('.form-panel');
+    if (form) {
+      form.classList.add('fade-out');
+      setTimeout(() => {
+        this.showRegister.set(!this.showRegister());
+      }, 200);
+    } else {
+      this.showRegister.set(!this.showRegister());
+    }
   }
 }

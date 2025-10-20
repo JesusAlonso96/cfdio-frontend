@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
   imports: [CommonModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule],
   standalone: true,
   templateUrl: './register.html',
-  styleUrl: './register.scss'
+  styleUrls: ['./register.scss', '../auth/auth.scss']
 })
 export class RegisterComponent {
   @Output() clicked = new EventEmitter<void>();

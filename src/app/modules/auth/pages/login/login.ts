@@ -11,7 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   imports: [CommonModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatCheckboxModule],
   standalone: true,
   templateUrl: './login.html',
-  styleUrl: 'login.scss'
+  styleUrls: ['login.scss', '../auth/auth.scss']
 })
 export class LoginComponent {
   @Output() clicked = new EventEmitter<void>();
