@@ -18,7 +18,7 @@
             <mat-list class="menu-list mt-2" role="menu" [class.collapsed]="isCollapsed()">
                 @for (item of menuItems; track $index) {
                 <mat-list-item role="listitem">
-                    <mat-icon class="material-symbols-outlined" matListItemIcon>{{item.icon}}</mat-icon>
+                    <mat-icon outlined matListItemIcon>{{item.icon}}</mat-icon>
                     @if (!isCollapsed()) {
                     <div class="menu-item-text" matListItemTitle>{{item.label}}</div>
                     }
@@ -28,7 +28,7 @@
 
             <div class="logout-section w-100" [class.collapsed]="isCollapsed()">
                 <button class="mb-1" (click)="toggleSidebar()" matIconButton>
-                    <mat-icon class="material-symbols-outlined">{{isCollapsed() ? 'right_panel_close' :
+                    <mat-icon outlined>{{isCollapsed() ? 'right_panel_close' :
                         'right_panel_open'}}</mat-icon>
                 </button>
 
@@ -486,6 +486,6 @@
 </mat-sidenav-container>
 @if (hasScrolled()) {
 <button [class.collapsed]="isCollapsed()" class="to-top-button me-1 mb-1" (click)="backToTop()" matIconButton>
-    <mat-icon class="material-symbols-outlined">keyboard_arrow_up</mat-icon>
+    <mat-icon outlined>keyboard_arrow_up</mat-icon>
 </button>
 }

@@ -4,10 +4,10 @@
 
     <div>
         <button matIconButton>
-            <mat-icon class="material-symbols-outlined">notifications</mat-icon>
+            <mat-icon outlined>notifications</mat-icon>
         </button>
         <button [matMenuTriggerFor]="menu" matIconButton>
-            <mat-icon class="material-symbols-outlined">account_circle</mat-icon>
+            <mat-icon outlined>account_circle</mat-icon>
         </button>
 
 
@@ -15,14 +15,14 @@
             <button mat-menu-item>
                 <span>Mi perfil</span>
 
-                <mat-icon class="material-symbols-outlined">location_away</mat-icon>
+                <mat-icon outlined>location_away</mat-icon>
             </button>
             <button mat-menu-item>
-                <mat-icon class="material-symbols-outlined">settings</mat-icon>
+                <mat-icon outlined>settings</mat-icon>
                 <span>Configuración</span>
             </button>
             <button (click)="logout()" mat-menu-item>
-                <mat-icon class="material-symbols-outlined">exit_to_app</mat-icon>
+                <mat-icon outlined>exit_to_app</mat-icon>
                 <span>Cerrar sesión</span>
             </button>
         </mat-menu>

@@ -7,11 +7,12 @@ import { MatSidenavContent, MatSidenavModule } from '@angular/material/sidenav';
 import { HeaderComponent } from '../header/header';
 import { MENU_ITEMS } from '../../constants/menu.constant';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon';
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [HeaderComponent, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, MatCardModule],
+  imports: [HeaderComponent, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, MatCardModule, OutlinedIconDirective],
   standalone: true,
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'

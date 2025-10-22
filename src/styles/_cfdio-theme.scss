@@ -2,6 +2,7 @@
 @use "./buttons" as buttons;
 @use "./menus" as menus;
 @use "./inputs";
+
 /****************************** LIGHT THEME ******************************/
 // $my-custom-level: mat.m2-define-typography-level(
 //   $font-family: Roboto,
@@ -12,17 +13,14 @@
 // );
 html {
   color-scheme: light;
-  @include mat.theme(
-    (
-      color: mat.$green-palette,
+  @include mat.theme((color: mat.$green-palette,
       typography: "Open Sans",
-      density: 0
-    )
-  );
+      density: 0));
   //Color de texto personalizado
   --mat-sys-on-surface: #363636 !important;
   @include buttons.general-buttons;
   @include menus.general-menus;
+
 }
 
 /****************************** DARK THEME ******************************/
