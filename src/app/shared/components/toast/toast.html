@@ -1,0 +1,7 @@
+<div class="toast d-flex justify-content-between align-items-center" [class.visible]="visible" [class.success]="type === 'success'" [class.error]="type === 'error'" [class.info]="type === 'info'" [class.warning]="type === 'warning'">
+    <div class="body-toast d-flex align-items-center">
+        <mat-icon class="me-2" outlined>{{toastIcon}}</mat-icon>
+        <span>{{ message }}</span>
+    </div>
+    <mat-icon class="close m-1" role="button" (click)="close()" outlined>close_small</mat-icon>
+</div>

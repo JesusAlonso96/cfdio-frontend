@@ -1,0 +1,46 @@
+@use "variables" as *;
+
+.toast {
+    cursor: pointer;
+    background: transparent;
+    color: white;
+    padding: 1.2rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 240px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+
+    &.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    &.error {
+        background: #d32f2f;
+    }
+
+    &.success {
+        background: #2e7d32;
+    }
+
+    &.warning {
+        background: #f9a825;
+    }
+
+    &.info {
+        background: #0288d1;
+    }
+
+    .close {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
