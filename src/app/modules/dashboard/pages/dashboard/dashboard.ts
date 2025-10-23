@@ -38,7 +38,6 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   /* HEADER FUNCTIONS */
   ngAfterViewInit() {
     this.scrollSubscription = this.content.elementScrolled().subscribe(() => {
-      console.log("entre quiii", this.content.getElementRef().nativeElement.scrollTop > 0)
       this.hasScrolled.set(this.content.getElementRef().nativeElement.scrollTop > 0);
     });
   }

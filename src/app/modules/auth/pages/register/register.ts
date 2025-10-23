@@ -7,7 +7,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BaseFormComponent } from '../../../../shared/components/base-form/base-form';
-import { RegisterFormModel } from '../../../models/register-form.interface';
+import { RegisterForm } from '../../../models/register-form.interface';
 import { PhoneMaskDirective } from '../../../../shared/directives/phone-mask';
 import { MatIconModule } from '@angular/material/icon';
 import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon';
@@ -19,25 +19,32 @@ import { AuthService } from '../../services/auth.service';
 import { RegisterResponse } from '../../../models/register-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from '../../../../shared/models/error-response.model';
-import { AlertsService } from '../../../../shared/services/toastr.service';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { LoadingIconsComponent } from '../../../../shared/components/loading-icons/loading-icons';
+import { LoadingColors } from '../../../../shared/enums/loading-colors.enum';
+import { LoadingIconsSize } from '../../../../shared/enums/loading-icons-size.enum';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatDividerModule, PhoneMaskDirective, MatIconModule, MatTooltipModule, OutlinedIconDirective],
+  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatDividerModule, PhoneMaskDirective, MatIconModule, MatTooltipModule, OutlinedIconDirective, LoadingIconsComponent],
   standalone: true,
   templateUrl: './register.html',
   styleUrls: ['./register.scss', '../auth/auth.scss']
 })
-export class RegisterComponent extends BaseFormComponent<RegisterFormModel> implements OnInit {
+export class RegisterComponent extends BaseFormComponent<RegisterForm> implements OnInit {
   @Output() clicked = new EventEmitter<void>();
-  private formUtils = inject(FormUtilsService);
+  private _formUtils = inject(FormUtilsService);
   private _authService = inject(AuthService);
-  private _alertsService = inject(AlertsService);
+  private _toastService = inject(ToastService);
   public form!: FormGroup;
   protected formValid = signal(false);
   protected showPassword = signal(false);
   protected showConfirmPassword = signal(false);
   protected tooltip = `-Mínimo 8 caracteres.\n-Usa al menos una minúscula.\n-Usa al menos una mayúscula.\n-Usa al menos un número.\n-Usa al menos un símbolo.`;
+  protected loading = signal(false);
+  protected LoadingIconsSize = LoadingIconsSize;
+  protected LoadingColors = LoadingColors;
+
   constructor(private fb: FormBuilder) {
     super();
   }
@@ -54,8 +61,6 @@ export class RegisterComponent extends BaseFormComponent<RegisterFormModel> impl
       this.formValid.set(this.form.valid)
     });
   }
-
-
 
   /* FORM METHODS */
   changeForm() {
@@ -83,20 +88,21 @@ export class RegisterComponent extends BaseFormComponent<RegisterFormModel> impl
   }
 
   protected registerClient(): void {
-    const registerData: RegisterData = this.formUtils.mapFormToModel<RegisterData>(this.form, ['confirmPassword']);
+    const registerData: RegisterData = this._formUtils.mapFormToModel<RegisterData>(this.form, ['confirmPassword']);
     registerData.cellphone = registerData.cellphone.replaceAll("-", "");
-    console.log(registerData)
+    this.loading.set(true);
     this._authService.registerUser(registerData).subscribe({
-      next: (res: RegisterResponse) => console.log('Registrado con éxito', res),
+      next: (res: RegisterResponse) => {
+        this.loading.set(false);
+        this._toastService.showSuccess("Registro exitoso, bienvenido!", 6000);
+        this.changeForm();
+      },
       error: (err: HttpErrorResponse) => {
+        this.loading.set(false);
         const error: ErrorResponse = err.error;
-        console.error('Error al registrar: ', error.message)
+        this._toastService.showError(error.message, 6000);
       }
     });
   }
-
-test(){
-  this._alertsService.showSuccessToast("holaaa");
-}
 
 }

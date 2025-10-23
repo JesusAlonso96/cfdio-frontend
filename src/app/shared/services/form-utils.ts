@@ -8,8 +8,8 @@ export class FormUtilsService {
 
   public mapFormToModel<T>(form: FormGroup, excludeKeys: string[] = []): T {
     const raw = form.getRawValue();
-  excludeKeys.forEach(key => delete raw[key]);
-  return raw as T;
+    excludeKeys.forEach(key => delete raw[key]);
+    return raw as T;
   }
 
 }

@@ -1,0 +1,7 @@
+<div class="d-flex">
+    @for (icon of icons; track $index) {
+    <mat-icon [class.primary-color]="color === 'primary'" [class.gray-color]="color === 'gray'"
+        [class.white-color]="color === 'white'" [class.dark-color]="color === 'black'" [class.normal]="size === 1" [class.large]="size === 2"
+        [class.extra-large]="size === 3" [ngClass]="'icon ' + icon.class">{{icon.name}}</mat-icon>
+    }
+</div>

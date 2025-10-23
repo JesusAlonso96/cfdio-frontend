@@ -22,8 +22,6 @@ export class HeaderComponent {
   }
 
   logout() {
-    // Lógica de cierre de sesión aquí
-    console.log('Cerrar sesión');
     this.router.navigate(['/auth']); // Redirigir a la página de inicio de sesión
   }
 

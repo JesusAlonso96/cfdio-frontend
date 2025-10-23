@@ -15,7 +15,7 @@
         </mat-form-field>
         <mat-form-field class="w-100 mb-3">
             <mat-label>Teléfono</mat-label>
-            <input formControlName="cellphone" matInput phoneMask type="text" placeholder="0000000000">
+            <input formControlName="cellphone" matInput phoneMask type="text" placeholder="000-000-0000">
             @if (hasError('cellphone', 'required')) {
             <mat-error>Por favor, ingresa un teléfono celular.</mat-error>
             }
@@ -23,8 +23,8 @@
 
         <mat-form-field class="w-100 mb-3">
             <mat-label>Contraseña</mat-label>
-            <input (change)="changePassword()" formControlName="password" matInput [type]="showPassword() ? 'text' : 'password'"
-                placeholder="••••••••">
+            <input (change)="changePassword()" formControlName="password" matInput
+                [type]="showPassword() ? 'text' : 'password'" placeholder="••••••••">
             @if (hasError('password', 'required')) {
             <mat-error>Por favor, ingresa una contraseña.</mat-error>
             } @else if (hasError('password', 'pattern')) {
@@ -48,11 +48,15 @@
             <mat-icon role="button" (click)="toggleShowConfirmPassword()" outlined matSuffix>{{showConfirmPassword() ?
                 'visibility_off' : 'visibility'}}</mat-icon>
         </mat-form-field>
-        <button  [disabled]="!formValid()" matButton="filled" class="w-100 mb-4 py-4">Registrarse</button>
+        <button [disabled]="!formValid() || loading()" matButton="filled" class="w-100 mb-4 py-4">
+            @if (loading()) {
+            <app-loading-icons [size]="LoadingIconsSize.Normal" [color]="LoadingColors.Black"></app-loading-icons>
+            } @else {
+            Registrarme
+            }
+        </button>
         <p class="register-form-text text-center">¿Ya tienes cuenta? <span class="underline-option"
                 (click)="changeForm()">Iniciar
                 sesión</span></p>
     </div>
 </form>
-
-        <button (click)="test()">prueba</button>

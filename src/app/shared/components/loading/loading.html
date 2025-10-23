@@ -1,0 +1,6 @@
+@if (_loadingService.loading$ | async) {
+<div class="loading-overlay">
+  <app-loading-icons [size]="LoadingIconsSize.ExtraLarge" [color]="LoadingColors.Primary"></app-loading-icons>
+</div>
+
+}
