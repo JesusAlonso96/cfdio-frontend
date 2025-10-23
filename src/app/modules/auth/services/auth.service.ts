@@ -6,6 +6,8 @@ import { RegisterData } from '../../models/register-data.model';
 import { RegisterResponse } from '../../models/register-response.model';
 import { LoginForm } from '../../models/login-form.interface';
 import { LoginResponse } from '../../models/login-response.model';
+import { DefaultResponse } from '../../../shared/models/default-response.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +24,16 @@ export class AuthService {
   }
 
   public login(loginData: LoginForm): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.authApi}/login`, loginData);
+    return this.http.post<LoginResponse>(`${this.authApi}/login`, loginData, { withCredentials: true });
   }
+
+  public validateSession(): Observable<DefaultResponse> {
+    return this.http.get<DefaultResponse>(`${this.authApi}/me`, { withCredentials: true })
+  }
+
+  public logout(): Observable<DefaultResponse> {
+    return this.http.post<DefaultResponse>(`${this.authApi}/logout`, { withCredentials: true })
+  }
+
 
 }

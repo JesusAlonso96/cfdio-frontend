@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, signal, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,6 +26,7 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatSidenavContent) content!: MatSidenavContent;
   hasScrolled = signal(false);
   private scrollSubscription?: Subscription;
+
   constructor() {
   }
 

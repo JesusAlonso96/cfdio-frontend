@@ -26,7 +26,7 @@
       <span class="underline-option">¿Olvidaste la contraseña?</span>
     </div>
 
-    <button [disabled]="!formValid()" matButton="filled" class="w-100 mb-4 py-4">
+    <button [disabled]="!formValid() || loading()" matButton="filled" class="w-100 mb-4 py-4">
       @if (loading()) {
       <app-loading-icons [size]="LoadingIconsSize.Normal" [color]="LoadingColors.Black"></app-loading-icons>
       } @else {

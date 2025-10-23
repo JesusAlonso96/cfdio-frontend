@@ -14,7 +14,7 @@ export class ToastService {
   private appRef = inject(ApplicationRef);
   constructor() { }
 
-  show(message: string, type: ToastType, duration: number = 4000) {
+  private show(message: string, type: ToastType, duration: number = 4000) {
     this.ensureContainer();
 
     // Crear el ToastComponent dinámicamente
@@ -88,8 +88,8 @@ export class ToastService {
     this.show(message, ToastType.Success, duration);
   }
 
-  public showError(message: string, duration?: number) {
-    this.show(message, ToastType.Error, duration);
+  public showError(message: string) {
+    this.show(message, ToastType.Error, 8000);
   }
 
   public showWarning(message: string, duration?: number) {

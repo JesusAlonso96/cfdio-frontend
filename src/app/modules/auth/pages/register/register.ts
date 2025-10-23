@@ -14,7 +14,7 @@ import { OutlinedIconDirective } from '../../../../shared/directives/outlined-ic
 import { PASSWORD_REGEX } from '../../../../shared/regular-expresions/password';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RegisterData } from '../../../models/register-data.model';
-import { FormUtilsService } from '../../../../shared/services/form-utils';
+import { FormUtilsService } from '../../../../shared/services/form-utils.service';
 import { AuthService } from '../../services/auth.service';
 import { RegisterResponse } from '../../../models/register-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -97,11 +97,7 @@ export class RegisterComponent extends BaseFormComponent<RegisterForm> implement
         this._toastService.showSuccess("Registro exitoso, bienvenido!", 6000);
         this.changeForm();
       },
-      error: (err: HttpErrorResponse) => {
-        this.loading.set(false);
-        const error: ErrorResponse = err.error;
-        this._toastService.showError(error.message, 6000);
-      }
+      error: (err: HttpErrorResponse) => this.loading.set(false)
     });
   }
 
