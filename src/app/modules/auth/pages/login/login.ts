@@ -61,16 +61,14 @@ export class LoginComponent extends BaseFormComponent<LoginForm> implements OnIn
 
   login() {
     const loginData: LoginForm = this._formUtils.mapFormToModel<LoginForm>(this.form);
-    console.log(loginData)
     this.loading.set(true);
-
     this._authService.login(loginData).subscribe({
       next: (res: LoginResponse) => {
         setTimeout(() => {
           this.router.navigate(['/dashboard']);
           this.loading.set(false);
           this._toastService.showSuccess('Inicio de sesión exitoso, bienvenido');
-        }, 2000);
+        }, 1000);
       },
       error: (err: HttpErrorResponse) => this.loading.set(false)
     })

@@ -6,9 +6,11 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { routes } from './app.routes';
 import { errorInterceptor } from './shared/interceptors/error-interceptor';
 import { credentialsInterceptor } from './shared/interceptors/credentials-interceptor';
+import { refreshTokenInterceptor } from './modules/auth/interceptors/refresh-token-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(withInterceptors([refreshTokenInterceptor])),
     provideHttpClient(withInterceptors([credentialsInterceptor])),
     provideHttpClient(withInterceptors([errorInterceptor])),
     provideHttpClient(withInterceptorsFromDi()),

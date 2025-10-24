@@ -9,7 +9,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error: HttpErrorResponse) => {
       let message = 'Ocurrió un error inesperado.';
       // Mensaje explicito de error
-      if (error.status === 401 && req.url.includes('/auth/me')) {
+      if (error.status === 401 && (req.url.includes('/auth/me') || req.url.includes('/auth/refresh'))) {
         // no mostrar toast
         return throwError(() => error);
       }
