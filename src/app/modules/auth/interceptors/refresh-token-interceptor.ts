@@ -3,13 +3,11 @@ import { inject } from '@angular/core';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ToastService } from '../../../shared/services/toast.service';
-import { ActivatedRoute } from '@angular/router';
 import { BYPASS_REFRESH } from '../../../core/tokens/http-context.tokens';
 
 export const refreshTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const _toastService = inject(ToastService);
-  const route = inject(ActivatedRoute);
   // URLs que NO deben disparar el refresh
   const excludedEndpoints = ['login', 'logout', 'register', 'refresh'];
 
@@ -44,10 +42,8 @@ export const refreshTokenInterceptor: HttpInterceptorFn = (req, next) => {
         }),
         catchError(err => {
           authService.setRefreshInProgress(false);
-
-
           _toastService.showError('Tu sesión expiró, por favor inicia sesión de nuevo');
-          authService.logout();
+          authService.logout().subscribe();
           return throwError(() => err);
         })
       );

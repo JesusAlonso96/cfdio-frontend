@@ -31,7 +31,6 @@ export class AuthService {
   }
 
   public validateSession(bypass: boolean): Observable<DefaultResponse> {
-    console.log(new HttpContext().set(BYPASS_REFRESH, bypass))
     return this.http.get<DefaultResponse>(`${this.authApi}/me`, { withCredentials: true, context: new HttpContext().set(BYPASS_REFRESH, bypass) })
   }
 
