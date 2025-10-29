@@ -1,0 +1,36 @@
+@use "variables" as *;
+
+@mixin general-tables {
+
+    .mat-mdc-table,
+    .mat-mdc-paginator {
+        background-color: $white !important;
+    }
+
+    .mat-mdc-header-cell {
+        color: $dark-gray;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+.mat-mdc-table tbody, .mat-mdc-table tfoot, .mat-mdc-table thead, .mat-mdc-cell, .mat-mdc-footer-cell, .mat-mdc-header-row, .mat-mdc-row, .mat-mdc-footer-row, .mat-mdc-table .mat-mdc-header-cell {
+ border-bottom: 2px solid $light-gray;  
+ 
+}
+    .tables-input {
+
+        .mat-mdc-text-field-wrapper {
+            background: rgba($medium-gray, 0.25);
+            border-radius: 20px;
+            border: none;
+        }
+
+        .mat-mdc-notch-piece {
+            border: none;
+        }
+
+        .mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+            display: none !important;
+        }
+    }
+
+}

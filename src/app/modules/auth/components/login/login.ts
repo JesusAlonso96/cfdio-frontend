@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { LoginForm } from '../../../models/login-form.interface';
+import { LoginForm } from '../../models/login-form.interface';
 import { BaseFormComponent } from '../../../../shared/components/base-form/base-form';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoadingIconsSize } from '../../../../shared/enums/loading-icons-size.enum';
@@ -13,9 +13,8 @@ import { LoadingColors } from '../../../../shared/enums/loading-colors.enum';
 import { FormUtilsService } from '../../../../shared/services/form-utils.service';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { AuthService } from '../../services/auth.service';
-import { LoginResponse } from '../../../models/login-response.model';
+import { LoginResponse } from '../../models/login-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorResponse } from '../../../../shared/models/error-response.model';
 import { LoadingIconsComponent } from '../../../../shared/components/loading-icons/loading-icons';
 import { Router } from '@angular/router';
 
@@ -24,7 +23,7 @@ import { Router } from '@angular/router';
   imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, LoadingIconsComponent],
   standalone: true,
   templateUrl: './login.html',
-  styleUrls: ['login.scss', '../auth/auth.scss']
+  styleUrls: ['login.scss', '../../pages/auth/auth.scss']
 })
 export class LoginComponent extends BaseFormComponent<LoginForm> implements OnInit {
   @Output() clicked = new EventEmitter<void>();

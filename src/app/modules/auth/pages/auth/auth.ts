@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { LoginComponent } from '../login/login';
-import { RegisterComponent } from '../register/register';
+import { LoginComponent } from '../../components/login/login';
+import { RegisterComponent } from '../../components/register/register';
 
 @Component({
   selector: 'app-auth',

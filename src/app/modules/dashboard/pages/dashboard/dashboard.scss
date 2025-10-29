@@ -14,12 +14,9 @@
 }
 
 .mini-icon-content {
-
     .mini-icon {
         height: 50px;
         width: 85%;
-
-
     }
 
     transition: background 0.3s ease;
@@ -38,7 +35,7 @@
 
 .logo-content,
 .mini-icon-content {
-    padding-top: 16px;
+    padding-top: 12px;
     padding-bottom: 16px;
 
 
@@ -101,7 +98,7 @@ mat-sidenav.main-sidenav {
             color: $white;
         }
 
-        &:hover {
+        &:hover, &.selected {
             background: $light-gray;
 
             .menu-item-text,
@@ -109,6 +106,7 @@ mat-sidenav.main-sidenav {
                 color: var(--mat-sys-primary);
             }
         }
+
     }
 }
 

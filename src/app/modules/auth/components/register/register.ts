@@ -7,16 +7,16 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BaseFormComponent } from '../../../../shared/components/base-form/base-form';
-import { RegisterForm } from '../../../models/register-form.interface';
+import { RegisterForm } from '../../models/register-form.interface';
 import { PhoneMaskDirective } from '../../../../shared/directives/phone-mask';
 import { MatIconModule } from '@angular/material/icon';
 import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon';
 import { PASSWORD_REGEX } from '../../../../shared/regular-expresions/password';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RegisterData } from '../../../models/register-data.model';
+import { RegisterData } from '../../models/register-data.model';
 import { FormUtilsService } from '../../../../shared/services/form-utils.service';
 import { AuthService } from '../../services/auth.service';
-import { RegisterResponse } from '../../../models/register-response.model';
+import { RegisterResponse } from '../../models/register-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorResponse } from '../../../../shared/models/error-response.model';
 import { ToastService } from '../../../../shared/services/toast.service';
@@ -29,7 +29,7 @@ import { LoadingIconsSize } from '../../../../shared/enums/loading-icons-size.en
   imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatDividerModule, PhoneMaskDirective, MatIconModule, MatTooltipModule, OutlinedIconDirective, LoadingIconsComponent],
   standalone: true,
   templateUrl: './register.html',
-  styleUrls: ['./register.scss', '../auth/auth.scss']
+  styleUrls: ['./register.scss', '../../pages/auth/auth.scss']
 })
 export class RegisterComponent extends BaseFormComponent<RegisterForm> implements OnInit {
   @Output() clicked = new EventEmitter<void>();

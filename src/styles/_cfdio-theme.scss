@@ -2,6 +2,8 @@
 @use "./buttons" as buttons;
 @use "./menus" as menus;
 @use "./inputs";
+@use "./cards";
+@use "./tables";
 
 /****************************** LIGHT THEME ******************************/
 // $my-custom-level: mat.m2-define-typography-level(
@@ -20,7 +22,8 @@ html {
   --mat-sys-on-surface: #363636 !important;
   @include buttons.general-buttons;
   @include menus.general-menus;
-
+  @include cards.general-cards;
+  @include tables.general-tables;
 }
 
 /****************************** DARK THEME ******************************/

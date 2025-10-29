@@ -2,10 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { RegisterData } from '../../models/register-data.model';
-import { RegisterResponse } from '../../models/register-response.model';
-import { LoginForm } from '../../models/login-form.interface';
-import { LoginResponse } from '../../models/login-response.model';
+import { RegisterData } from '../models/register-data.model';
+import { RegisterResponse } from '../models/register-response.model';
+import { LoginForm } from '../models/login-form.interface';
+import { LoginResponse } from '../models/login-response.model';
 import { DefaultResponse } from '../../../shared/models/default-response.model';
 import { BYPASS_REFRESH } from '../../../core/tokens/http-context.tokens';
 

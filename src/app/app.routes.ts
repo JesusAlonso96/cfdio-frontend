@@ -6,12 +6,12 @@ export const routes: Routes = [
     path: 'auth',
     loadComponent: () =>
       import('./modules/auth/pages/auth/auth').then(m => m.AuthComponent),
-  canActivate: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'dashboard',
-    loadComponent: () =>
-      import('./modules/dashboard/pages/dashboard/dashboard').then(m => m.DashboardComponent),
+    loadChildren: () =>
+      import('./modules/dashboard/dashboard.routes').then(m => m.DASHBOARD_ROUTES),
     canActivate: [authGuard],
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },

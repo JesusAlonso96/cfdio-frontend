@@ -1,0 +1,10 @@
+@use "variables" as *;
+
+@mixin general-cards {
+    .mat-mdc-card {
+        box-shadow: $cards-shadow;
+        border: $cards-border;
+        border-radius: $cards-border-radius;
+        background-color: $white !important;
+    }
+}

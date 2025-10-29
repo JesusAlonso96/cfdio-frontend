@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -17,6 +17,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './header.scss'
 })
 export class HeaderComponent {
+  @Input() currentModule: string = '';
   @Output() toggleSidebar = new EventEmitter<void>();
   isCollapsed = input.required<boolean>();
   hasScrolled = input.required<boolean>();
