@@ -1,9 +1,9 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {  ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { routes } from './app.routes';
+import { MAIN_ROUTES } from './app.routes';
 import { errorInterceptor } from './shared/interceptors/error-interceptor';
 import { credentialsInterceptor } from './shared/interceptors/credentials-interceptor';
 import { refreshTokenInterceptor } from './modules/auth/interceptors/refresh-token-interceptor';
@@ -16,8 +16,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes), provideClientHydration(withEventReplay()),
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline', floatLabel: 'always', subscriptSizing: 'fixed' } }
+    provideRouter(MAIN_ROUTES, withPreloading(PreloadAllModules)),
+    provideClientHydration(),
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline', floatLabel: 'always', subscriptSizing: 'fixed' } },
   ],
 
 };

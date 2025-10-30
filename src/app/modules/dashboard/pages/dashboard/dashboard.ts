@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, OnDestroy, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,6 +9,8 @@ import { MENU_ITEMS } from '../../constants/menu.constant';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon';
 import { RouterOutlet, Router } from "@angular/router";
+import { MatDialog } from '@angular/material/dialog';
+import { CreateCompanyModal } from '../../../../shared/components/create-company-modal/create-company-modal';
 
 
 @Component({
@@ -18,10 +20,11 @@ import { RouterOutlet, Router } from "@angular/router";
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
-export class DashboardComponent implements AfterViewInit, OnDestroy {
+export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   /* GENERAL VARS */
   readonly menuItems = MENU_ITEMS;
   private router = inject(Router);
+  readonly dialog = inject(MatDialog);
   /* SIDEBAR VARS */
   isCollapsed = signal(false);
   currentModule = signal('');
@@ -33,6 +36,15 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
   constructor() {
     this.initCurrentModule();
   }
+
+  async ngOnInit() {
+    const existCompany: string | null = localStorage.getItem('company');
+    if (!existCompany || Boolean(existCompany)) this.openCreateCompanyModal()
+    console.log(existCompany)
+
+  }
+
+
 
   /* SIDEBAR FUNCTIONS */
   toggleSidebar() {
@@ -64,6 +76,16 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
 
   backToTop() {
     this.content.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* CHECK COMPANY */
+  openCreateCompanyModal(): void {
+    this.dialog.open(CreateCompanyModal, {
+      width: '40vw',
+      enterAnimationDuration: '100ms',
+      exitAnimationDuration: '100ms',
+      disableClose: true
+    });
   }
 
 

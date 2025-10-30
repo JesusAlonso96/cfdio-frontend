@@ -1,0 +1,10 @@
+@use "variables" as *;
+
+.info-text {
+    color: $dark-gray-200;
+    font-size: 0.765rem;
+    line-height: 1rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-align: justify;
+}

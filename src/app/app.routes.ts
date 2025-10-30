@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './modules/auth/guards/auth-guard';
+import { AuthComponent } from './modules/auth/pages/auth/auth';
 
-export const routes: Routes = [
+
+export const MAIN_ROUTES: Routes = [
   {
     path: 'auth',
-    loadComponent: () =>
-      import('./modules/auth/pages/auth/auth').then(m => m.AuthComponent),
+    component: AuthComponent,
     canActivate: [authGuard],
   },
   {
@@ -14,5 +15,11 @@ export const routes: Routes = [
       import('./modules/dashboard/dashboard.routes').then(m => m.DASHBOARD_ROUTES),
     canActivate: [authGuard],
   },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full'
+  }
 ];
+
+

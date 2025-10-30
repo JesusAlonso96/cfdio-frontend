@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { LoadingService } from '../../services/loading.service';
 import { LoadingIconsComponent } from '../loading-icons/loading-icons';

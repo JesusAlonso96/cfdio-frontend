@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({
@@ -7,14 +7,15 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 export class LoadingService {
   private _loading = new BehaviorSubject<boolean>(false);
   loading$ = this._loading.asObservable();
+  loading = signal(false);
 
-  show(): boolean {
+  show() {
+    this.loading.set(true);
     this._loading.next(true);
-    return true;
   }
 
-  hide(): boolean {
+  hide() {
+    this.loading.set(false);
     this._loading.next(false);
-    return false;
   }
 }

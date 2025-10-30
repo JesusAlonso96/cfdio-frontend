@@ -3,10 +3,6 @@
         <div class="col-12">
             <mat-card class="mx-4">
                 <div class="card-data-header w-100 d-flex justify-content-between">
-                    <!-- <div>
-                        <h4> Mis datos fiscales</h4>
-                        <h6>4 datos fiscales</h6>
-                    </div> -->
                     <mat-form-field class="tables-input w-75 me-3">
                         <input matInput type="text" placeholder="Buscar">
                         <mat-icon role="button" outlined matPrefix>search</mat-icon>
@@ -18,16 +14,12 @@
                             <mat-icon outlined>post_add</mat-icon> Nuevo
                         </button> -->
 
-                        <button style="padding-top: 1.4rem; padding-bottom: 1.45rem; border-radius: 6px;" matButton="filled"> <mat-icon style="width: 24px;
-        height: 24px;
-        font-size: 24px;" outlined>post_add</mat-icon> Nuevo</button>
+                        <button style="padding-top: 1.4rem; padding-bottom: 1.45rem; border-radius: 6px;" matButton="filled"> 
+                            <mat-icon style="width: 24px; height: 24px; font-size: 24px;" outlined>post_add</mat-icon> Nuevo</button>
                     </div>
                 </div>
                 <mat-card-content>
                     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-                        <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="position">

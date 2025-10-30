@@ -34,11 +34,13 @@ export class HeaderComponent {
     this._loadingService.show();
     this._authService.logout().subscribe({
       next: () => {
-        setTimeout(() => {
+        
+        
           this.router.navigate(['/auth']);
           this._loadingService.hide();
           this._toastService.showSuccess('Cierre de sesión exitoso');
-        }, 1000);
+  
+          
       },
       error: (err: HttpErrorResponse) => this._loadingService.hide()
     })

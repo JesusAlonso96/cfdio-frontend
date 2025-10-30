@@ -13,7 +13,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         // no mostrar toast
         return throwError(() => error);
       }
-      
+
       if (error.error?.message) {
         message = error.error.message;
       } else {

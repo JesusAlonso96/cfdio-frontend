@@ -11,32 +11,28 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state) =
   const _authService = inject(AuthService);
 
   //se manda petición a backend para validar sesión con cookies
-  const actualRoute: string = route.url[0].path;
+
   _loadingService.show();
   //si esta en dashboard
-  const isDashboardRoute: boolean = actualRoute.includes("dashboard");
 
-  return _authService
-    .validateSession(!isDashboardRoute)
-    .pipe(
-      map(() => {
-        _loadingService.hide();
-        if (isDashboardRoute) {
-          return true;
+  
+  return _authService.validateSession(true).pipe(
+    map(() => {
+      _loadingService.hide();
+      // Si es login u otra ruta pública, redirigir a dashboard si ya está logueado
+      if (route.url[0]?.path !== 'dashboard') {
+        return router.createUrlTree(['/dashboard']);
+      }
 
-        } else {
-          router.navigate(['/dashboard']);
-          return false;
-        }
-      }),
-      catchError(() => {
-        _loadingService.hide();
-        if (isDashboardRoute) {
-          router.navigate(['/auth']);
-          return of(false);
-        } else {
-          return of(true);
-        }
-      })
-    );
+      return true; // permitir dashboard
+    }),
+    catchError(() => {
+      _loadingService.hide();
+      // Si intenta acceder a dashboard sin sesión
+      if (route.url[0]?.path === 'dashboard') {
+        return of(router.createUrlTree(['/auth']));
+      }
+      return of(true);
+    })
+  );
 };
