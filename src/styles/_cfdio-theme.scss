@@ -5,6 +5,7 @@
 @use "./cards";
 @use "./tables";
 @use "./modals";
+@use "./slide-toggles";
 
 /****************************** LIGHT THEME ******************************/
 // $my-custom-level: mat.m2-define-typography-level(
@@ -26,8 +27,10 @@ html {
   @include cards.general-cards;
   @include tables.general-tables;
   @include modals.general-dialogs;
-
+  @include slide-toggles.general-slide-toggles;
+  @include inputs.general-inputs;
 }
+
 
 /****************************** DARK THEME ******************************/
 // .dark-theme {

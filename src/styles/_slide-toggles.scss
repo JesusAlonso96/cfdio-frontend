@@ -1,0 +1,12 @@
+
+
+@use "variables" as *;
+@use "@angular/material" as mat;
+
+@mixin general-slide-toggles {
+ @include mat.slide-toggle-overrides((
+    selected-focus-handle-color: $white,
+    selected-hover-handle-color: $white
+  ));
+
+}
