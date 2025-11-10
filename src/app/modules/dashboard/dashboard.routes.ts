@@ -11,7 +11,12 @@ export const DASHBOARD_ROUTES: Routes = [
         loadComponent: () =>
           import('../tax-data/pages/main-tax-data/main-tax-data').then(m => m.MainTaxData),
       },
-    //   { path: '', redirectTo: 'facturacion', pathMatch: 'full' },
+      {
+        path: 'inicio',
+        loadComponent: () =>
+          import('../home/pages/home/home').then(m => m.HomeComponent)
+      }
+      //   { path: '', redirectTo: 'facturacion', pathMatch: 'full' },
     ],
   },
 ];

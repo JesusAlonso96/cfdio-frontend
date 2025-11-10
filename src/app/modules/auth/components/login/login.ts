@@ -65,7 +65,7 @@ export class LoginComponent extends BaseFormComponent<LoginForm> implements OnIn
       next: (res: LoginResponse) => {
         this.loading.set(false);
         this._toastService.showSuccess('Inicio de sesión exitoso, bienvenido');
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard/inicio']);
         if(!res.companyId) localStorage.setItem('company', 'NO-EXIST');
       },
       error: (err: HttpErrorResponse) => this.loading.set(false)
