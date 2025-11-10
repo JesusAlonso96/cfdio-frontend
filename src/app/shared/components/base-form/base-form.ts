@@ -1,4 +1,4 @@
-import { FormGroup, AbstractControl } from '@angular/forms';
+import { FormGroup, AbstractControl, Validators } from '@angular/forms';
 
 export abstract class BaseFormComponent<T extends { [key: string]: any }> {
   // Cada componente que extienda debe definir su FormGroup tipado
@@ -39,6 +39,28 @@ export abstract class BaseFormComponent<T extends { [key: string]: any }> {
   // Deshabilita el control
   setDisable<K extends keyof T>(name: K): void {
     this.control(name)?.disable({ onlySelf: true });
+  }
+
+  //Vuelve control requerido
+  setRequired<K extends keyof T>(name: K): void {
+    this.control(name)?.addValidators(Validators.required);
+    this.control(name)?.updateValueAndValidity();
+  }
+
+  //Vuelve control requerido
+  removeRequired<K extends keyof T>(name: K): void {
+    this.control(name)?.removeValidators(Validators.required);
+    this.control(name)?.updateValueAndValidity();
+  }
+
+  setPatternValidator<K extends keyof T>(name: K, regex: string | RegExp): void {
+    this.control(name)?.addValidators(Validators.pattern(regex));
+    this.control(name)?.updateValueAndValidity();
+  }
+
+   removePatternValidator<K extends keyof T>(name: K, regex: string | RegExp): void {
+    this.control(name)?.removeValidators(Validators.pattern(regex));
+    this.control(name)?.updateValueAndValidity();
   }
 
 }
