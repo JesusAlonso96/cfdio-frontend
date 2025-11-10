@@ -39,7 +39,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async ngOnInit() {
     const existCompany: string | null = localStorage.getItem('company');
-    if (!existCompany || Boolean(existCompany)) this.openCreateCompanyModal()
+    if(!existCompany) return;
+    if (existCompany === 'NO-EXIST') this.openCreateCompanyModal();
     console.log(existCompany)
 
   }
@@ -81,7 +82,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   /* CHECK COMPANY */
   openCreateCompanyModal(): void {
     this.dialog.open(CreateCompanyModal, {
-      width: '40vw',
+      width: '500px',
+      height: '350px',
       enterAnimationDuration: '100ms',
       exitAnimationDuration: '100ms',
       disableClose: true

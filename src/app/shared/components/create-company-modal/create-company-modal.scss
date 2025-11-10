@@ -1,4 +1,5 @@
 @use "variables" as *;
+@use "/animations/fade-slide-scale-in.animation" as *;
 
 .info-text {
     color: $dark-gray-200;
@@ -7,4 +8,11 @@
     font-weight: 400;
     letter-spacing: 0;
     text-align: justify;
+}
+
+.info-text,
+.name-input {
+    opacity: 0;
+    transform: translateY(15px) scale(0.97);
+    animation: fadeSlideScaleIn 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }

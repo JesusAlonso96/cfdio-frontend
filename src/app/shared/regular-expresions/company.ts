@@ -1,0 +1,1 @@
+export const COMPANY_REGEX = /^[A-ZÁÉÍÓÚÑ0-9][A-ZÁÉÍÓÚÑ0-9&.,\-/()' ]*[A-ZÁÉÍÓÚÑ0-9)]$/i;

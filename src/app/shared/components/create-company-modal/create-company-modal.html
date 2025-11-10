@@ -1,21 +1,23 @@
 <h2 style="font-weight: 600;" mat-dialog-title>Crea tu empresa</h2>
-<mat-dialog-content class="mat-typography py-4">
+<mat-dialog-content class="mat-typography py-2">
 
-    <form [formGroup]="form" action="">
-        <mat-slide-toggle formControlName="haveCompany" (change)="changeHaveCompany()" class="mb-3">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" id="form">
+
+        <mat-slide-toggle formControlName="haveCompany" class="mb-3" >
             {{haveCompany() ? 'Tengo empresa': 'No tengo empresa'}}
         </mat-slide-toggle>
-        @if (haveCompany()) {
-        <mat-form-field class="w-100">
+        <mat-form-field class="name-input w-100 mb-1">
             <mat-label>Nombre</mat-label>
-            <input formControlName="name" matInput type="text">
-            <!-- @if (hasError('email', 'email')) {
-            <mat-error>Por favor, ingresa un correo electrónico valido.</mat-error>
-            } @else if (hasError('email', 'required')) {
-            <mat-error>Por favor, ingresa un correo electrónico.</mat-error>
-            } -->
+            <input formControlName="name" placeholder="Mi empresa SA de CV" matInput type="text">
+
+            @if (hasError('name', 'required')) {
+            <mat-error>Por favor, ingresa el nombre de tu empresa.</mat-error>
+            } @else if (hasError('name', 'pattern')) {
+            <mat-error> Por favor, ingresa un nombre válido.</mat-error>
+            }
         </mat-form-field>
-        } @else {
+
+        @if (!haveCompany()) {
         <p class="info-text">
             Si no tienes empresa, puedes dejar desmarcada la opción, aunque en cualquier momento puedes
             modificarla.
@@ -25,8 +27,7 @@
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button matButton mat-dialog-close>Cancelar</button>
-    <button matButton="filled" [mat-dialog-close]="true" cdkFocusInitial outlined>
-        <mat-icon>save</mat-icon> Guardar
+    <button matButton="filled" type="submit" form="form" [disabled]="!formValid()">
+        <mat-icon outlined>save</mat-icon> Guardar
     </button>
 </mat-dialog-actions>
