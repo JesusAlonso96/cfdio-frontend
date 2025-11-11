@@ -4,9 +4,9 @@
         <div class="form-wrapper d-flex justify-content-center align-items-center">
             <div class="auth-wrapper">
                 @if (!showRegister()) {
-                <app-login class="form-panel" (clicked)="toggleRegistrationForm()"></app-login>
+                <app-login class="form-panel show-animation" (clicked)="toggleRegistrationForm()"></app-login>
                 } @else {
-                <app-register class="form-panel" (clicked)="toggleRegistrationForm()"></app-register>
+                <app-register class="form-panel show-animation" (clicked)="toggleRegistrationForm()"></app-register>
                 }
             </div>
         </div>

@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private initCurrentModule(): void {
     const currentRoute = this.router.url;
-    const currentModule = this.menuItems.find(i => i.route.includes(currentRoute));
+    const currentModule = this.menuItems.find(i => i.route.includes(currentRoute) || i.subroutes?.includes(currentRoute));
     if (currentModule) this.setCurrentModule(currentModule);
   }
 

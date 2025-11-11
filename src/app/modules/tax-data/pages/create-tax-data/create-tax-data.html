@@ -1,0 +1,129 @@
+<div class="container show-animation">
+    <div class="row">
+        <div class="col-12">
+            @if (forms) {
+            <mat-card class="mx-4">
+                <mat-horizontal-stepper [disableRipple]="true" [linear]="true" #stepper [animationDuration]="'400'">
+                    <mat-step [stepControl]="forms.generalDataForm">
+                        <form [formGroup]="forms.generalDataForm">
+                            <ng-template matStepLabel>
+                                Generales
+                            </ng-template>
+                            <div class="container-fluid py-3">
+                                <div class="row mb-3">
+                                    <div class="col-lg-5 col-md-6 col-sm-12">
+                                        <mat-form-field class="w-100">
+                                            <mat-label>Alias</mat-label>
+                                            <input formControlName="alias" matInput type="text"
+                                                placeholder="Mis datos fiscales">
+                                            <mat-icon role="button" matTooltipClass="multi-line-tooltip"
+                                                [matTooltip]="'Nombre opcional que te puede ayudar para identificar un conjunto de datos fiscales'"
+                                                outlined matSuffix>info_outline</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-2 col-md-6 col-sm-12">
+                                        <mat-form-field class="w-100">
+                                            <mat-label>Tipo de persona</mat-label>
+                                            <mat-select formControlName="personType">
+                                                @for (item of personTypeCatalog; track $index) {
+                                                <mat-option [value]="item.value">{{item.alias}}</mat-option>
+                                                }
+                                            </mat-select>
+                                            @if (hasError('generalDataForm', 'personType', 'required')) {
+                                            <mat-error>Por favor, ingresa el tipo de persona.</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-5 col-md-6 col-sm-12">
+                                        <mat-form-field class="w-100">
+                                            <mat-label>Régimen fiscal</mat-label>
+                                            <mat-select formControlName="taxRegime">
+                                                @for (item of filteredTaxRegimeCatalog; track $index) {
+                                                <mat-option [value]="item.key">{{item.key}} - {{item.description}}</mat-option>
+                                                }
+                                            </mat-select>
+                                            @if (hasError('generalDataForm', 'taxRegime', 'required')) {
+                                            <mat-error>Por favor, selecciona un régimen fiscal.</mat-error>
+                                            }
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div [class]="isNaturalPerson()  ? 'col-lg-4' : 'col-lg-6'" class="col-md-6 col-sm-12">
+                                        <mat-form-field class="w-100">
+                                            <mat-label>RFC</mat-label>
+                                            <input formControlName="rfc" matInput type="text"
+                                                placeholder="XAXX010101000">
+                                        </mat-form-field>
+                                    </div>
+                                    <div [class]="isNaturalPerson()  ? 'col-lg-4' : 'col-lg-6'" class="col-md-6 col-sm-12">
+                                        <mat-form-field class="w-100">
+                                            <mat-label>{{isNaturalPerson() ? 'Nombre del contribuyente' : 'Razón social'}}</mat-label>
+                                            <input formControlName="legalName" matInput type="text"
+                                                [placeholder]="isNaturalPerson() ? 'José López' : 'Mi empresa SA de CV'">
+                                        </mat-form-field>
+                                    </div>
+                                    @if (isNaturalPerson()) {
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <mat-form-field class="w-100">
+                                            <mat-label>CURP</mat-label>
+                                            <input formControlName="curp" matInput type="text"
+                                                placeholder="XEXX010101HNEXXXA4">
+                                        </mat-form-field>
+                                    </div>
+                                    }
+
+
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end w-100">
+                                <button [disabled]="!generalDataFormValid()" matButton matStepperNext>Siguiente</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="forms.contactForm">
+                        <form [formGroup]="forms.contactForm">
+                            <ng-template matStepLabel>Contacto</ng-template>
+
+
+
+
+
+                            <div>
+                                <button matButton matStepperPrevious>Back</button>
+                                <button matButton matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="forms.addressForm">
+                        <form [formGroup]="forms.addressForm">
+                            <ng-template matStepLabel>Dirección fiscal</ng-template>
+
+
+
+
+
+                            <div>
+                                <button matButton matStepperPrevious>Back</button>
+                                <button matButton matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Done</ng-template>
+                        You are now done.
+                        <div>
+                            <button matButton matStepperPrevious>Back</button>
+                            <button matButton (click)="stepper.reset()">Reset</button>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+
+
+            </mat-card>
+            }
+
+        </div>
+    </div>
+</div>

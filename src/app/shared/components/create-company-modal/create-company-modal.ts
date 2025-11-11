@@ -71,12 +71,10 @@ export class CreateCompanyModal extends BaseFormComponent<CompanyData> implement
 
   onSubmit() {
     const companyData: CompanyData = this._formUtils.mapFormToModel<CompanyData>(this.form);
-    console.log(companyData)
     this._loadingService.show();
 
     this._companyService.createCompany(companyData).subscribe({
       next: (res: any) => {
-        console.log(res)
         this._loadingService.hide();
         this._toastService.showSuccess("Empresa creada con éxito", 6000);
         localStorage.removeItem('company');

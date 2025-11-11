@@ -17,8 +17,8 @@
 
             <mat-list class="menu-list mt-2" role="menu"  [class.collapsed]="isCollapsed()">
                 @for (item of menuItems; track $index) {
-                <mat-list-item [class.selected]="currentModule() === item.label" (click)="redirectToModule(item)" role="listitem">
-                    <mat-icon outlined matListItemIcon>{{item.icon}}</mat-icon>
+                <mat-list-item [class.selected]="currentModule().includes(item.label) " (click)="redirectToModule(item)" role="listitem">
+                    <mat-icon outlined matListItemIcon>{{item.icon}} {{currentModule()}}</mat-icon>
                     @if (!isCollapsed()) {
                     <div class="menu-item-text" matListItemTitle>{{item.label}}</div>
                     }

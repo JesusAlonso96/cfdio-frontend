@@ -1,0 +1,22 @@
+@use "variables" as *;
+@use "@angular/material" as mat;
+
+
+@mixin general-steppers {
+    @include mat.stepper-overrides((header-hover-state-layer-color: transparent,
+            header-focus-state-layer-color: transparent,
+            line-color: $medium-gray,
+            header-icon-background-color: $medium-dark-gray,
+            header-label-text-color: $medium-dark-gray,
+            header-selected-state-label-text-color: $primary
+            
+            ));
+
+    .mat-stepper-vertical,
+    .mat-stepper-horizontal {
+        border-radius: $cards-border-radius;
+        background-color: $white;
+    }
+
+
+}

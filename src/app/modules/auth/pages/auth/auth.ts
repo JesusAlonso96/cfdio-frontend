@@ -14,7 +14,6 @@ export class AuthComponent {
   showRegister = signal(false);
 
   toggleRegistrationForm() {
-
     const form = document.querySelector('.form-panel');
     if (form) {
       form.classList.add('fade-out');

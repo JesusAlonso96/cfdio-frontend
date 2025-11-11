@@ -1,7 +1,7 @@
 @use "variables" as *;
 
-@mixin general-menus {
-    .mat-mdc-menu-panel {
+@mixin general-selects {
+    .mat-mdc-select-panel {
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
 

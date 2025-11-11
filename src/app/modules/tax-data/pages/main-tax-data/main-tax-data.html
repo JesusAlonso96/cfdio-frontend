@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid show-animation">
     <div class="row">
         <div class="col-12">
             <mat-card class="mx-4">
@@ -9,13 +9,10 @@
                     </mat-form-field>
                     <div>
 
-
-                        <!-- <button color="primary" matFab extended>
-                            <mat-icon outlined>post_add</mat-icon> Nuevo
-                        </button> -->
-
-                        <button style="padding-top: 1.4rem; padding-bottom: 1.45rem; border-radius: 6px;" matButton="filled"> 
-                            <mat-icon style="width: 24px; height: 24px; font-size: 24px;" outlined>post_add</mat-icon> Nuevo</button>
+                        <button (click)="openCreateTaxData()" style="padding-top: 1.4rem; padding-bottom: 1.45rem; border-radius: 6px;"
+                            matButton="filled">
+                            <mat-icon style="width: 24px; height: 24px; font-size: 24px;" outlined>post_add</mat-icon>
+                            Nuevo</button>
                     </div>
                 </div>
                 <mat-card-content>

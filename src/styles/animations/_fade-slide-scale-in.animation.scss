@@ -9,13 +9,17 @@
   }
 }
 
-.form-panel.fade-out {
-  animation: fadeOut 0.25s ease forwards;
-}
+
 
 @keyframes fadeOut {
   to {
     opacity: 0;
     transform: translateY(-10px) scale(0.98);
   }
+}
+
+.show-animation {
+    opacity: 0;
+  transform: translateY(15px) scale(0.97);
+  animation: fadeSlideScaleIn 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }

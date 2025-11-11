@@ -17,6 +17,7 @@ import { LoginResponse } from '../../models/login-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoadingIconsComponent } from '../../../../shared/components/loading-icons/loading-icons';
 import { Router } from '@angular/router';
+import { HOME_ROUTE } from '../../../../core/constants/main-routes.contant';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,7 @@ export class LoginComponent extends BaseFormComponent<LoginForm> implements OnIn
   private _formUtils = inject(FormUtilsService);
   private _authService = inject(AuthService);
   private _toastService = inject(ToastService);
+  private _formBuilder = inject(FormBuilder);
   private router = inject(Router);
   public form!: FormGroup;
   protected formValid = signal(false);
@@ -37,7 +39,7 @@ export class LoginComponent extends BaseFormComponent<LoginForm> implements OnIn
   protected LoadingIconsSize = LoadingIconsSize;
   protected LoadingColors = LoadingColors;
 
-  constructor(private fb: FormBuilder) {
+  constructor() {
     super();
   }
 
@@ -47,7 +49,7 @@ export class LoginComponent extends BaseFormComponent<LoginForm> implements OnIn
 
 
   ngOnInit(): void {
-    this.form = this.fb.group({
+    this.form = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       rememberMe: [false]
@@ -65,7 +67,7 @@ export class LoginComponent extends BaseFormComponent<LoginForm> implements OnIn
       next: (res: LoginResponse) => {
         this.loading.set(false);
         this._toastService.showSuccess('Inicio de sesión exitoso, bienvenido');
-        this.router.navigate(['/dashboard/inicio']);
+        this.router.navigate([HOME_ROUTE]);
         if(!res.companyId) localStorage.setItem('company', 'NO-EXIST');
       },
       error: (err: HttpErrorResponse) => this.loading.set(false)

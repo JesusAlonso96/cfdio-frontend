@@ -8,8 +8,8 @@ export const DASHBOARD_ROUTES: Routes = [
     children: [
       {
         path: 'datos-fiscales',
-        loadComponent: () =>
-          import('../tax-data/pages/main-tax-data/main-tax-data').then(m => m.MainTaxData),
+        loadChildren: () =>
+          import('../tax-data/tax-data.routes').then(m => m.TAX_DATA_ROUTES),
       },
       {
         path: 'inicio',
