@@ -16,6 +16,9 @@ import { GeneralDataForm } from '../../models/general-data-form.model';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon';
 import { TaxRegime } from '../../../../shared/models/tax-regime.model';
+import { RFC_REGEX } from '../../../../shared/regular-expresions/rfc.regex';
+import { CURP_REGEX } from '../../../../shared/regular-expresions/curp.regex';
+import { ALIAS_REGEX } from '../../../../shared/regular-expresions/alias.regex';
 @Component({
   selector: 'app-create-tax-data',
   imports: [MatCardModule, MatStepperModule, MatIconModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatSelectModule, MatTooltipModule, OutlinedIconDirective],
@@ -37,7 +40,7 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
   protected isNaturalPerson = signal(true);
   protected contactFormValid = signal(false);
   protected addressFormValid = signal(false);
-
+  protected aliasTooltip =  `Nombre opcional que te puede ayudar para identificar un conjunto de datos fiscales.\n Este campo admite:\n\n-Máximo 40 caracteres\n-Acentos\n-Digitos\n-Guión medio\n-Guión bajo\n-Punto.`;
   constructor() {
     super();
   }
@@ -62,11 +65,11 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
   private initForms() {
     this.forms = {
       generalDataForm: this._formBuilder.group({
-        alias: [''],
-        rfc: ['', [Validators.required]],
+        alias: ['', [Validators.pattern(ALIAS_REGEX)]],
+        rfc: ['', [Validators.required, Validators.pattern(RFC_REGEX)]],
         legalName: ['', [Validators.required]], //si es fisico nombre del contribuyente, si es moral nombre de la razón social
         taxRegime: ['', [Validators.required]],
-        curp: [''],
+        curp: ['', [Validators.pattern(CURP_REGEX)]],
         personType: ['', [Validators.required]]
       }),
       contactForm: this._formBuilder.group({

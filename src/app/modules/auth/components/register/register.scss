@@ -11,8 +11,3 @@
     color: $dark-gray-200;
     font-weight: 600;
 }
-
-::ng-deep .multi-line-tooltip {
-  white-space: pre-line !important;
-  text-align: justify !important;
-}

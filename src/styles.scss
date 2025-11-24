@@ -41,3 +41,8 @@ body {
 ::ng-deep mat-icon {
   font-family: 'Material Symbols Outlined', sans-serif;
 }
+
+.multi-line-tooltip {
+  white-space: pre-line !important;
+  text-align: justify !important;
+}
