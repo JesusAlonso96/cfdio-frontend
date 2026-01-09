@@ -1,6 +1,10 @@
 @use "variables" as *;
 
 @mixin general-selects {
+    .mat-mdc-select {
+        font-size: var(--mat-select-trigger-text-size);
+    }
+
     .mat-mdc-select-panel {
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;

@@ -1,1 +1,26 @@
 @use "/animations/fade-slide-scale-in.animation" as *;
+@use "variables" as *;
+
+
+
+.contact-label {
+    color: $dark-gray-200;
+    font-weight: 500;
+}
+
+.contact-row {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  flex-wrap: wrap; /* 🔥 */
+}
+
+.contact-field {
+  flex: 1 1 260px; /* 🔥 */
+  min-width: 200px;
+}
+
+.contact-button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}

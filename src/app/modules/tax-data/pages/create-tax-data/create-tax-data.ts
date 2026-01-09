@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -19,13 +19,14 @@ import { TaxRegime } from '../../../../shared/models/tax-regime.model';
 import { RFC_REGEX } from '../../../../shared/regular-expresions/rfc.regex';
 import { CURP_REGEX } from '../../../../shared/regular-expresions/curp.regex';
 import { ALIAS_REGEX } from '../../../../shared/regular-expresions/alias.regex';
+import { MatDividerModule } from '@angular/material/divider';
 @Component({
   selector: 'app-create-tax-data',
-  imports: [MatCardModule, MatStepperModule, MatIconModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatSelectModule, MatTooltipModule, OutlinedIconDirective],
+  imports: [MatCardModule, MatStepperModule, MatIconModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatSelectModule, MatTooltipModule, MatDividerModule, OutlinedIconDirective],
   templateUrl: './create-tax-data.html',
   styleUrl: './create-tax-data.scss'
 })
-export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalDataForm: GeneralDataForm, contactForm: any, addressForm: any }> implements OnInit {
+export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalDataForm: GeneralDataForm, contactForm: { contactId: number }, addressForm: any }> implements OnInit {
   private _catalogsService = inject(CatalogsService);
   private _formBuilder = inject(FormBuilder);
   private _loadingService = inject(LoadingService);
@@ -34,13 +35,27 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
   protected personTypeCatalog: PersonType[] = [];
   protected taxRegimeCatalog: TaxRegime[] = [];
   protected filteredTaxRegimeCatalog: TaxRegime[] = [];
+  //forms arrays
+  protected contacts = signal<any[]>([]);; //esta interfaz va a ir en la sección de contacto
+  hasContacts = computed(() => this.contacts().length > 0);
+  contactSelectDisabled = computed(() => !this.hasContacts());
+  contactLabel = computed(() =>
+    this.hasContacts()
+      ? 'Seleccionar un contacto para continuar con el registro'
+      : 'Crea un nuevo contacto para continuar con el registro.'
+  );
+  contactPlaceholder = computed(() =>
+    this.hasContacts()
+      ? 'Seleccionar un contacto'
+      : 'No hay contactos registrados'
+  );
   //forms
   override forms!: { generalDataForm: FormGroup<any>; contactForm: FormGroup<any>; addressForm: FormGroup<any>; };
   protected generalDataFormValid = signal(false);
   protected isNaturalPerson = signal(true);
   protected contactFormValid = signal(false);
   protected addressFormValid = signal(false);
-  protected aliasTooltip =  `Nombre opcional que te puede ayudar para identificar un conjunto de datos fiscales.\n Este campo admite:\n\n-Máximo 40 caracteres\n-Acentos\n-Digitos\n-Guión medio\n-Guión bajo\n-Punto.`;
+  protected aliasTooltip = `Nombre opcional que te puede ayudar para identificar un conjunto de datos fiscales.\n Este campo admite:\n\n-Máximo 40 caracteres\n-Acentos\n-Digitos\n-Guión medio\n-Guión bajo\n-Punto.`;
   constructor() {
     super();
   }
@@ -73,7 +88,7 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
         personType: ['', [Validators.required]]
       }),
       contactForm: this._formBuilder.group({
-        prueba: ['']
+        contactId: [null, [Validators.required]]
       }),
       addressForm: this._formBuilder.group({
         prueba: ['']
@@ -102,5 +117,11 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
 
   private updateTaxRegimeCatalog(): void {
     this.filteredTaxRegimeCatalog = this.taxRegimeCatalog.filter(tr => { return this.isNaturalPerson() ? tr.naturalPerson : tr.legalPerson });
+  }
+
+  //contact form methods
+  protected addContact() {
+    // this.contacts.push("hola")
+    this.contacts.update(current => [...current, "hola"]);
   }
 }
