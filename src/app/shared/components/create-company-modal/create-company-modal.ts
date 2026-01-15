@@ -3,9 +3,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { OutlinedIconDirective } from "../../directives/outlined-icon";
 import { MatIconModule } from '@angular/material/icon';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BaseFormComponent } from '../base-form/base-form';
@@ -37,8 +36,6 @@ export class CreateCompanyModal extends BaseFormComponent<CompanyData> implement
 
   constructor(private fb: FormBuilder) {
     super();
-
-
   }
 
   ngOnInit(): void {

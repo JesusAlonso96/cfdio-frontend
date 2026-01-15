@@ -20,9 +20,11 @@ import { RFC_REGEX } from '../../../../shared/regular-expresions/rfc.regex';
 import { CURP_REGEX } from '../../../../shared/regular-expresions/curp.regex';
 import { ALIAS_REGEX } from '../../../../shared/regular-expresions/alias.regex';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CreateContactDataComponent } from '../../../contact-data/shared-components/create-contact-data/create-contact-data';
 @Component({
   selector: 'app-create-tax-data',
-  imports: [MatCardModule, MatStepperModule, MatIconModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatSelectModule, MatTooltipModule, MatDividerModule, OutlinedIconDirective],
+  imports: [MatCardModule, MatStepperModule, MatIconModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatSelectModule, MatTooltipModule, MatDividerModule, MatDialogModule, OutlinedIconDirective],
   templateUrl: './create-tax-data.html',
   styleUrl: './create-tax-data.scss'
 })
@@ -31,6 +33,7 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
   private _formBuilder = inject(FormBuilder);
   private _loadingService = inject(LoadingService);
   private _toastService = inject(ToastService);
+  readonly dialog = inject(MatDialog);
   //catalogs
   protected personTypeCatalog: PersonType[] = [];
   protected taxRegimeCatalog: TaxRegime[] = [];
@@ -121,7 +124,14 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
 
   //contact form methods
   protected addContact() {
-    // this.contacts.push("hola")
-    this.contacts.update(current => [...current, "hola"]);
+    const dialogRef = this.dialog.open(CreateContactDataComponent);
+    dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        console.log("si se creo")
+              console.log("Cree un nuevo contacto: ", res);
+      } else {
+        console.log("se cerró")
+      }
+    })
   }
 }

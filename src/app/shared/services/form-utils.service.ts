@@ -12,4 +12,8 @@ export class FormUtilsService {
     return raw as T;
   }
 
+  public replacePhoneMask(phone: string): string {
+    return phone.replaceAll("-", "");
+  }
+
 }

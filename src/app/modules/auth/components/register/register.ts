@@ -18,7 +18,6 @@ import { FormUtilsService } from '../../../../shared/services/form-utils.service
 import { AuthService } from '../../services/auth.service';
 import { RegisterResponse } from '../../models/register-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorResponse } from '../../../../shared/models/error-response.model';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { LoadingIconsComponent } from '../../../../shared/components/loading-icons/loading-icons';
 import { LoadingColors } from '../../../../shared/enums/loading-colors.enum';
@@ -89,7 +88,7 @@ export class RegisterComponent extends BaseFormComponent<RegisterForm> implement
 
   protected registerClient(): void {
     const registerData: RegisterData = this._formUtils.mapFormToModel<RegisterData>(this.form, ['confirmPassword']);
-    registerData.cellphone = registerData.cellphone.replaceAll("-", "");
+    registerData.cellphone = this._formUtils.replacePhoneMask(registerData.cellphone);
     this.loading.set(true);
     this._authService.registerUser(registerData).subscribe({
       next: (res: RegisterResponse) => {
