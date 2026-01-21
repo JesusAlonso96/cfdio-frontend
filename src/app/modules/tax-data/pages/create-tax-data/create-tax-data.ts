@@ -22,6 +22,8 @@ import { ALIAS_REGEX } from '../../../../shared/regular-expresions/alias.regex';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateContactDataComponent } from '../../../contact-data/shared-components/create-contact-data/create-contact-data';
+import { ContactData } from '../../../contact-data/models/contact-data.interface';
+
 @Component({
   selector: 'app-create-tax-data',
   imports: [MatCardModule, MatStepperModule, MatIconModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatSelectModule, MatTooltipModule, MatDividerModule, MatDialogModule, OutlinedIconDirective],
@@ -39,7 +41,7 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
   protected taxRegimeCatalog: TaxRegime[] = [];
   protected filteredTaxRegimeCatalog: TaxRegime[] = [];
   //forms arrays
-  protected contacts = signal<any[]>([]);; //esta interfaz va a ir en la sección de contacto
+  protected contacts = signal<any[]>([]); //esta interfaz va a ir en la sección de contacto
   hasContacts = computed(() => this.contacts().length > 0);
   contactSelectDisabled = computed(() => !this.hasContacts());
   contactLabel = computed(() =>
@@ -125,13 +127,12 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
   //contact form methods
   protected addContact() {
     const dialogRef = this.dialog.open(CreateContactDataComponent);
-    dialogRef.afterClosed().subscribe(res => {
-      if(res) {
+    dialogRef.afterClosed().subscribe((newContact: ContactData) => {
+      if (newContact) {
         console.log("si se creo")
-              console.log("Cree un nuevo contacto: ", res);
-      } else {
-        console.log("se cerró")
-      }
+        console.log("Cree un nuevo contacto: ", newContact);
+        this.contacts.update(contacts => [...contacts, newContact]);
+      } 
     })
   }
 }

@@ -113,7 +113,9 @@
                                             <mat-form-field class="contact-field">
                                                 <mat-label>Seleccionar contacto</mat-label>
                                                 <mat-select formControlName="contactId" [placeholder]="contactPlaceholder()">
-                                                    <mat-option [value]="1">prueba</mat-option>
+                                                    @for (contact of contacts(); track $index) {
+                                                        <mat-option [value]="contact.id">{{contact.email}} - {{contact.phone}}</mat-option>
+                                                    }
                                                 </mat-select>
                                                 
 
@@ -137,7 +139,7 @@
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <button matButton matStepperPrevious>Atrás</button>
-                                <button matButton matStepperNext>Siguiente</button>
+                                <button matButton [disabled]="!contactFormValid()" matStepperNext>Siguiente</button>
                             </div>
                         </form>
                     </mat-step>

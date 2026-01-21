@@ -11,6 +11,9 @@ import { OutlinedIconDirective } from '../../../../shared/directives/outlined-ic
 import { PhoneMaskDirective } from '../../../../shared/directives/phone-mask';
 import { FormUtilsService } from '../../../../shared/services/form-utils.service';
 import { LoadingService } from '../../../../shared/services/loading.service';
+import { ContactDataService } from '../../services/contact-data';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ContactData } from '../../models/contact-data.interface';
 
 @Component({
   selector: 'app-create-contact-data',
@@ -22,6 +25,7 @@ export class CreateContactDataComponent extends BaseFormComponent<CreateContactD
   readonly dialogRef = inject(MatDialogRef<CreateCompanyModal>);
   private _formUtils = inject(FormUtilsService);
   private _loadingService = inject(LoadingService);
+  private _contactDataService = inject(ContactDataService);
   override form!: FormGroup;
   protected formValid = signal(false);
 
@@ -44,8 +48,20 @@ export class CreateContactDataComponent extends BaseFormComponent<CreateContactD
     const contactData: CreateContactData = this._formUtils.mapFormToModel<CreateContactData>(this.form);
     this._loadingService.show();
     contactData.phone = this._formUtils.replacePhoneMask(contactData.phone);
-    console.log(contactData);
+    this.createContactData(contactData);
     this._loadingService.hide();
 
+  }
+
+  private createContactData(contactData: CreateContactData) {
+    this._loadingService.show();
+    this._contactDataService.createContactData(contactData).subscribe({
+      next: (res: ContactData) => {
+        this._loadingService.hide();
+        this.dialogRef.close(res);
+      },
+      error: (err: HttpErrorResponse) => this._loadingService.hide()
+
+    })
   }
 }
