@@ -23,6 +23,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateContactDataComponent } from '../../../contact-data/shared-components/create-contact-data/create-contact-data';
 import { ContactData } from '../../../contact-data/models/contact-data.interface';
+import { ContactDataService } from '../../../contact-data/services/contact-data';
 
 @Component({
   selector: 'app-create-tax-data',
@@ -41,6 +42,7 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
   protected taxRegimeCatalog: TaxRegime[] = [];
   protected filteredTaxRegimeCatalog: TaxRegime[] = [];
   //forms arrays
+  private _contactDataService = inject(ContactDataService);
   protected contacts = signal<any[]>([]); //esta interfaz va a ir en la sección de contacto
   hasContacts = computed(() => this.contacts().length > 0);
   contactSelectDisabled = computed(() => !this.hasContacts());
@@ -71,6 +73,9 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
       this._loadingService.show();
       this.personTypeCatalog = await this._catalogsService.getPersonTypeCatalogAsync();
       this.taxRegimeCatalog = await this._catalogsService.getTaxRegimeCatalogAsync();
+      /* CONTACT DATA */
+      const contactData: ContactData[] = await this._contactDataService.getAllContactDataAsync();
+      this.contacts.update(contacts => [...contacts, ...contactData]);
       this.initForms();
       this.control('generalDataForm', 'personType')?.setValue(this.personTypeCatalog.find(pt => pt.value === 'NATURAL')?.value);
       this.updateTaxRegimeCatalog();
@@ -129,10 +134,8 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
     const dialogRef = this.dialog.open(CreateContactDataComponent);
     dialogRef.afterClosed().subscribe((newContact: ContactData) => {
       if (newContact) {
-        console.log("si se creo")
-        console.log("Cree un nuevo contacto: ", newContact);
-        this.contacts.update(contacts => [...contacts, newContact]);
-      } 
+        this.contacts.update(contacts => [newContact, ...contacts]);
+      }
     })
   }
 }

@@ -110,10 +110,14 @@
                                             <mat-form-field class="contact-field">
                                                 <mat-label>Seleccionar contacto</mat-label>
                                                 <mat-select formControlName="contactId" [placeholder]="contactPlaceholder()">
+                                                    <mat-option [value]="null">Seleccionar</mat-option>
                                                     @for (contact of contacts(); track $index) {
                                                         <mat-option [value]="contact.id">{{contact.email}} - {{contact.phone}}</mat-option>
                                                     }
                                                 </mat-select>
+                                                @if (hasError('contactForm', 'contactId', 'required')) {
+                                                    <mat-error>Por favor, selecciona los datos de contacto</mat-error>
+                                                }
                                             </mat-form-field>
                                             <button (click)="addContact()" class="contact-button py-4" matButton="filled">
                                                 <mat-icon>add</mat-icon>

@@ -14,6 +14,7 @@ import { LoadingService } from '../../../../shared/services/loading.service';
 import { ContactDataService } from '../../services/contact-data';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ContactData } from '../../models/contact-data.interface';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-create-contact-data',
@@ -26,6 +27,7 @@ export class CreateContactDataComponent extends BaseFormComponent<CreateContactD
   private _formUtils = inject(FormUtilsService);
   private _loadingService = inject(LoadingService);
   private _contactDataService = inject(ContactDataService);
+  private _toastService = inject(ToastService);
   override form!: FormGroup;
   protected formValid = signal(false);
 
@@ -53,15 +55,15 @@ export class CreateContactDataComponent extends BaseFormComponent<CreateContactD
 
   }
 
-  private createContactData(contactData: CreateContactData) {
-    this._loadingService.show();
-    this._contactDataService.createContactData(contactData).subscribe({
-      next: (res: ContactData) => {
-        this._loadingService.hide();
-        this.dialogRef.close(res);
-      },
-      error: (err: HttpErrorResponse) => this._loadingService.hide()
-
-    })
+  private async createContactData(contactData: CreateContactData) {
+    try {
+      this._loadingService.show();
+      const contactDataCreated: ContactData = await this._contactDataService.createContactDataAsync(contactData);
+      this._loadingService.hide();
+      this.dialogRef.close(contactDataCreated);
+    } catch (error) {
+      this._loadingService.hide();
+      this._toastService.showError('Ocurrió un error al crear los datos de contacto, por favor intentalo de nuevo más tarde')
+    }
   }
 }
