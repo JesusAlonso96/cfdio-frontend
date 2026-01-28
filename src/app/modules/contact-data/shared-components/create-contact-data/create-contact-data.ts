@@ -12,7 +12,6 @@ import { PhoneMaskDirective } from '../../../../shared/directives/phone-mask';
 import { FormUtilsService } from '../../../../shared/services/form-utils.service';
 import { LoadingService } from '../../../../shared/services/loading.service';
 import { ContactDataService } from '../../services/contact-data';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ContactData } from '../../models/contact-data.interface';
 import { ToastService } from '../../../../shared/services/toast.service';
 
@@ -52,7 +51,6 @@ export class CreateContactDataComponent extends BaseFormComponent<CreateContactD
     contactData.phone = this._formUtils.replacePhoneMask(contactData.phone);
     this.createContactData(contactData);
     this._loadingService.hide();
-
   }
 
   private async createContactData(contactData: CreateContactData) {

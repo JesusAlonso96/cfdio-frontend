@@ -24,6 +24,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateContactDataComponent } from '../../../contact-data/shared-components/create-contact-data/create-contact-data';
 import { ContactData } from '../../../contact-data/models/contact-data.interface';
 import { ContactDataService } from '../../../contact-data/services/contact-data';
+import { CreateAddressComponent } from '../../../address-data/shared-components/create-address/create-address';
 
 @Component({
   selector: 'app-create-tax-data',
@@ -31,7 +32,7 @@ import { ContactDataService } from '../../../contact-data/services/contact-data'
   templateUrl: './create-tax-data.html',
   styleUrl: './create-tax-data.scss'
 })
-export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalDataForm: GeneralDataForm, contactForm: { contactId: number }, addressForm: any }> implements OnInit {
+export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalDataForm: GeneralDataForm, contactForm: { contactId: number }, addressForm: { addressId: number } }> implements OnInit {
   private _catalogsService = inject(CatalogsService);
   private _formBuilder = inject(FormBuilder);
   private _loadingService = inject(LoadingService);
@@ -42,13 +43,14 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
   protected taxRegimeCatalog: TaxRegime[] = [];
   protected filteredTaxRegimeCatalog: TaxRegime[] = [];
   //forms arrays
+  //contact vars
   private _contactDataService = inject(ContactDataService);
   protected contacts = signal<any[]>([]); //esta interfaz va a ir en la sección de contacto
   hasContacts = computed(() => this.contacts().length > 0);
   contactSelectDisabled = computed(() => !this.hasContacts());
   contactLabel = computed(() =>
     this.hasContacts()
-      ? 'Seleccionar un contacto para continuar con el registro'
+      ? 'Selecciona un contacto para continuar con el registro'
       : 'Crea un nuevo contacto para continuar con el registro.'
   );
   contactPlaceholder = computed(() =>
@@ -56,6 +58,20 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
       ? 'Seleccionar un contacto'
       : 'No hay contactos registrados'
   );
+  //address vars
+  protected addresses = signal<any[]>([]); //esta interfaz va a ir en la sección de contacto
+  hasAddresses = computed(() => this.contacts().length > 0);
+  addressLabel = computed(() =>
+    this.hasAddresses()
+      ? 'Selecciona una dirección para continuar con el registro'
+      : 'Crea una nueva dirección para continuar con el registro'
+  );
+  addressPlaceholder = computed(() =>
+    this.hasContacts()
+      ? 'Seleccionar una dirección'
+      : 'No hay direcciones registradas'
+  );
+
   //forms
   override forms!: { generalDataForm: FormGroup<any>; contactForm: FormGroup<any>; addressForm: FormGroup<any>; };
   protected generalDataFormValid = signal(false);
@@ -101,7 +117,7 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
         contactId: [null, [Validators.required]]
       }),
       addressForm: this._formBuilder.group({
-        prueba: ['']
+        addressId: [null, [Validators.required]]
       })
     }
   }
@@ -135,6 +151,16 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
     dialogRef.afterClosed().subscribe((newContact: ContactData) => {
       if (newContact) {
         this.contacts.update(contacts => [newContact, ...contacts]);
+      }
+    })
+  }
+
+  //address form methods
+  protected addAddress() {
+    const dialogRef = this.dialog.open(CreateAddressComponent);
+    dialogRef.afterClosed().subscribe((newAddress: any) => {
+      if (newAddress) {
+        this.addresses.update(addresses => [newAddress, ...addresses]);
       }
     })
   }
