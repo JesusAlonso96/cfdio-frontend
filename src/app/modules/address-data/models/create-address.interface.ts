@@ -5,6 +5,5 @@ export interface CreateAddress {
     colony: string;
     municipality: string;
     state: string;
-    country: string; //solo Mexico por el momento
     zipCode: string;
 }

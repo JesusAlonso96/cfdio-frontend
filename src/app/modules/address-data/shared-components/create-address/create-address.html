@@ -1,1 +1,11 @@
-<p>create-address works!</p>
+<h2 mat-dialog-title>Crear dirección</h2>
+<mat-dialog-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" id="form">
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-between align-items-center">
+    <button matButton mat-dialog-close>Cerrar</button>
+    <button matButton="filled" type="submit" form="form" [disabled]="!formValid()">
+        <mat-icon outlined>save</mat-icon> Guardar
+    </button>
+</mat-dialog-actions>

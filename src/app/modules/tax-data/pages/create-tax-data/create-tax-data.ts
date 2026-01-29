@@ -6,7 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
-import { CatalogsService } from '../../../../shared/services/catalogs.service';
 import { LoadingService } from '../../../../shared/services/loading.service';
 import { ToastService } from '../../../../shared/services/toast.service';
 import { MatSelectModule } from '@angular/material/select';
@@ -25,6 +24,8 @@ import { CreateContactDataComponent } from '../../../contact-data/shared-compone
 import { ContactData } from '../../../contact-data/models/contact-data.interface';
 import { ContactDataService } from '../../../contact-data/services/contact-data';
 import { CreateAddressComponent } from '../../../address-data/shared-components/create-address/create-address';
+import { InternalCatalogsService } from '../../../../shared/services/catalogs/internal-catalogs.service';
+import { SatCatalogsService } from '../../../../shared/services/catalogs/sat-catalogs.service';
 
 @Component({
   selector: 'app-create-tax-data',
@@ -33,7 +34,8 @@ import { CreateAddressComponent } from '../../../address-data/shared-components/
   styleUrl: './create-tax-data.scss'
 })
 export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalDataForm: GeneralDataForm, contactForm: { contactId: number }, addressForm: { addressId: number } }> implements OnInit {
-  private _catalogsService = inject(CatalogsService);
+  private _internalCatalogsService = inject(InternalCatalogsService);
+  private _satCatalogsService = inject(SatCatalogsService);
   private _formBuilder = inject(FormBuilder);
   private _loadingService = inject(LoadingService);
   private _toastService = inject(ToastService);
@@ -87,8 +89,8 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
 
     try {
       this._loadingService.show();
-      this.personTypeCatalog = await this._catalogsService.getPersonTypeCatalogAsync();
-      this.taxRegimeCatalog = await this._catalogsService.getTaxRegimeCatalogAsync();
+      this.personTypeCatalog = await this._internalCatalogsService.getPersonTypeCatalogAsync();
+      this.taxRegimeCatalog = await this._satCatalogsService.getTaxRegimeCatalogAsync();
       /* CONTACT DATA */
       const contactData: ContactData[] = await this._contactDataService.getAllContactDataAsync();
       this.contacts.update(contacts => [...contacts, ...contactData]);
