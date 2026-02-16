@@ -1,11 +1,99 @@
 <h2 mat-dialog-title>Crear dirección</h2>
 <mat-dialog-content>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" id="form">
+        <div class="location-section">
+            <div class="location-title mb-3">
+                <h5>Ubicación</h5>
+                <p>(derivada del código postal)</p>
+                <mat-divider></mat-divider>
+            </div>
+            <div class="location-form">
+                <mat-form-field class="w-100 mb-2">
+                    <mat-label>Código postal</mat-label>
+                    <input formControlName="zipCode" type="text" maxlength="5" inputmode="numeric" matInput onlyNumbers>
+                    @if (loadingZipCodeData()) {
+                    <app-loading-icons matSuffix [size]="LoadingIconsSize.Normal"
+                        [color]="LoadingColors.Primary"></app-loading-icons>
+                    } @else {
+                    <mat-icon role="button" matTooltipClass="multi-line-tooltip"
+                        matTooltip="Al ingresar el código postal se llenarán los datos automáticamente" outlined
+                        matSuffix>info_outline</mat-icon>
+                    }
+
+                    @if (hasError('zipCode', 'required')) {
+                    <mat-error>Por favor, ingresa un código postal.</mat-error>
+                    } @else if(hasError('zipCode', 'pattern')){
+                    <mat-error>Por favor, ingresa cinco dígitos.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field class="w-100 mb-2">
+                    <mat-label>Estado</mat-label>
+                    <input formControlName="state" type="text" matInput>
+                </mat-form-field>
+                <mat-form-field class="w-100 mb-2">
+                    <mat-label>Municipio</mat-label>
+                    <input formControlName="municipality" type="text" matInput>
+                </mat-form-field>
+                <mat-form-field class="w-100 mb-2">
+                    <mat-label>Colonia</mat-label>
+                    <mat-select formControlName="colony">
+                        @for (colony of colonies(); track $index) {
+                        <mat-option [value]="colony">{{colony}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+        </div>
+        <div class="address-section">
+            <div class="address-title mb-3">
+                <h5>Dirección</h5>
+                <p>(datos exactos del domicilio)</p>
+                <mat-divider></mat-divider>
+            </div>
+            <div class="address-form" style="display: grid;">
+                <mat-form-field class="w-100 mb-2">
+                    <mat-label>Calle</mat-label>
+                    <input formControlName="street" type="text" matInput>
+                    @if (hasError('street', 'required')) {
+                    <mat-error>Por favor, ingresa la calle.</mat-error>
+                    } @else if(hasError('street', 'pattern')){
+                    <mat-error>Formato no válido.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field class="w-25 mb-2">
+                    <mat-label>No. exterior</mat-label>
+                    <input formControlName="extNumber" type="text" matInput>
+                    @if (hasError('extNumber', 'required')) {
+                    <mat-error>Por favor, ingresa el número exterior.</mat-error>
+                    } @else if(hasError('extNumber', 'pattern')){
+                    <mat-error>Formato no válido.</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field class="w-25">
+                    <mat-label>No. interior</mat-label>
+                    <input formControlName="intNumber" type="text" matInput>
+                    @if (hasError('intNumber', 'pattern')) {
+                    <mat-error>Formato no válido.</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions class="d-flex justify-content-between align-items-center">
-    <button matButton mat-dialog-close>Cerrar</button>
-    <button matButton="filled" type="submit" form="form" [disabled]="!formValid()">
-        <mat-icon outlined>save</mat-icon> Guardar
+    <button matButton mat-dialog-close [disabled]="loadingCreation()">Cerrar</button>
+    <button matButton="filled" type="submit" form="form" [disabled]="!formValid() || loadingCreation()">
+        @if (loadingCreation()) {
+        <app-loading-icons matSuffix [size]="LoadingIconsSize.Normal" [color]="LoadingColors.Black"></app-loading-icons>
+        } @else {
+        <ng-container>
+            <div class="d-flex align-items-center">
+                <mat-icon outlined>save</mat-icon> <span>Guardar</span>
+            </div>
+        </ng-container>
+        }
+
     </button>
 </mat-dialog-actions>

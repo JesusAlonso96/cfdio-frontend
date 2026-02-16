@@ -5,7 +5,7 @@ export interface ContactData {
     type?: ContactType;
     email: string;
     phone: string;
-    default?: false;
+    default?: boolean;
     createdAt?: string;
     updatedAt?: string;
     creationUserId?: number;

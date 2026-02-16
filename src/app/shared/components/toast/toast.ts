@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, Signal, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { OutlinedIconDirective } from '../../directives/outlined-icon';
+import { OutlinedIconDirective } from '../../directives/outlined-icon.directive';
 import { ToastType } from '../../enums/toast-type.enum';
 
 @Component({

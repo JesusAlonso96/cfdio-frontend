@@ -1,10 +1,23 @@
 <div class="container show-animation">
+
     <div class="row">
         <div class="col-12">
             @if (forms) {
             <mat-card class="mx-4">
+                <div class="draft-status d-flex align-items-center">
+                    @switch (draftStatus()) {
+                    @case ('saved') {<mat-icon class="me-1" outlined>check_circle</mat-icon> <span>Último guardado
+                        {{lastSaved | date:'hh:mm a'}}</span>}
+                    @case ('saving') { <span>Guardando...</span> }
+                    @case ('preloaded') {<mat-icon class="me-1" outlined>check_circle</mat-icon> <span>Último borrador
+                        cargado</span>}
+                    }
+                </div>
                 <mat-horizontal-stepper [disableRipple]="true" [linear]="true" #stepper [animationDuration]="'400'">
+
                     <mat-step [stepControl]="forms.generalDataForm">
+
+
                         <form [formGroup]="forms.generalDataForm">
                             <ng-template matStepLabel>
                                 Generales
@@ -71,7 +84,8 @@
                                     <div [class]="isNaturalPerson()  ? 'col-lg-4' : 'col-lg-6'"
                                         class="col-md-6 col-sm-12">
                                         <mat-form-field class="w-100">
-                                            <mat-label>{{isNaturalPerson() ? 'Nombre del contribuyente' : 'Razón social'}}</mat-label>
+                                            <mat-label>{{isNaturalPerson() ? 'Nombre del contribuyente' : 'Razón
+                                                social'}}</mat-label>
                                             <input formControlName="legalName" matInput type="text"
                                                 [placeholder]="isNaturalPerson() ? 'José López' : 'Mi empresa SA de CV'">
                                         </mat-form-field>
@@ -146,7 +160,7 @@
                                                 [placeholder]="addressPlaceholder()">
                                                 <mat-option [value]="null">Seleccionar</mat-option>
                                                 @for (address of addresses(); track $index) {
-                                                <mat-option [value]="null">direccion aqui</mat-option>
+                                                <mat-option [value]="address.id">{{address.fullAddress}}</mat-option>
                                                 }
                                             </mat-select>
                                             @if (hasError('addressForm', 'addressId', 'required')) {
@@ -161,7 +175,7 @@
                             </form>
                             <div class="d-flex justify-content-between align-items-center">
                                 <button matButton matStepperPrevious>Atrás</button>
-                                <button matButton [disabled]="!contactFormValid()" matStepperNext>Siguiente</button>
+                                <button matButton [disabled]="!addressFormValid()" matStepperNext>Siguiente</button>
                             </div>
                         </form>
                     </mat-step>

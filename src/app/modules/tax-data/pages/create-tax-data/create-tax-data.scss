@@ -4,8 +4,8 @@
 
 
 .form-label {
-    color: $dark-gray-200;
-    font-weight: 500;
+  color: $dark-gray-200;
+  font-weight: 500;
 }
 
 .form-row {
@@ -25,4 +25,16 @@
   white-space: nowrap;
   padding-top: 1.4rem;
   padding-bottom: 1.4rem;
+}
+
+.draft-status {
+  min-height: 25px;
+  display: flex;
+  align-items: center;
+  color: $dark-gray-400;
+  
+  span {
+       font-size: 14px;
+
+  }
 }

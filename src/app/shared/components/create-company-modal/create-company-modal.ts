@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal, Signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { OutlinedIconDirective } from "../../directives/outlined-icon";
+import { OutlinedIconDirective } from "../../directives/outlined-icon.directive";
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';

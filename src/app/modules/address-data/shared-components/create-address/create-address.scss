@@ -1,0 +1,16 @@
+@use "variables" as *;
+
+.mat-mdc-dialog-title {
+    color: $black;
+    font-weight: 600;
+}
+.location-section .location-title, .address-section .address-title {
+    h5 {
+        color:  $dark-gray-700;
+        font-weight: 500;
+    }
+    p {
+        color: $dark-gray-200;
+        margin-bottom: 0.5rem;
+    }
+}

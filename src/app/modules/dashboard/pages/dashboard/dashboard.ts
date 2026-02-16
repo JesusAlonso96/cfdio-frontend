@@ -7,7 +7,7 @@ import { MatSidenavContent, MatSidenavModule } from '@angular/material/sidenav';
 import { HeaderComponent } from '../header/header';
 import { MENU_ITEMS } from '../../constants/menu.constant';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon';
+import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon.directive';
 import { RouterOutlet, Router } from "@angular/router";
 import { MatDialog } from '@angular/material/dialog';
 import { CreateCompanyModal } from '../../../../shared/components/create-company-modal/create-company-modal';
@@ -41,8 +41,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     const existCompany: string | null = localStorage.getItem('company');
     if(!existCompany) return;
     if (existCompany === 'NO-EXIST') this.openCreateCompanyModal();
-    console.log(existCompany)
-
   }
 
 

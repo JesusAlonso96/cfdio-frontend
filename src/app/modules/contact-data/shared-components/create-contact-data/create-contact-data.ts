@@ -7,11 +7,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CreateCompanyModal } from '../../../../shared/components/create-company-modal/create-company-modal';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon';
-import { PhoneMaskDirective } from '../../../../shared/directives/phone-mask';
+import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon.directive';
+import { PhoneMaskDirective } from '../../../../shared/directives/phone-mask.directive';
 import { FormUtilsService } from '../../../../shared/services/form-utils.service';
 import { LoadingService } from '../../../../shared/services/loading.service';
-import { ContactDataService } from '../../services/contact-data';
+import { ContactDataService } from '../../services/contact-data.service';
 import { ContactData } from '../../models/contact-data.interface';
 import { ToastService } from '../../../../shared/services/toast.service';
 

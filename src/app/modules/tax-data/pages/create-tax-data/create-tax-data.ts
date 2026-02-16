@@ -13,7 +13,7 @@ import { PersonType } from '../../../../shared/models/person-type.model';
 import { BaseMultipleFormComponent } from '../../../../shared/components/base-form/base-multiple-form';
 import { GeneralDataForm } from '../../models/general-data-form.model';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon';
+import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon.directive';
 import { TaxRegime } from '../../../../shared/models/tax-regime.model';
 import { RFC_REGEX } from '../../../../shared/regular-expresions/rfc.regex';
 import { CURP_REGEX } from '../../../../shared/regular-expresions/curp.regex';
@@ -22,14 +22,19 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateContactDataComponent } from '../../../contact-data/shared-components/create-contact-data/create-contact-data';
 import { ContactData } from '../../../contact-data/models/contact-data.interface';
-import { ContactDataService } from '../../../contact-data/services/contact-data';
+import { ContactDataService } from '../../../contact-data/services/contact-data.service';
 import { CreateAddressComponent } from '../../../address-data/shared-components/create-address/create-address';
 import { InternalCatalogsService } from '../../../../shared/services/catalogs/internal-catalogs.service';
 import { SatCatalogsService } from '../../../../shared/services/catalogs/sat-catalogs.service';
+import { AddressData } from '../../../address-data/models/address-data.interface';
+import { AddressDataService } from '../../../address-data/services/address-data.service';
+import { debounceTime, merge, tap } from 'rxjs';
+import { DatePipe } from '@angular/common';
+type DraftStatus = 'preloaded' | 'pristine' | 'saving' | 'saved';
 
 @Component({
   selector: 'app-create-tax-data',
-  imports: [MatCardModule, MatStepperModule, MatIconModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatSelectModule, MatTooltipModule, MatDividerModule, MatDialogModule, OutlinedIconDirective],
+  imports: [MatCardModule, MatStepperModule, MatIconModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule, MatSelectModule, MatTooltipModule, MatDividerModule, MatDialogModule, OutlinedIconDirective, DatePipe],
   templateUrl: './create-tax-data.html',
   styleUrl: './create-tax-data.scss'
 })
@@ -47,7 +52,7 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
   //forms arrays
   //contact vars
   private _contactDataService = inject(ContactDataService);
-  protected contacts = signal<any[]>([]); //esta interfaz va a ir en la sección de contacto
+  protected contacts = signal<ContactData[]>([]); //esta interfaz va a ir en la sección de contacto
   hasContacts = computed(() => this.contacts().length > 0);
   contactSelectDisabled = computed(() => !this.hasContacts());
   contactLabel = computed(() =>
@@ -61,15 +66,16 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
       : 'No hay contactos registrados'
   );
   //address vars
-  protected addresses = signal<any[]>([]); //esta interfaz va a ir en la sección de contacto
-  hasAddresses = computed(() => this.contacts().length > 0);
+  private _addressDataService = inject(AddressDataService);
+  protected addresses = signal<AddressData[]>([]); //esta interfaz va a ir en la sección de contacto
+  hasAddresses = computed(() => this.addresses().length > 0);
   addressLabel = computed(() =>
     this.hasAddresses()
       ? 'Selecciona una dirección para continuar con el registro'
       : 'Crea una nueva dirección para continuar con el registro'
   );
   addressPlaceholder = computed(() =>
-    this.hasContacts()
+    this.hasAddresses()
       ? 'Seleccionar una dirección'
       : 'No hay direcciones registradas'
   );
@@ -81,6 +87,10 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
   protected contactFormValid = signal(false);
   protected addressFormValid = signal(false);
   protected aliasTooltip = `Nombre opcional que te puede ayudar para identificar un conjunto de datos fiscales.\n Este campo admite:\n\n-Máximo 40 caracteres\n-Acentos\n-Digitos\n-Guión medio\n-Guión bajo\n-Punto.`;
+
+  protected draftStatus = signal<DraftStatus>('pristine');
+  protected lastSaved: Date | null = null;
+
   constructor() {
     super();
   }
@@ -93,10 +103,35 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
       this.taxRegimeCatalog = await this._satCatalogsService.getTaxRegimeCatalogAsync();
       /* CONTACT DATA */
       const contactData: ContactData[] = await this._contactDataService.getAllContactDataAsync();
-      this.contacts.update(contacts => [...contacts, ...contactData]);
+      this.contacts.update(c => [...c, ...contactData]);
+      /* ADDRESSES DATA */
+      const addresses: AddressData[] = await this._addressDataService.getAllAddressesAsync();
+      this.addresses.update(a => [...a, ...addresses]);
+
       this.initForms();
       this.control('generalDataForm', 'personType')?.setValue(this.personTypeCatalog.find(pt => pt.value === 'NATURAL')?.value);
       this.updateTaxRegimeCatalog();
+      const draft = sessionStorage.getItem('draft.datosFiscales');
+
+      if (draft) {
+        console.log("ya hay borrador existente")
+        const parsed = JSON.parse(draft);
+        this.draftStatus.set('preloaded');
+        this.forms.generalDataForm.patchValue(parsed.general || {});
+        this.forms.contactForm.patchValue(parsed.contact || {});
+        this.forms.addressForm.patchValue(parsed.address || {});
+        this.forms.generalDataForm.markAllAsTouched();
+        this.forms.contactForm.markAllAsTouched();
+        this.forms.addressForm.markAllAsTouched();
+
+        this.forms.generalDataForm.markAllAsDirty();
+        this.forms.contactForm.markAllAsDirty();
+        this.forms.addressForm.markAllAsDirty();
+
+
+      } else {
+        console.log("no habia borrador")
+      }
       this.detectFormsChanges();
       this._loadingService.hide();
     } catch (error: any) {
@@ -125,6 +160,9 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
   }
 
   private detectFormsChanges() {
+    this.generalDataFormValid.set(this.forms.generalDataForm.valid);
+    this.contactFormValid.set(this.forms.contactForm.valid);
+    this.addressFormValid.set(this.forms.addressForm.valid);
 
     this.forms.generalDataForm.statusChanges.subscribe(() => {
       this.generalDataFormValid.set(this.forms.generalDataForm.valid);
@@ -135,6 +173,24 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
     this.forms.addressForm.statusChanges.subscribe(() => {
       this.addressFormValid.set(this.forms.addressForm.valid);
     });
+
+    merge(
+      this.forms.generalDataForm.valueChanges,
+      this.forms.contactForm.valueChanges,
+      this.forms.addressForm.valueChanges
+    )
+
+      .pipe(
+        tap(() => this.draftStatus.set('saving')),
+        debounceTime(400)
+      )
+      .subscribe(() => {
+        this.saveDraft();
+        this.draftStatus.set('saved');
+        this.lastSaved = new Date();
+
+      })
+
     //controls changes
     this.control('generalDataForm', 'personType')?.statusChanges.subscribe(() => {
       this.isNaturalPerson.set(this.value('generalDataForm', 'personType') === 'NATURAL');
@@ -143,6 +199,19 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
     })
   }
 
+  private validateStatusForms() {
+
+  }
+
+  private saveDraft() {
+    const draft: any = {
+      general: this.forms.generalDataForm.value,
+      contact: this.forms.contactForm.value,
+      address: this.forms.addressForm.value,
+    };
+
+    sessionStorage.setItem('draft.datosFiscales', JSON.stringify(draft));
+  }
   private updateTaxRegimeCatalog(): void {
     this.filteredTaxRegimeCatalog = this.taxRegimeCatalog.filter(tr => { return this.isNaturalPerson() ? tr.naturalPerson : tr.legalPerson });
   }
@@ -153,6 +222,7 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
     dialogRef.afterClosed().subscribe((newContact: ContactData) => {
       if (newContact) {
         this.contacts.update(contacts => [newContact, ...contacts]);
+        this._toastService.showSuccess('¡Contacto creado exitosamente!');
       }
     })
   }
@@ -163,6 +233,7 @@ export class CreateTaxDataComponent extends BaseMultipleFormComponent<{ generalD
     dialogRef.afterClosed().subscribe((newAddress: any) => {
       if (newAddress) {
         this.addresses.update(addresses => [newAddress, ...addresses]);
+        this._toastService.showSuccess('¡Dirección creada exitosamente!');
       }
     })
   }

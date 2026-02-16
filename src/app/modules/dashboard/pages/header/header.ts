@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
-import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon';
+import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon.directive';
 import { AuthService } from '../../../auth/services/auth.service';
 import { LoadingService } from '../../../../shared/services/loading.service';
 import { ToastService } from '../../../../shared/services/toast.service';
