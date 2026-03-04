@@ -1,7 +1,15 @@
-@use "/animations/fade-slide-scale-in.animation" as *;
-@use "variables" as *;
+@use '/animations/fade-slide-scale-in.animation' as *;
+@use 'variables' as *;
 
+.tax-data-card {
+  min-height: 50dvh;
+  display: flex;
+  flex-direction: column;
+}
 
+.tax-data-stepper {
+  flex: 1;
+}
 
 .form-label {
   color: $dark-gray-200;
@@ -28,13 +36,26 @@
 }
 
 .draft-status {
-  min-height: 25px;
-  display: flex;
-  align-items: center;
   color: $dark-gray-400;
-  
+  min-height: 25px;
   span {
-       font-size: 14px;
-
+    font-size: 14px;
   }
+}
+
+
+.discard-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 12px;
+  font-size: 14px;
+  color: #c62828; /* rojo suave */
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.discard-link:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
