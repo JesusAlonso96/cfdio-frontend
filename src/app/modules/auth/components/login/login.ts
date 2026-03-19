@@ -21,18 +21,27 @@ import { HOME_ROUTE } from '../../../../core/constants/main-routes.contant';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, LoadingIconsComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    LoadingIconsComponent,
+  ],
   standalone: true,
   templateUrl: './login.html',
-  styleUrls: ['login.scss', '../../pages/auth/auth.scss']
+  styleUrls: ['login.scss', '../../pages/auth/auth.scss'],
 })
 export class LoginComponent extends BaseFormComponent<LoginForm> implements OnInit {
   @Output() clicked = new EventEmitter<void>();
-  private _formUtils = inject(FormUtilsService);
-  private _authService = inject(AuthService);
-  private _toastService = inject(ToastService);
-  private _formBuilder = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly _formUtils = inject(FormUtilsService);
+  private readonly _authService = inject(AuthService);
+  private readonly _toastService = inject(ToastService);
+  private readonly _formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
   public form!: FormGroup;
   protected formValid = signal(false);
   protected loading = signal(false);
@@ -47,16 +56,14 @@ export class LoginComponent extends BaseFormComponent<LoginForm> implements OnIn
     this.clicked.emit();
   }
 
-
   ngOnInit(): void {
     this.form = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
-      rememberMe: [false]
-
+      rememberMe: [false],
     });
     this.form.statusChanges.subscribe(() => {
-      this.formValid.set(this.form.valid)
+      this.formValid.set(this.form.valid);
     });
   }
 
@@ -68,9 +75,9 @@ export class LoginComponent extends BaseFormComponent<LoginForm> implements OnIn
         this.loading.set(false);
         this._toastService.showSuccess('Inicio de sesión exitoso, bienvenido');
         this.router.navigate([HOME_ROUTE]);
-        if(!res.companyId) localStorage.setItem('company', 'NO-EXIST');
+        if (!res.companyId) localStorage.setItem('company', 'NO-EXIST');
       },
-      error: (err: HttpErrorResponse) => this.loading.set(false)
-    })
+      error: (err: HttpErrorResponse) => this.loading.set(false),
+    });
   }
 }

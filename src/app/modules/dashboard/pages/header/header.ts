@@ -14,17 +14,17 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-header',
   imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatMenuModule, OutlinedIconDirective],
   templateUrl: './header.html',
-  styleUrl: './header.scss'
+  styleUrl: './header.scss',
 })
 export class HeaderComponent {
   @Input() currentModule: string = '';
   @Output() toggleSidebar = new EventEmitter<void>();
   isCollapsed = input.required<boolean>();
   hasScrolled = input.required<boolean>();
-  private router = inject(Router);
-  private _authService = inject(AuthService);
-  private _loadingService = inject(LoadingService);
-  private _toastService = inject(ToastService);
+  private readonly router = inject(Router);
+  private readonly _authService = inject(AuthService);
+  private readonly _loadingService = inject(LoadingService);
+  private readonly _toastService = inject(ToastService);
 
   onToggleSidebar() {
     this.toggleSidebar.emit();
@@ -34,17 +34,12 @@ export class HeaderComponent {
     this._loadingService.show();
     this._authService.logout().subscribe({
       next: () => {
-        
-        
-          this.router.navigate(['/auth']);
-          this._loadingService.hide();
-          this._toastService.showSuccess('Cierre de sesión exitoso');
-  
-          
+        this.router.navigate(['/auth']);
+        this._loadingService.hide();
+        this._toastService.showSuccess('Cierre de sesión exitoso');
       },
-      error: (err: HttpErrorResponse) => this._loadingService.hide()
-    })
+      error: (err: HttpErrorResponse) => this._loadingService.hide(),
+    });
     // Redirigir a la página de inicio de sesión
   }
-
 }

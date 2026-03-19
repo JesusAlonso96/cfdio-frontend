@@ -4,15 +4,15 @@ import { ToastComponent } from '../components/toast/toast';
 import { ToastType } from '../enums/toast-type.enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ToastService {
   private containerOverlayRef?: OverlayRef;
   private containerElement?: HTMLElement;
-  private activeToasts: { componentRef: ComponentRef<ToastComponent> }[] = [];
-  private overlay = inject(Overlay);
-  private appRef = inject(ApplicationRef);
-  constructor() { }
+  private readonly activeToasts: { componentRef: ComponentRef<ToastComponent> }[] = [];
+  private readonly overlay = inject(Overlay);
+  private readonly appRef = inject(ApplicationRef);
+  constructor() {}
 
   private show(message: string, type: ToastType, duration: number = 4000) {
     this.ensureContainer();
@@ -25,7 +25,7 @@ export class ToastService {
     this.containerElement!.appendChild(componentRef.location.nativeElement);
     componentRef.instance.message = message;
     componentRef.instance.type = type;
-    componentRef.instance.onClose = () => this.removeToast(componentRef);
+    componentRef.instance.onClose = () => void this.removeToast(componentRef);
 
     // Añadir al contenedor
     this.containerElement!.appendChild(componentRef.location.nativeElement);
@@ -41,10 +41,7 @@ export class ToastService {
   private ensureContainer() {
     if (!this.containerOverlayRef) {
       this.containerOverlayRef = this.overlay.create({
-        positionStrategy: this.overlay.position()
-          .global()
-          .top('20px')
-          .centerHorizontally(),
+        positionStrategy: this.overlay.position().global().top('20px').centerHorizontally(),
         hasBackdrop: false,
         scrollStrategy: this.overlay.scrollStrategies.noop(),
       });
@@ -61,11 +58,11 @@ export class ToastService {
   private async removeToast(componentRef: ComponentRef<ToastComponent>) {
     await componentRef.instance.fadeOut();
 
-    const index = this.activeToasts.findIndex(t => t.componentRef === componentRef);
+    const index = this.activeToasts.findIndex((t) => t.componentRef === componentRef);
     if (index !== -1) this.activeToasts.splice(index, 1);
 
     if (componentRef.location.nativeElement.parentNode) {
-      componentRef.location.nativeElement.parentNode.removeChild(componentRef.location.nativeElement);
+      componentRef.location.nativeElement.parentNode.remove(componentRef.location.nativeElement);
     }
     this.appRef.detachView(componentRef.hostView);
     componentRef.destroy();
@@ -99,5 +96,4 @@ export class ToastService {
   public showInfo(message: string, duration?: number) {
     this.show(message, ToastType.Info, duration);
   }
-
 }

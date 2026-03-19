@@ -1,62 +1,98 @@
 <form [formGroup]="form" (ngSubmit)="registerClient()" class="py-3">
-    <div class="auth-titles">
-        <h1 class="ms-0">Regístrate</h1>
-        <span>Por favor, ingresa tus datos</span>
-    </div>
-    <div class="register-form">
-        <mat-form-field class="w-100 mb-3">
-            <mat-label>Correo electrónico</mat-label>
-            <input formControlName="email" matInput type="email" placeholder="ejemplo@dominio.com">
-            @if (hasError('email', 'email')) {
-            <mat-error>Por favor, ingresa un correo electrónico valido.</mat-error>
-            } @else if (hasError('email', 'required')) {
-            <mat-error>Por favor, ingresa un correo electrónico.</mat-error>
-            }
-        </mat-form-field>
-        <mat-form-field class="w-100 mb-3">
-            <mat-label>Teléfono</mat-label>
-            <input formControlName="cellphone" matInput phoneMask type="text" placeholder="000-000-0000">
-            @if (hasError('cellphone', 'required')) {
-            <mat-error>Por favor, ingresa un teléfono celular.</mat-error>
-            }
-        </mat-form-field>
+  <div class="auth-titles">
+    <h1 class="ms-0">Regístrate</h1>
+    <span>Por favor, ingresa tus datos</span>
+  </div>
+  <div class="register-form">
+    <mat-form-field class="w-100 mb-3">
+      <mat-label>Correo electrónico</mat-label>
+      <input formControlName="email" matInput type="email" placeholder="ejemplo@dominio.com" />
+      @if (hasError('email', 'email')) {
+        <mat-error>Por favor, ingresa un correo electrónico valido.</mat-error>
+      } @else if (hasError('email', 'required')) {
+        <mat-error>Por favor, ingresa un correo electrónico.</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-100 mb-3">
+      <mat-label>Teléfono</mat-label>
+      <input
+        formControlName="cellphone"
+        matInput
+        phoneMask
+        type="text"
+        placeholder="000-000-0000"
+      />
+      @if (hasError('cellphone', 'required')) {
+        <mat-error>Por favor, ingresa un teléfono celular.</mat-error>
+      }
+    </mat-form-field>
 
-        <mat-form-field class="w-100 mb-3">
-            <mat-label>Contraseña</mat-label>
-            <input (change)="changePassword()" formControlName="password" matInput
-                [type]="showPassword() ? 'text' : 'password'" placeholder="••••••••">
-            @if (hasError('password', 'required')) {
-            <mat-error>Por favor, ingresa una contraseña.</mat-error>
-            } @else if (hasError('password', 'pattern')) {
-            <mat-error>Por favor, ingresa una contraseña valida.</mat-error>
-            }
-            <mat-icon role="button" (click)="toggleShowPassword()" outlined matSuffix>{{showPassword() ?
-                'visibility_off' : 'visibility'}}</mat-icon>
-            <mat-icon role="button" matTooltipClass="multi-line-tooltip" [matTooltip]="tooltip" outlined
-                matSuffix>info_outline</mat-icon>
-        </mat-form-field>
+    <mat-form-field class="w-100 mb-3">
+      <mat-label>Contraseña</mat-label>
+      <input
+        (change)="changePassword()"
+        formControlName="password"
+        matInput
+        [type]="showPassword() ? 'text' : 'password'"
+        placeholder="••••••••"
+      />
+      @if (hasError('password', 'required')) {
+        <mat-error>Por favor, ingresa una contraseña.</mat-error>
+      } @else if (hasError('password', 'pattern')) {
+        <mat-error>Por favor, ingresa una contraseña valida.</mat-error>
+      }
+      <button matSuffix class="btn-custom-transparent" type="button" (click)="toggleShowPassword()">
+        <mat-icon outlined>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
 
-        <mat-form-field class="w-100 mb-3">
-            <mat-label>Confirmar contraseña</mat-label>
-            <input formControlName="confirmPassword" matInput [type]="showConfirmPassword() ? 'text' : 'password'"
-                (keyup)="changeConfirmPassword()" (paste)="$event.preventDefault()" placeholder="••••••••">
-            @if (hasError('confirmPassword', 'required')) {
-            <mat-error>Por favor, confirma la contraseña.</mat-error>
-            } @else if (hasError('confirmPassword', 'diferent')) {
-            <mat-error>Las contraseñas deben ser las mismas</mat-error>
-            }
-            <mat-icon role="button" (click)="toggleShowConfirmPassword()" outlined matSuffix>{{showConfirmPassword() ?
-                'visibility_off' : 'visibility'}}</mat-icon>
-        </mat-form-field>
-        <button [disabled]="!formValid() || loading()" matButton="filled" class="w-100 mb-4 py-4">
-            @if (loading()) {
-            <app-loading-icons [size]="LoadingIconsSize.Normal" [color]="LoadingColors.Black"></app-loading-icons>
-            } @else {
-            Registrarme
-            }
-        </button>
-        <p class="register-form-text text-center">¿Ya tienes cuenta? <span class="underline-option"
-                (click)="changeForm()">Iniciar
-                sesión</span></p>
-    </div>
+      <mat-icon
+        matTooltipClass="multi-line-tooltip pwd-info"
+        [matTooltip]="tooltip"
+        outlined
+        matSuffix
+        >info_outline</mat-icon
+      >
+    </mat-form-field>
+
+    <mat-form-field class="w-100 mb-3">
+      <mat-label>Confirmar contraseña</mat-label>
+      <input
+        formControlName="confirmPassword"
+        matInput
+        [type]="showConfirmPassword() ? 'text' : 'password'"
+        (keyup)="changeConfirmPassword()"
+        (paste)="$event.preventDefault()"
+        placeholder="••••••••"
+      />
+      @if (hasError('confirmPassword', 'required')) {
+        <mat-error>Por favor, confirma la contraseña.</mat-error>
+      } @else if (hasError('confirmPassword', 'diferent')) {
+        <mat-error>Las contraseñas deben ser las mismas</mat-error>
+      }
+      <button
+        type="button"
+        (click)="toggleShowConfirmPassword()"
+        matSuffix
+        class="btn-custom-transparent"
+        type="button"
+      >
+        <mat-icon outlined matSuffix>{{
+          showConfirmPassword() ? 'visibility_off' : 'visibility'
+        }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <button type="submit" [disabled]="!formValid() || loading()" matButton="filled" class="w-100 mb-4 py-4">
+      @if (loading()) {
+        <app-loading-icons
+          [size]="LoadingIconsSize.Normal"
+          [color]="LoadingColors.Black"
+        ></app-loading-icons>
+      } @else {
+        Registrarme
+      }
+    </button>
+    <p class="register-form-text text-center">
+      ¿Ya tienes cuenta? <button type="button" class="underline-option btn-custom-transparent" (click)="changeForm()">Iniciar sesión</button>
+    </p>
+  </div>
 </form>

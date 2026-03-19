@@ -1,21 +1,29 @@
-@use "variables" as *;
+@use 'variables' as *;
 .login-form {
-    p {
-        color: $dark-gray-200;
-        font-weight: 600;
-    }
+  p {
+    color: $dark-gray-200;
+    font-weight: 600;
+  }
 }
 
 .login-form-text {
-    color: $dark-gray-200;
+  color: $dark-gray-200;
+  font-weight: 600;
+  button {
     font-weight: 600;
+  }
 }
 
 ::ng-deep .mat-mdc-checkbox .mat-internal-form-field {
-    color: $black !important;
-    font-weight: 600 !important;
+  color: $black !important;
+  font-weight: 600 !important;
 }
 
 .options {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+
+.curs-point {
+  cursor: pointer !important;
 }

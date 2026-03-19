@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, Signal, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { OutlinedIconDirective } from '../../directives/outlined-icon.directive';
 import { ToastType } from '../../enums/toast-type.enum';
@@ -8,7 +8,7 @@ import { ToastType } from '../../enums/toast-type.enum';
   selector: 'app-toast',
   imports: [CommonModule, MatIconModule, OutlinedIconDirective],
   templateUrl: './toast.html',
-  styleUrl: './toast.scss'
+  styleUrl: './toast.scss',
 })
 export class ToastComponent implements AfterViewInit {
   @Input() message = '';
@@ -16,9 +16,7 @@ export class ToastComponent implements AfterViewInit {
   visible = false;
   toastIcon: string = '';
 
-  constructor(private cdr: ChangeDetectorRef) {
-
-  }
+  constructor(private readonly cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     // Espera un ciclo para asegurar que el DOM pinte el estado inicial (invisible)
@@ -33,7 +31,7 @@ export class ToastComponent implements AfterViewInit {
     this.visible = false;
     this.cdr.detectChanges();
 
-    return new Promise(resolve => setTimeout(resolve, 300)); // Duración de la animación
+    return new Promise((resolve) => setTimeout(resolve, 300)); // Duración de la animación
   }
 
   close() {
@@ -44,11 +42,16 @@ export class ToastComponent implements AfterViewInit {
 
   private getCurrentIcon(): string {
     switch (this.type) {
-      case ToastType.Success: return 'check_circle_unread';
-      case ToastType.Error: return 'release_alert';
-      case ToastType.Warning: return 'warning';
-      case ToastType.Info: return 'info';
-      default: return 'check_circle_unread';
+      case ToastType.Success:
+        return 'check_circle_unread';
+      case ToastType.Error:
+        return 'release_alert';
+      case ToastType.Warning:
+        return 'warning';
+      case ToastType.Info:
+        return 'info';
+      default:
+        return 'check_circle_unread';
     }
   }
 }

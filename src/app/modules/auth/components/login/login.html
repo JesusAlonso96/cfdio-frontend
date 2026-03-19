@@ -26,15 +26,15 @@
       <span class="underline-option">¿Olvidaste la contraseña?</span>
     </div>
 
-    <button [disabled]="!formValid() || loading()" matButton="filled" class="w-100 mb-4 py-4">
+    <button type="submit" [disabled]="!formValid() || loading()" matButton="filled" class="w-100 mb-4 py-4">
       @if (loading()) {
       <app-loading-icons [size]="LoadingIconsSize.Normal" [color]="LoadingColors.Black"></app-loading-icons>
       } @else {
       Iniciar sesión
       }
     </button>
-    <p class="login-form-text text-center">¿Aún no tienes una cuenta? <span class="underline-option"
-        (click)="changeForm()">Regístrate</span></p>
+    <p class="login-form-text text-center">¿Aún no tienes una cuenta? <button type="button" class="underline-option btn-custom-transparent"
+        (click)="changeForm()">Regístrate</button></p>
 
   </div>
 </form>

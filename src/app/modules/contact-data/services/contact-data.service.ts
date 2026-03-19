@@ -6,13 +6,13 @@ import { CreateContactData } from '../models/create-contact-data.interface';
 import { ContactData } from '../models/contact-data.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ContactDataService {
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
   private readonly contactDataApi = `${environment.apiUrl}/contact`;
 
-  constructor() { }
+  constructor() {}
 
   /* HTTP POST */
   private createContactData(contactData: CreateContactData): Observable<ContactData> {
@@ -22,10 +22,12 @@ export class ContactDataService {
   public createContactDataAsync(contactData: CreateContactData): Promise<ContactData> {
     return new Promise<ContactData>((resolve, reject) => {
       this.createContactData(contactData).subscribe({
-        next: (response: ContactData) => { resolve(response) },
-        error: (err: HttpErrorResponse) => reject(err.error)
+        next: (response: ContactData) => {
+          resolve(response);
+        },
+        error: (err: HttpErrorResponse) => reject(err.error),
       });
-    })
+    });
   }
 
   /* HTTP GET */
@@ -36,9 +38,11 @@ export class ContactDataService {
   public getAllContactDataAsync(): Promise<ContactData[]> {
     return new Promise<ContactData[]>((resolve, reject) => {
       this.getAllContactData().subscribe({
-        next: (response: ContactData[]) => { resolve(response) },
-        error: (err: HttpErrorResponse) => reject(err.error)
+        next: (response: ContactData[]) => {
+          resolve(response);
+        },
+        error: (err: HttpErrorResponse) => reject(err.error),
       });
-    })
+    });
   }
 }

@@ -75,11 +75,11 @@ export class CreateTaxDataComponent
   }>
   implements OnInit, AfterViewInit
 {
-  private _internalCatalogsService = inject(InternalCatalogsService);
-  private _satCatalogsService = inject(SatCatalogsService);
-  private _formBuilder = inject(FormBuilder);
-  private _loadingService = inject(LoadingService);
-  private _toastService = inject(ToastService);
+  private readonly _internalCatalogsService = inject(InternalCatalogsService);
+  private readonly _satCatalogsService = inject(SatCatalogsService);
+  private readonly _formBuilder = inject(FormBuilder);
+  private readonly _loadingService = inject(LoadingService);
+  private readonly _toastService = inject(ToastService);
   readonly dialog = inject(MatDialog);
   //catalogs
   protected personTypeCatalog: PersonType[] = [];
@@ -87,7 +87,7 @@ export class CreateTaxDataComponent
   protected filteredTaxRegimeCatalog: TaxRegime[] = [];
   //forms arrays
   //contact vars
-  private _contactDataService = inject(ContactDataService);
+  private readonly _contactDataService = inject(ContactDataService);
   protected contacts = signal<ContactData[]>([]); //esta interfaz va a ir en la sección de contacto
   hasContacts = computed(() => this.contacts().length > 0);
   contactSelectDisabled = computed(() => !this.hasContacts());
@@ -100,7 +100,7 @@ export class CreateTaxDataComponent
     this.hasContacts() ? 'Seleccionar un contacto' : 'No hay contactos registrados',
   );
   //address vars
-  private _addressDataService = inject(AddressDataService);
+  private readonly _addressDataService = inject(AddressDataService);
   protected addresses = signal<AddressData[]>([]); //esta interfaz va a ir en la sección de contacto
   hasAddresses = computed(() => this.addresses().length > 0);
   addressLabel = computed(() =>
@@ -137,7 +137,7 @@ export class CreateTaxDataComponent
     this.onStepChange();
   }
   private currentStepSub?: Subscription;
-  protected currentStepValid = signal<Boolean>(false);
+  protected currentStepValid = signal<boolean>(false);
   private isProgrammaticReset: boolean = false;
   constructor() {
     super();
@@ -147,7 +147,11 @@ export class CreateTaxDataComponent
     this.onStepChange();
   }
 
-  async ngOnInit() {
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  async loadData(): Promise<void> {
     try {
       this._loadingService.show();
       this.personTypeCatalog = await this._internalCatalogsService.getPersonTypeCatalogAsync();
@@ -170,7 +174,9 @@ export class CreateTaxDataComponent
         this.loadDraft(draft);
       }
       this.detectFormsChanges();
-      this._loadingService.hide();
+      setTimeout(() => {
+        this._loadingService.hide();
+      }, 4000);
     } catch (error: any) {
       this._toastService.showError(error.message);
       this._loadingService.hide();

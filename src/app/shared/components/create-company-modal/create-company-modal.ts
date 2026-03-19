@@ -1,7 +1,7 @@
-import { Component, inject, OnInit, signal, Signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { OutlinedIconDirective } from "../../directives/outlined-icon.directive";
+import { OutlinedIconDirective } from '../../directives/outlined-icon.directive';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,30 +18,38 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-company-modal',
-  imports: [MatDialogModule, MatButtonModule, OutlinedIconDirective, MatIconModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, ReactiveFormsModule],
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    OutlinedIconDirective,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './create-company-modal.html',
-  styleUrl: './create-company-modal.scss'
+  styleUrl: './create-company-modal.scss',
 })
 export class CreateCompanyModal extends BaseFormComponent<CompanyData> implements OnInit {
   readonly dialogRef = inject(MatDialogRef<CreateCompanyModal>);
-  private _formUtils = inject(FormUtilsService);
-  private _companyService = inject(CompanyService);
-  private _toastService = inject(ToastService);
-  private _loadingService = inject(LoadingService);
+  private readonly _formUtils = inject(FormUtilsService);
+  private readonly _companyService = inject(CompanyService);
+  private readonly _toastService = inject(ToastService);
+  private readonly _loadingService = inject(LoadingService);
   public form!: FormGroup;
   protected formValid = signal(true);
 
   protected haveCompany = signal(false);
 
-
-  constructor(private fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder) {
     super();
   }
 
   ngOnInit(): void {
     this.form = this.fb.group({
       haveCompany: [false],
-      name: [{ value: '', disabled: true }, [Validators.pattern(COMPANY_REGEX)]]
+      name: [{ value: '', disabled: true }, [Validators.pattern(COMPANY_REGEX)]],
     });
     this.form.statusChanges.subscribe(() => {
       this.formValid.set(this.form.valid);
@@ -49,7 +57,7 @@ export class CreateCompanyModal extends BaseFormComponent<CompanyData> implement
 
     this.control('haveCompany')?.valueChanges.subscribe((haveCompany) => {
       this.haveCompany.set(haveCompany);
-      this.changeNameInputProperties(haveCompany)
+      this.changeNameInputProperties(haveCompany);
       this.markAllTouched();
     });
   }
@@ -73,12 +81,11 @@ export class CreateCompanyModal extends BaseFormComponent<CompanyData> implement
     this._companyService.createCompany(companyData).subscribe({
       next: (res: any) => {
         this._loadingService.hide();
-        this._toastService.showSuccess("Empresa creada con éxito", 6000);
+        this._toastService.showSuccess('Empresa creada con éxito', 6000);
         localStorage.removeItem('company');
         this.dialogRef.close();
       },
-      error: (err: HttpErrorResponse) => this._loadingService.hide()
+      error: (err: HttpErrorResponse) => this._loadingService.hide(),
     });
   }
-
 }

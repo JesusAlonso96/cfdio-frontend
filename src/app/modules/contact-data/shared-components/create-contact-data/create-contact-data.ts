@@ -1,6 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { BaseFormComponent } from '../../../../shared/components/base-form/base-form';
 import { CreateContactData } from '../../models/create-contact-data.interface';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -17,28 +23,41 @@ import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-create-contact-data',
-  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, OutlinedIconDirective, MatButtonModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, PhoneMaskDirective],
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    OutlinedIconDirective,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    PhoneMaskDirective,
+  ],
   templateUrl: './create-contact-data.html',
-  styleUrl: './create-contact-data.scss'
 })
-export class CreateContactDataComponent extends BaseFormComponent<CreateContactData> implements OnInit {
+export class CreateContactDataComponent
+  extends BaseFormComponent<CreateContactData>
+  implements OnInit
+{
   readonly dialogRef = inject(MatDialogRef<CreateCompanyModal>);
-  private _formUtils = inject(FormUtilsService);
-  private _loadingService = inject(LoadingService);
-  private _contactDataService = inject(ContactDataService);
-  private _toastService = inject(ToastService);
+  private readonly _formUtils = inject(FormUtilsService);
+  private readonly _loadingService = inject(LoadingService);
+  private readonly _contactDataService = inject(ContactDataService);
+  private readonly _toastService = inject(ToastService);
   override form!: FormGroup;
   protected formValid = signal(false);
 
-  constructor(private fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder) {
     super();
   }
 
   ngOnInit(): void {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.minLength(12)]]
-    })
+      phone: ['', [Validators.required, Validators.minLength(12)]],
+    });
     //form changes
     this.form.statusChanges.subscribe(() => {
       this.formValid.set(this.form.valid);
@@ -46,7 +65,9 @@ export class CreateContactDataComponent extends BaseFormComponent<CreateContactD
   }
 
   onSubmit() {
-    const contactData: CreateContactData = this._formUtils.mapFormToModel<CreateContactData>(this.form);
+    const contactData: CreateContactData = this._formUtils.mapFormToModel<CreateContactData>(
+      this.form,
+    );
     this._loadingService.show();
     contactData.phone = this._formUtils.replacePhoneMask(contactData.phone);
     this.createContactData(contactData);
@@ -56,12 +77,16 @@ export class CreateContactDataComponent extends BaseFormComponent<CreateContactD
   private async createContactData(contactData: CreateContactData) {
     try {
       this._loadingService.show();
-      const contactDataCreated: ContactData = await this._contactDataService.createContactDataAsync(contactData);
+      const contactDataCreated: ContactData =
+        await this._contactDataService.createContactDataAsync(contactData);
       this._loadingService.hide();
       this.dialogRef.close(contactDataCreated);
     } catch (error) {
+      console.error('Error al crear datos de contacto: ', error);
       this._loadingService.hide();
-      this._toastService.showError('Ocurrió un error al crear los datos de contacto, por favor intentalo de nuevo más tarde')
+      this._toastService.showError(
+        'Ocurrió un error al crear los datos de contacto, por favor intentalo de nuevo más tarde',
+      );
     }
   }
 }

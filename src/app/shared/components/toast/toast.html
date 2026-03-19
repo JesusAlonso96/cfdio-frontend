@@ -3,5 +3,5 @@
         <mat-icon class="me-2" outlined>{{toastIcon}}</mat-icon>
         <span>{{ message }}</span>
     </div>
-    <mat-icon class="close m-1" role="button" (click)="close()" outlined>close_small</mat-icon>
+    <mat-icon class="close m-1" tabindex="0" (keydown.scape)="close()" (click)="close()" outlined>close_small</mat-icon>
 </div>

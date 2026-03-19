@@ -1,14 +1,19 @@
-@use "general-styles" as *;
-@use "variables" as *;
+@use 'general-styles' as *;
+@use 'variables' as *;
 
 @mixin general-buttons {
-    button {
-        @include rounded-button();
-    }
+  button {
+    @include rounded-button();
+  }
 
-    .mat-mdc-fab-base{
-        box-shadow: none;
-        color: $white;
-        background-color: $primary;
-    }
+  .mat-mdc-fab-base {
+    box-shadow: none;
+    color: $white;
+    background-color: $primary;
+  }
+
+  .btn-custom-transparent {
+    border: none;
+    background-color: transparent;
+  }
 }

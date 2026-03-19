@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -25,16 +25,29 @@ import { LoadingIconsSize } from '../../../../shared/enums/loading-icons-size.en
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatDividerModule, PhoneMaskDirective, MatIconModule, MatTooltipModule, OutlinedIconDirective, LoadingIconsComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule,
+    PhoneMaskDirective,
+    MatIconModule,
+    MatTooltipModule,
+    OutlinedIconDirective,
+    LoadingIconsComponent,
+  ],
   standalone: true,
   templateUrl: './register.html',
-  styleUrls: ['./register.scss', '../../pages/auth/auth.scss']
+  styleUrls: ['./register.scss', '../../pages/auth/auth.scss'],
 })
 export class RegisterComponent extends BaseFormComponent<RegisterForm> implements OnInit {
   @Output() clicked = new EventEmitter<void>();
-  private _formUtils = inject(FormUtilsService);
-  private _authService = inject(AuthService);
-  private _toastService = inject(ToastService);
+  private readonly _formUtils = inject(FormUtilsService);
+  private readonly _authService = inject(AuthService);
+  private readonly _toastService = inject(ToastService);
   public form!: FormGroup;
   protected formValid = signal(false);
   protected showPassword = signal(false);
@@ -44,7 +57,7 @@ export class RegisterComponent extends BaseFormComponent<RegisterForm> implement
   protected LoadingIconsSize = LoadingIconsSize;
   protected LoadingColors = LoadingColors;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder) {
     super();
   }
 
@@ -53,11 +66,10 @@ export class RegisterComponent extends BaseFormComponent<RegisterForm> implement
       email: ['', [Validators.required, Validators.email]],
       cellphone: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.pattern(PASSWORD_REGEX)]],
-      confirmPassword: ['', [Validators.required, Validators.pattern(PASSWORD_REGEX)]]
-
+      confirmPassword: ['', [Validators.required, Validators.pattern(PASSWORD_REGEX)]],
     });
     this.form.statusChanges.subscribe(() => {
-      this.formValid.set(this.form.valid)
+      this.formValid.set(this.form.valid);
     });
   }
 
@@ -82,22 +94,23 @@ export class RegisterComponent extends BaseFormComponent<RegisterForm> implement
     const password: string = String(this.value('password'));
     const confirmPassword: string = String(this.value('confirmPassword'));
     if (!PASSWORD_REGEX.test(confirmPassword)) return;
-    if (password !== confirmPassword) this.control('confirmPassword')?.setErrors({ diferent: true });
-    else this.control('confirmPassword')?.setErrors(null);
+    if (password === confirmPassword) this.control('confirmPassword')?.setErrors(null);
+    else this.control('confirmPassword')?.setErrors({ diferent: true });
   }
 
   protected registerClient(): void {
-    const registerData: RegisterData = this._formUtils.mapFormToModel<RegisterData>(this.form, ['confirmPassword']);
+    const registerData: RegisterData = this._formUtils.mapFormToModel<RegisterData>(this.form, [
+      'confirmPassword',
+    ]);
     registerData.cellphone = this._formUtils.replacePhoneMask(registerData.cellphone);
     this.loading.set(true);
     this._authService.registerUser(registerData).subscribe({
       next: (res: RegisterResponse) => {
         this.loading.set(false);
-        this._toastService.showSuccess("Registro exitoso, bienvenido!", 6000);
+        this._toastService.showSuccess('Registro exitoso, bienvenido!', 6000);
         this.changeForm();
       },
-      error: (err: HttpErrorResponse) => this.loading.set(false)
+      error: (err: HttpErrorResponse) => this.loading.set(false),
     });
   }
-
 }

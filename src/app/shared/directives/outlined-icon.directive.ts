@@ -1,12 +1,13 @@
 import { Directive, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[outlined]'
+  selector: '[outlined]',
 })
 export class OutlinedIconDirective {
-
-  constructor(private el: ElementRef, private renderer: Renderer2) {
+  constructor(
+    private readonly el: ElementRef,
+    private readonly renderer: Renderer2,
+  ) {
     this.renderer.addClass(this.el.nativeElement, 'material-symbols-outlined');
   }
-
 }

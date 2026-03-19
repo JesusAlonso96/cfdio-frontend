@@ -2,17 +2,18 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
-  selector: '[phoneMask]'
+  selector: '[phoneMask]',
 })
 export class PhoneMaskDirective {
-
-  constructor(private el: ElementRef<HTMLInputElement>, private ngControl: NgControl) { }
+  constructor(
+    private readonly el: ElementRef<HTMLInputElement>,
+    private readonly ngControl: NgControl,
+  ) {}
 
   @HostListener('input', ['$event'])
   onInput(event: Event) {
-    let value = this.el.nativeElement.value.replace(/\D/g, ''); // solo dígitos
+    let value = this.el.nativeElement.value.replaceAll(/\D/g, ''); // solo dígitos
     if (value.length > 10) value = value.slice(0, 10);
- 
 
     // Formato con guiones: 123-456-7890
     let formatted = '';
@@ -31,5 +32,4 @@ export class PhoneMaskDirective {
     }
     event.stopPropagation();
   }
-
 }

@@ -1,4 +1,4 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,8 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon.directive';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatDialog } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 
 export interface PeriodicElement {
@@ -33,9 +32,19 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 @Component({
   selector: 'app-main-tax-data',
-  imports: [MatTableModule, MatPaginatorModule, MatCardModule, MatButtonModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatIconModule, OutlinedIconDirective],
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatCardModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatIconModule,
+    OutlinedIconDirective,
+  ],
   templateUrl: './main-tax-data.html',
-  styleUrl: './main-tax-data.scss'
+  styleUrl: './main-tax-data.scss',
 })
 export class MainTaxData {
   readonly router = inject(Router);
@@ -45,6 +54,6 @@ export class MainTaxData {
   dataSource = ELEMENT_DATA;
 
   openCreateTaxData() {
-    this.router.navigate(['nuevo'], { relativeTo: this.route })
+    this.router.navigate(['nuevo'], { relativeTo: this.route });
   }
 }

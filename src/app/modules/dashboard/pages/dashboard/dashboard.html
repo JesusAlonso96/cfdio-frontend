@@ -1,56 +1,65 @@
 <mat-sidenav-container class="main-container" autosize>
+  <mat-sidenav #sidenav mode="side" opened class="main-sidenav" [class.collapsed]="isCollapsed()">
+    <div class="sidenav-content">
+      <div class="sidebar-header">
+        @if (isCollapsed()) {
+          <div class="mini-icon-content w-100 d-flex justify-content-center align-items-center">
+            <img class="mini-icon" src="./assets/logos/dashboard-mini-logo.svg" alt="" />
+          </div>
+        } @else {
+          <div class="logo-content w-100 d-flex justify-content-center align-items-center">
+            <img class="logo" src="./assets/logos/dashboard-white-logo.svg" alt="" />
+          </div>
+        }
+      </div>
 
-    <mat-sidenav #sidenav mode="side" opened class="main-sidenav" [class.collapsed]="isCollapsed()">
-        <div class="sidenav-content">
-            <div class="sidebar-header">
-                @if (isCollapsed()) {
-                <div class="mini-icon-content w-100 d-flex justify-content-center align-items-center">
-                    <img class="mini-icon" src="./assets/logos/dashboard-mini-logo.svg" alt="">
-                </div>
-                } @else {
-                <div class="logo-content w-100 d-flex justify-content-center align-items-center">
-                    <img class="logo" src="./assets/logos/dashboard-white-logo.svg" alt="">
+      <mat-list class="menu-list mt-2" role="menu" [class.collapsed]="isCollapsed()">
+        @for (item of menuItems; track $index) {
+          <mat-list-item
+            [class.selected]="currentModule().includes(item.label)"
+            (click)="redirectToModule(item)"
+            (keydown.enter)="redirectToModule(item)"
+            tabindex="0"
+            role="listitem"
+          >
+            <mat-icon outlined matListItemIcon>{{ item.icon }} {{ currentModule() }}</mat-icon>
+            @if (!isCollapsed()) {
+              <div class="menu-item-text" matListItemTitle>{{ item.label }}</div>
+            }
+          </mat-list-item>
+        }
+      </mat-list>
 
-                </div>
-                }
-            </div>
+      <div class="logout-section w-100" [class.collapsed]="isCollapsed()">
+        <button class="mb-1" (click)="toggleSidebar()" matIconButton>
+          <mat-icon outlined>{{
+            isCollapsed() ? 'right_panel_close' : 'right_panel_open'
+          }}</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-sidenav>
 
-            <mat-list class="menu-list mt-2" role="menu"  [class.collapsed]="isCollapsed()">
-                @for (item of menuItems; track $index) {
-                <mat-list-item [class.selected]="currentModule().includes(item.label) " (click)="redirectToModule(item)" role="listitem">
-                    <mat-icon outlined matListItemIcon>{{item.icon}} {{currentModule()}}</mat-icon>
-                    @if (!isCollapsed()) {
-                    <div class="menu-item-text" matListItemTitle>{{item.label}}</div>
-                    }
-                </mat-list-item>
-                }
-            </mat-list>
+  <mat-sidenav-content #sidenavContainer class="main-content">
+    <app-header
+      [currentModule]="currentModule()"
+      [hasScrolled]="hasScrolled()"
+      [isCollapsed]="isCollapsed()"
+      (toggleSidebar)="toggleSidebar()"
+    ></app-header>
 
-            <div class="logout-section w-100" [class.collapsed]="isCollapsed()">
-                <button class="mb-1" (click)="toggleSidebar()" matIconButton>
-                    <mat-icon outlined>{{isCollapsed() ? 'right_panel_close' :
-                        'right_panel_open'}}</mat-icon>
-                </button>
-
-            </div>
-        </div>
-
-
-    </mat-sidenav>
-
-
-    <mat-sidenav-content #sidenavContainer class="main-content">
-
-        <app-header [currentModule]="currentModule()" [hasScrolled]="hasScrolled()" [isCollapsed]="isCollapsed()"
-            (toggleSidebar)="toggleSidebar()"></app-header>
-
-        <div class="container-fluid py-5">
-            <router-outlet></router-outlet>
-        </div>
-    </mat-sidenav-content>
+    <div class="container-fluid py-5">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
 </mat-sidenav-container>
 @if (hasScrolled()) {
-<button [class.collapsed]="isCollapsed()" class="to-top-button me-1 mb-1" (click)="backToTop()" matIconButton>
+  <button
+    [class.collapsed]="isCollapsed()"
+    class="to-top-button me-1 mb-1"
+    (click)="backToTop()"
+    matIconButton
+  >
     <mat-icon outlined>keyboard_arrow_up</mat-icon>
-</button>
+  </button>
 }

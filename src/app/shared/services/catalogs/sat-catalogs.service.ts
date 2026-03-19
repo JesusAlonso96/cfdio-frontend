@@ -5,13 +5,13 @@ import { environment } from '../../../../environments/environment';
 import { TaxRegime } from '../../models/tax-regime.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SatCatalogsService {
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
   private readonly satCatalogsApi = `${environment.apiUrl}/catalogs/sat`;
 
-  constructor() { }
+  constructor() {}
 
   /* TAX REGIME CATALOG */
   private getTaxRegimeCatalog(): Observable<TaxRegime[]> {
@@ -21,9 +21,11 @@ export class SatCatalogsService {
   public getTaxRegimeCatalogAsync(): Promise<TaxRegime[]> {
     return new Promise<TaxRegime[]>((resolve, reject) => {
       this.getTaxRegimeCatalog().subscribe({
-        next: (response: TaxRegime[]) => { resolve(response) },
-        error: (err: HttpErrorResponse) => reject(err.error)
-      })
-    })
+        next: (response: TaxRegime[]) => {
+          resolve(response);
+        },
+        error: (err: HttpErrorResponse) => reject(err.error),
+      });
+    });
   }
 }

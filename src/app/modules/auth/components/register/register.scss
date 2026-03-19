@@ -1,13 +1,16 @@
-@use "variables" as *;
+@use 'variables' as *;
 
 .register-form {
-    p {
-        color: $dark-gray-200;
-        font-weight: 600;
-    }
+  p {
+    color: $dark-gray-200;
+    font-weight: 600;
+  }
 }
 
 .register-form-text {
-    color: $dark-gray-200;
+  color: $dark-gray-200;
+  font-weight: 600;
+  button {
     font-weight: 600;
+  }
 }

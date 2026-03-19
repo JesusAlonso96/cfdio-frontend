@@ -1,11 +1,9 @@
-@use "variables" as *;
+@use 'variables' as *;
 
 @mixin general-dialogs {
-    .mat-mdc-dialog-surface {
-          box-shadow: $cards-shadow;
-        border: $cards-border;
-        border-radius: $cards-border-radius;
-
-        border-radius: $cards-border-radius !important;
-    }
+  .mat-mdc-dialog-surface {
+    box-shadow: $cards-shadow;
+    border: $cards-border;
+    border-radius: $cards-border-radius !important;
+  }
 }

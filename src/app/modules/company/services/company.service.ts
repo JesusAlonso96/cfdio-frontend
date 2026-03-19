@@ -5,13 +5,13 @@ import { CompanyData } from '../../../shared/models/company-data.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CompanyService {
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
   private readonly companiesApi = `${environment.apiUrl}/companies`;
 
-  constructor() { }
+  constructor() {}
 
   public createCompany(companyData: CompanyData): Observable<any> {
     return this.http.post<any>(`${this.companiesApi}`, companyData);
