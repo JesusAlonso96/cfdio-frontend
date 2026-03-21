@@ -8,22 +8,16 @@
             class="tax-data-stepper"
             [disableRipple]="true"
             [linear]="true"
-            (selectionChange)="onStepChange()"
             [animationDuration]="'400'"
           >
-            <mat-step [stepControl]="forms.generalDataForm">
-              <form [formGroup]="forms.generalDataForm">
-                <ng-template matStepLabel> Generales </ng-template>
+            <mat-step label="Generales" [stepControl]="forms.generalDataForm">
+              <form  [formGroup]="forms.generalDataForm">
                 <div class="container-fluid py-3">
                   <div class="row mb-3">
                     <div class="col-lg-5 col-md-6 col-sm-12">
                       <mat-form-field class="w-100">
                         <mat-label>Alias</mat-label>
-                        <input
-                          formControlName="alias"
-                          matInput
-                          type="text"
-                        />
+                        <input formControlName="alias" matInput type="text" />
                         <mat-icon
                           matTooltipClass="multi-line-tooltip"
                           [matTooltip]="aliasTooltip"
@@ -57,7 +51,7 @@
                         <mat-select formControlName="taxRegime">
                           <mat-option [value]="null">Seleccionar</mat-option>
                           @for (item of filteredTaxRegimeCatalog; track $index) {
-                            <mat-option [value]="item.key"
+                            <mat-option [value]="item.id"
                               >{{ item.key }} - {{ item.description }}</mat-option
                             >
                           }
@@ -75,11 +69,7 @@
                     >
                       <mat-form-field class="w-100">
                         <mat-label>RFC con homoclave</mat-label>
-                        <input
-                          formControlName="rfc"
-                          matInput
-                          type="text"
-                        />
+                        <input formControlName="rfc" matInput type="text" />
                         @if (hasError('generalDataForm', 'rfc', 'required')) {
                           <mat-error>Por favor, ingresa el RFC.</mat-error>
                         } @else if (hasError('generalDataForm', 'rfc', 'pattern')) {
@@ -95,23 +85,14 @@
                         <mat-label>{{
                           isNaturalPerson() ? 'Nombre del contribuyente' : 'Razón social'
                         }}</mat-label>
-                        <input
-                          formControlName="legalName"
-                          matInput
-                          type="text"
-                          
-                        />
+                        <input formControlName="legalName" matInput type="text" />
                       </mat-form-field>
                     </div>
                     @if (isNaturalPerson()) {
                       <div class="col-lg-4 col-md-6 col-sm-12">
                         <mat-form-field class="w-100">
                           <mat-label>CURP</mat-label>
-                          <input
-                            formControlName="curp"
-                            matInput
-                            type="text"
-                          />
+                          <input formControlName="curp" matInput type="text" />
                           @if (hasError('generalDataForm', 'curp', 'pattern')) {
                             <mat-error>Por favor, ingresa un CURP valido.</mat-error>
                           }
@@ -122,9 +103,8 @@
                 </div>
               </form>
             </mat-step>
-            <mat-step [stepControl]="forms.contactForm">
+            <mat-step label="Contacto de facturación" [stepControl]="forms.contactForm">
               <form [formGroup]="forms.contactForm">
-                <ng-template matStepLabel>Contacto de facturación</ng-template>
                 <div class="container-fluid py-3">
                   <span class="form-label">{{ contactLabel() }}</span>
                   <mat-divider class="mt-2 mb-3"></mat-divider>
@@ -144,16 +124,15 @@
                       }
                     </mat-form-field>
                     <button (click)="addContact()" class="form-button" matButton="filled">
-                      <mat-icon>add</mat-icon>
+                      <mat-icon outlined>add</mat-icon>
                       Agregar nuevo
                     </button>
                   </div>
                 </div>
               </form>
             </mat-step>
-            <mat-step [stepControl]="forms.addressForm">
+            <mat-step label="Dirección fiscal" [stepControl]="forms.addressForm">
               <form [formGroup]="forms.addressForm">
-                <ng-template matStepLabel>Dirección fiscal</ng-template>
                 <div class="container-fluid py-3">
                   <span class="form-label">{{ addressLabel() }}</span>
                   <mat-divider class="mt-2 mb-3"></mat-divider>
@@ -171,16 +150,12 @@
                       }
                     </mat-form-field>
                     <button (click)="addAddress()" class="form-button" matButton="filled">
-                      <mat-icon>add</mat-icon>
+                      <mat-icon outlined>add</mat-icon>
                       Agregar nueva
                     </button>
                   </div>
                 </div>
               </form>
-            </mat-step>
-            <mat-step>
-              <ng-template matStepLabel>Done</ng-template>
-              You are now done.
             </mat-step>
           </mat-horizontal-stepper>
 
@@ -204,13 +179,13 @@
             <div class="actions d-flex justify-content-between">
               <button
                 matButton
-                (click)="stepper.previous()"
+                (click)="stepper.previous(); currentStep.set(stepper.selectedIndex)"
                 [disabled]="stepper.selectedIndex === 0"
               >
                 Atrás
               </button>
 
-              <button matButton (click)="stepper.next()" [disabled]="!currentStepValid()">
+              <button matButton (click)="nextStep()" [disabled]="!currentStepValid()">
                 Siguiente
               </button>
             </div>

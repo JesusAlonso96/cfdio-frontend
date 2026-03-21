@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>{{ options.title }}</h2>
+
+<mat-dialog-content>
+  {{ options.message }}
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  @if (options.showCancelButton) {
+    <button mat-button matButton (click)="cancel()">
+      {{ options.cancelText || 'Cancelar' }}
+    </button>
+  }
+  
+  @if (options.showConfirmButton) {
+    <button matButton="filled" (click)="confirm()">
+      {{ options.confirmText || 'Aceptar' }}
+    </button>
+  }
+</mat-dialog-actions>

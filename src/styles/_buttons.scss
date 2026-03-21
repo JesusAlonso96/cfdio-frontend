@@ -1,7 +1,14 @@
 @use 'general-styles' as *;
 @use 'variables' as *;
+@use '@angular/material' as mat;
 
 @mixin general-buttons {
+  @include mat.button-overrides(
+    (
+      outlined-outline-color: $medium-gray,
+    )
+  );
+
   button {
     @include rounded-button();
   }

@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  computed,
-  inject,
-  OnInit,
-  signal,
-  ViewChild,
-} from '@angular/core';
+import { Component, computed, inject, OnInit, signal, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -42,8 +34,9 @@ import { InternalCatalogsService } from '../../../../shared/services/catalogs/in
 import { SatCatalogsService } from '../../../../shared/services/catalogs/sat-catalogs.service';
 import { AddressData } from '../../../address-data/models/address-data.interface';
 import { AddressDataService } from '../../../address-data/services/address-data.service';
-import { debounceTime, filter, merge, Subscription, tap } from 'rxjs';
+import { debounceTime, filter, merge, tap } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 type DraftStatus = 'preloaded' | 'pristine' | 'saving' | 'saved';
 
 @Component({
@@ -73,7 +66,7 @@ export class CreateTaxDataComponent
     contactForm: { contactId: number };
     addressForm: { addressId: number };
   }>
-  implements OnInit, AfterViewInit
+  implements OnInit
 {
   private readonly _internalCatalogsService = inject(InternalCatalogsService);
   private readonly _satCatalogsService = inject(SatCatalogsService);
@@ -81,6 +74,8 @@ export class CreateTaxDataComponent
   private readonly _loadingService = inject(LoadingService);
   private readonly _toastService = inject(ToastService);
   readonly dialog = inject(MatDialog);
+  private readonly router = inject(Router);
+
   //catalogs
   protected personTypeCatalog: PersonType[] = [];
   protected taxRegimeCatalog: TaxRegime[] = [];
@@ -129,22 +124,23 @@ export class CreateTaxDataComponent
   //stepper controls
   @ViewChild(MatStepper) stepper!: MatStepper;
 
-  @ViewChild(MatStepper)
-  set matStepper(stepper: MatStepper | undefined) {
-    if (!stepper) return;
-
-    this.stepper = stepper;
-    this.onStepChange();
-  }
-  private currentStepSub?: Subscription;
-  protected currentStepValid = signal<boolean>(false);
+  currentStep = signal(0);
+  currentStepValid = computed(() => {
+    const step = this.currentStep();
+    switch (step) {
+      case 0:
+        return this.generalDataFormValid();
+      case 1:
+        return this.contactFormValid();
+      case 2:
+        return this.addressFormValid();
+      default:
+        return false;
+    }
+  });
   private isProgrammaticReset: boolean = false;
   constructor() {
     super();
-  }
-
-  ngAfterViewInit() {
-    this.onStepChange();
   }
 
   ngOnInit(): void {
@@ -174,9 +170,7 @@ export class CreateTaxDataComponent
         this.loadDraft(draft);
       }
       this.detectFormsChanges();
-      setTimeout(() => {
-        this._loadingService.hide();
-      }, 4000);
+      this._loadingService.hide();
     } catch (error: any) {
       this._toastService.showError(error.message);
       this._loadingService.hide();
@@ -248,13 +242,25 @@ export class CreateTaxDataComponent
 
   private saveDraft() {
     const draft: any = {
-      general: this.forms.generalDataForm.value,
-      contact: this.forms.contactForm.value,
-      address: this.forms.addressForm.value,
+      general: {
+        ...this.forms.generalDataForm.value,
+        taxRegimeText: this.taxRegimeCatalog.find(
+          (t) => t.id === this.forms.generalDataForm.value.taxRegime,
+        ),
+      },
+      contact: this.forms.contactForm.value.contactId,
+      address: this.forms.addressForm.value.addressId,
+      fullAddress: this.addresses().find((a) => a.id === this.forms.addressForm.value.addressId)
+        ?.fullAddress,
+      contactPhone: this.contacts().find((c) => c.id === this.forms.contactForm.value.contactId)
+        ?.phone,
+      contactEmail: this.contacts().find((c) => c.id === this.forms.contactForm.value.contactId)
+        ?.email,
     };
 
     sessionStorage.setItem('draft.datosFiscales', JSON.stringify(draft));
   }
+
   private updateTaxRegimeCatalog(): void {
     this.filteredTaxRegimeCatalog = this.taxRegimeCatalog.filter((tr) => {
       return this.isNaturalPerson() ? tr.naturalPerson : tr.legalPerson;
@@ -281,10 +287,6 @@ export class CreateTaxDataComponent
         this._toastService.showSuccess('¡Dirección creada exitosamente!');
       }
     });
-  }
-
-  isCurrentStepValid(stepper: MatStepper): boolean {
-    return stepper ? (stepper.selected?.stepControl?.valid ?? false) : false;
   }
 
   /* DRAFT METHODS */
@@ -320,17 +322,12 @@ export class CreateTaxDataComponent
     this.isProgrammaticReset = false;
   }
 
-  /* STEPPER CONTROLS METHODS */
-  onStepChange() {
-    if (!this.stepper) return;
-    this.currentStepSub?.unsubscribe();
-    const control = this.stepper.selected?.stepControl;
-
-    this.currentStepValid.set(control?.valid ?? false);
-    if (control) {
-      this.currentStepSub = control.statusChanges.subscribe(() => {
-        this.currentStepValid.set(control.valid);
-      });
+  nextStep() {
+    if (this.currentStep() === 2) {
+      this.router.navigate(['/dashboard/datos-fiscales/nuevo/resumen']);
+      return;
     }
+    this.stepper.next();
+    this.currentStep.set(this.stepper.selectedIndex);
   }
 }
