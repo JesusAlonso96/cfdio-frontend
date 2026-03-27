@@ -34,18 +34,30 @@
             <mat-icon outlined>overview</mat-icon>
             <span>Datos generales</span>
           </div>
-          <button matButton="outlined">Editar</button>
+          <button
+            [routerLink]="['/dashboard/datos-fiscales/nuevo']"
+            [queryParams]="{ step: TaxDataStep.GENERAL }"
+            matButton="outlined"
+          >
+            Editar
+          </button>
         </div>
 
         <div class="resume-section-content">
-          <p><strong>Alias:</strong> {{taxData.general.alias ??  'No registrado'  }}</p>
-          <p><strong>Tipo de persona:</strong> {{taxData.general.personType}}</p>
-          <p><strong>RFC:</strong> {{taxData.general.rfc}}</p>
-          <p><strong>Nombre:</strong> {{taxData.general.legalName}}</p>
+          <p><strong>Alias:</strong> {{ taxData.general.alias ?? 'No registrado' }}</p>
+          <p><strong>Tipo de persona:</strong> {{ taxData.general.personType | personTypeLabel }}</p>
+          <p><strong>RFC:</strong> {{ taxData.general.rfc }}</p>
+          <p>
+            <strong>{{ isNaturalPerson() ? 'Nombre del contribuyente' : 'Razón social' }}:</strong>
+            {{ taxData.general.legalName }}
+          </p>
           @if (isNaturalPerson()) {
-            <p><strong>CURP:</strong> {{taxData.general.curp ??  'No registrado'  }}</p>
+            <p><strong>CURP:</strong> {{ taxData.general.curp ?? 'No registrado' }}</p>
           }
-          <p><strong>Régimen fiscal:</strong> 605 - Sueldos y Salarios</p>
+          <p>
+            <strong>Régimen fiscal:</strong> {{ taxData.general.taxRegimeText?.key }} -
+            {{ taxData.general.taxRegimeText?.description }}
+          </p>
         </div>
       </div>
 
@@ -56,35 +68,50 @@
             <mat-icon outlined>call_log</mat-icon>
             <span>Contacto de facturación</span>
           </div>
-          <button matButton="outlined">Editar</button>
+          <button
+            [routerLink]="['/dashboard/datos-fiscales/nuevo']"
+            [queryParams]="{ step: TaxDataStep.CONTACT }"
+            matButton="outlined"
+          >
+            Editar
+          </button>
         </div>
 
         <div class="resume-section-content">
-          <p><strong>Email:</strong> ejemplo@gmail.com</p>
-          <p><strong>Teléfono:</strong> 4498896523</p>
+          <p><strong>Email:</strong> {{ taxData.contactEmail }}</p>
+          <p><strong>Teléfono:</strong> {{ taxData.contactPhone }}</p>
         </div>
       </div>
 
       <!-- address -->
       <div class="resume-section">
-         <div class="resume-section-header">
+        <div class="resume-section-header">
           <div class="resume-section-title">
             <mat-icon outlined>home_pin</mat-icon>
             <span>Dirección fiscal</span>
           </div>
-          <button matButton="outlined">Editar</button>
+          <button
+            [routerLink]="['/dashboard/datos-fiscales/nuevo']"
+            [queryParams]="{ step: TaxDataStep.ADDRESS }"
+            matButton="outlined"
+          >
+            Editar
+          </button>
         </div>
 
         <div class="resume-section-content">
-          <p>Av. Reforma 123</p>
-          <p>Col. Centro</p>
-          <p>CP 20000, Aguascalientes, AGS</p>
+          <p class="address">{{ taxData.addressFirstLine }}</p>
+          <p class="address">{{ taxData.addressSecondLine }}</p>
+          <p class="address">{{ taxData.addressThirdLine }}</p>
+          <p class="address">{{ taxData.addressFourLine }}</p>
         </div>
       </div>
 
       <div class="resume-actions d-flex justify-content-end">
-        <button matButton="outlined">Volver a editar</button>
-        <button matButton="filled">Guardar y confirmar</button>
+        <button routerLink="/dashboard/datos-fiscales/nuevo" matButton="outlined">
+          Volver a editar
+        </button>
+        <button (click)="saveTaxData()" matButton="filled">Guardar y confirmar</button>
       </div>
     </mat-card>
   </div>

@@ -11,7 +11,7 @@
             [animationDuration]="'400'"
           >
             <mat-step label="Generales" [stepControl]="forms.generalDataForm">
-              <form  [formGroup]="forms.generalDataForm">
+              <form [formGroup]="forms.generalDataForm">
                 <div class="container-fluid py-3">
                   <div class="row mb-3">
                     <div class="col-lg-5 col-md-6 col-sm-12">
@@ -51,7 +51,7 @@
                         <mat-select formControlName="taxRegime">
                           <mat-option [value]="null">Seleccionar</mat-option>
                           @for (item of filteredTaxRegimeCatalog; track $index) {
-                            <mat-option [value]="item.id"
+                            <mat-option [value]="item.key"
                               >{{ item.key }} - {{ item.description }}</mat-option
                             >
                           }
@@ -138,7 +138,7 @@
                   <mat-divider class="mt-2 mb-3"></mat-divider>
                   <div class="form-row">
                     <mat-form-field class="form-field">
-                      <mat-label>Seleccionar direción</mat-label>
+                      <mat-label>Seleccionar dirección</mat-label>
                       <mat-select formControlName="addressId" [placeholder]="addressPlaceholder()">
                         <mat-option [value]="null">Seleccionar</mat-option>
                         @for (address of addresses(); track $index) {
@@ -186,7 +186,7 @@
               </button>
 
               <button matButton (click)="nextStep()" [disabled]="!currentStepValid()">
-                Siguiente
+                {{ isEditMode() ? 'Guardar y avanzar' : 'Siguiente' }}
               </button>
             </div>
           </div>

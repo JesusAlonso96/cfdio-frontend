@@ -47,7 +47,7 @@
 
 .resume-card {
   max-width: 45dvw;
-  min-width: 35dvw;
+  min-width: 40dvw;
 }
 
 .resume-section {
@@ -88,4 +88,9 @@
 .resume-actions {
   gap: 12px;
   padding: 20px;
+}
+
+.address {
+  white-space: pre-line;
+  line-height: 1.4;
 }

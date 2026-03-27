@@ -36,7 +36,8 @@ import { AddressData } from '../../../address-data/models/address-data.interface
 import { AddressDataService } from '../../../address-data/services/address-data.service';
 import { debounceTime, filter, merge, tap } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TaxDataStep } from '../../enums/tax-data-step.enum';
 type DraftStatus = 'preloaded' | 'pristine' | 'saving' | 'saved';
 
 @Component({
@@ -75,6 +76,7 @@ export class CreateTaxDataComponent
   private readonly _toastService = inject(ToastService);
   readonly dialog = inject(MatDialog);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   //catalogs
   protected personTypeCatalog: PersonType[] = [];
@@ -123,28 +125,51 @@ export class CreateTaxDataComponent
   protected lastSaved = signal<Date | null>(null);
   //stepper controls
   @ViewChild(MatStepper) stepper!: MatStepper;
-
+  @ViewChild(MatStepper)
+  set matStepper(stepper: MatStepper) {
+    if (stepper) {
+      this.stepper = stepper;
+      Promise.resolve().then(() => {
+        this.moveToStepFromQuery();
+      });
+    }
+  }
   currentStep = signal(0);
   currentStepValid = computed(() => {
     const step = this.currentStep();
     switch (step) {
-      case 0:
+      case TaxDataStep.GENERAL:
         return this.generalDataFormValid();
-      case 1:
+      case TaxDataStep.CONTACT:
         return this.contactFormValid();
-      case 2:
+      case TaxDataStep.ADDRESS:
         return this.addressFormValid();
       default:
         return false;
     }
   });
   private isProgrammaticReset: boolean = false;
+  protected isEditMode = signal(false);
   constructor() {
     super();
   }
 
   ngOnInit(): void {
     this.loadData();
+  }
+
+  moveToStepFromQuery() {
+    const step: number = Number(this.route.snapshot.queryParamMap.get('step'));
+    if (step) {
+      const index = step;
+      this.stepper.steps.forEach((s, i) => {
+        if (i < index) {
+          s.completed = true;
+        }
+      });
+      this.stepper.selectedIndex = index;
+      this.isEditMode.set(true);
+    }
   }
 
   async loadData(): Promise<void> {
@@ -241,17 +266,26 @@ export class CreateTaxDataComponent
   }
 
   private saveDraft() {
+    const selectedAddress = this.addresses().find(
+      (a) => a.id === this.forms.addressForm.value.addressId,
+    );
     const draft: any = {
       general: {
         ...this.forms.generalDataForm.value,
         taxRegimeText: this.taxRegimeCatalog.find(
-          (t) => t.id === this.forms.generalDataForm.value.taxRegime,
+          (t) => t.key === this.forms.generalDataForm.value.taxRegime,
         ),
       },
       contact: this.forms.contactForm.value.contactId,
       address: this.forms.addressForm.value.addressId,
-      fullAddress: this.addresses().find((a) => a.id === this.forms.addressForm.value.addressId)
-        ?.fullAddress,
+      addressFirstLine: selectedAddress
+        ? `${selectedAddress.street} ${selectedAddress.extNumber}${selectedAddress.intNumber ?? ' -' + selectedAddress.intNumber}`
+        : null,
+      addressSecondLine: selectedAddress ? `${selectedAddress.colony}` : null,
+      addressThirdLine: selectedAddress
+        ? `${selectedAddress.municipality}, ${selectedAddress.state}`
+        : null,
+      addressFourLine: selectedAddress ? `C.P: ${selectedAddress.zipCode}` : null,
       contactPhone: this.contacts().find((c) => c.id === this.forms.contactForm.value.contactId)
         ?.phone,
       contactEmail: this.contacts().find((c) => c.id === this.forms.contactForm.value.contactId)
@@ -294,8 +328,8 @@ export class CreateTaxDataComponent
     const parsed = JSON.parse(draft);
     this.draftStatus.set('preloaded');
     this.forms.generalDataForm.patchValue(parsed.general || {});
-    this.forms.contactForm.patchValue(parsed.contact || {});
-    this.forms.addressForm.patchValue(parsed.address || {});
+    this.forms.contactForm.patchValue({ contactId: parsed.contact ?? null });
+    this.forms.addressForm.patchValue({ addressId: parsed.address ?? null });
     this.isNaturalPerson.set(this.value('generalDataForm', 'personType') === 'NATURAL');
     this.updateTaxRegimeCatalog();
 
@@ -323,6 +357,11 @@ export class CreateTaxDataComponent
   }
 
   nextStep() {
+    if (this.isEditMode()) {
+      this.router.navigate(['/dashboard/datos-fiscales/nuevo/resumen']);
+      return;
+    }
+
     if (this.currentStep() === 2) {
       this.router.navigate(['/dashboard/datos-fiscales/nuevo/resumen']);
       return;

@@ -1,10 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ConfirmService } from '../../../../shared/services/confirm.service';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon.directive';
+import { TaxDataStep } from '../../enums/tax-data-step.enum';
+import { PersonTypeLabelPipe } from '../../pipes/person-type-label.pipe';
+import { PersonType } from '../../enums/person-type.enum';
 
 @Component({
   selector: 'app-tax-data-summary',
@@ -15,12 +18,13 @@ import { OutlinedIconDirective } from '../../../../shared/directives/outlined-ic
     MatCardModule,
     RouterLink,
     OutlinedIconDirective,
+    PersonTypeLabelPipe,
   ],
   templateUrl: './tax-data-summary.html',
   styleUrl: './tax-data-summary.scss',
 })
 export class TaxDataSummaryComponent implements OnInit {
-  private readonly router = inject(Router);
+  TaxDataStep = TaxDataStep;
   private readonly _confirmService = inject(ConfirmService);
   protected emptyForm = signal(false);
   private readonly requiredFields = [
@@ -38,7 +42,6 @@ export class TaxDataSummaryComponent implements OnInit {
     const draft = sessionStorage.getItem('draft.datosFiscales');
     this.taxData = draft ? JSON.parse(sessionStorage.getItem('draft.datosFiscales') || '') : null;
     if (!this.taxData) {
-      console.log('no hay taxdata');
       this.emptyForm.set(true);
       return;
     }
@@ -46,13 +49,12 @@ export class TaxDataSummaryComponent implements OnInit {
       path.split('.').reduce((obj, key) => obj?.[key], this.taxData),
     );
     if (!isValidDraft) {
-      console.log('esta incompleto el formulario');
       this.emptyForm.set(true);
       return;
     }
     this.normalizeEmptyStrings(this.taxData);
-    this.isNaturalPerson.set(this.taxData.general.personType);
-    console.log(this.taxData);
+    this.isNaturalPerson.set(this.taxData.general.personType === PersonType.NATURAL);
+    console.log(this.isNaturalPerson());
   }
 
   private normalizeEmptyStrings(obj: any): any {
@@ -69,5 +71,20 @@ export class TaxDataSummaryComponent implements OnInit {
     });
 
     return obj;
+  }
+
+  protected saveTaxData(): void {
+    console.log(this.taxData);
+    const taxDataToSave: any = {
+      alias: this.taxData.general.alias,
+      personType: this.taxData.general.personType,
+      rfc: this.taxData.general.rfc,
+      legalName: this.taxData.general.legalName,
+      curp: this.taxData.general.curp,
+      taxRegime: this.taxData.general.taxRegime,
+      contactId: this.taxData.contact,
+      addressId: this.taxData.address,
+    };
+    console.log(taxDataToSave);
   }
 }

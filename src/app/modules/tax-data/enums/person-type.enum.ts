@@ -1,4 +1,4 @@
 export enum PersonType {
-  NATURAL = 'FÍSICA',
-  LEGAL = 'MORAL',
+  NATURAL = 'NATURAL',
+  LEGAL = 'LEGAL',
 }
