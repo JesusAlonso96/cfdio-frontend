@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ConfirmService } from '../../../../shared/services/confirm.service';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -8,6 +7,10 @@ import { OutlinedIconDirective } from '../../../../shared/directives/outlined-ic
 import { TaxDataStep } from '../../enums/tax-data-step.enum';
 import { PersonTypeLabelPipe } from '../../pipes/person-type-label.pipe';
 import { PersonType } from '../../enums/person-type.enum';
+import { CreateTaxData } from '../../models/create-tax-data.interface';
+import { TaxDataService } from '../../services/tax-data.service';
+import { LoadingService } from '../../../../shared/services/loading.service';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-tax-data-summary',
@@ -25,7 +28,10 @@ import { PersonType } from '../../enums/person-type.enum';
 })
 export class TaxDataSummaryComponent implements OnInit {
   TaxDataStep = TaxDataStep;
-  private readonly _confirmService = inject(ConfirmService);
+  private readonly _loadingService = inject(LoadingService);
+  private readonly _taxDataService = inject(TaxDataService);
+  private readonly _toastService = inject(ToastService);
+  private readonly router = inject(Router);
   protected emptyForm = signal(false);
   private readonly requiredFields = [
     'general.rfc',
@@ -54,7 +60,6 @@ export class TaxDataSummaryComponent implements OnInit {
     }
     this.normalizeEmptyStrings(this.taxData);
     this.isNaturalPerson.set(this.taxData.general.personType === PersonType.NATURAL);
-    console.log(this.isNaturalPerson());
   }
 
   private normalizeEmptyStrings(obj: any): any {
@@ -73,18 +78,30 @@ export class TaxDataSummaryComponent implements OnInit {
     return obj;
   }
 
-  protected saveTaxData(): void {
-    console.log(this.taxData);
-    const taxDataToSave: any = {
-      alias: this.taxData.general.alias,
-      personType: this.taxData.general.personType,
-      rfc: this.taxData.general.rfc,
-      legalName: this.taxData.general.legalName,
-      curp: this.taxData.general.curp,
-      taxRegime: this.taxData.general.taxRegime,
-      contactId: this.taxData.contact,
-      addressId: this.taxData.address,
-    };
-    console.log(taxDataToSave);
+  protected async saveTaxData(): Promise<any> {
+    try {
+      this._loadingService.show();
+      const taxDataToSave: CreateTaxData = {
+        alias: this.taxData.general.alias,
+        personType: this.taxData.general.personType,
+        rfc: this.taxData.general.rfc,
+        legalName: this.taxData.general.legalName,
+        curp: this.taxData.general.curp,
+        taxRegime: this.taxData.general.taxRegime,
+        contactId: this.taxData.contact,
+        addressId: this.taxData.address,
+      };
+      await this._taxDataService.createTaxDataAsync(taxDataToSave);
+      sessionStorage.removeItem('draft.datosFiscales');
+      this._loadingService.hide();
+      this._toastService.showSuccess('¡Datos fiscales creados exitosamente!');
+      this.router.navigate(['/dashboard/datos-fiscales']);
+    } catch (error) {
+      console.error('Error al crear los datos fiscales: ', error);
+      this._loadingService.hide();
+      this._toastService.showError(
+        'Ocurrió un error al crear los datos fiscales, por favor intentalo de nuevo más tarde',
+      );
+    }
   }
 }

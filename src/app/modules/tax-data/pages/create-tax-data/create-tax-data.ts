@@ -205,7 +205,7 @@ export class CreateTaxDataComponent
   private initForms() {
     this.forms = {
       generalDataForm: this._formBuilder.group({
-        alias: ['', [Validators.pattern(ALIAS_REGEX)]],
+        alias: ['', [Validators.required, Validators.pattern(ALIAS_REGEX)]],
         rfc: ['', [Validators.required, Validators.pattern(RFC_REGEX)]],
         legalName: ['', [Validators.required]], //si es fisico nombre del contribuyente, si es moral nombre de la razón social
         taxRegime: ['', [Validators.required]],
@@ -357,15 +357,11 @@ export class CreateTaxDataComponent
   }
 
   nextStep() {
-    if (this.isEditMode()) {
+    if (this.isEditMode() || this.currentStep() === 2) {
       this.router.navigate(['/dashboard/datos-fiscales/nuevo/resumen']);
       return;
     }
 
-    if (this.currentStep() === 2) {
-      this.router.navigate(['/dashboard/datos-fiscales/nuevo/resumen']);
-      return;
-    }
     this.stepper.next();
     this.currentStep.set(this.stepper.selectedIndex);
   }
