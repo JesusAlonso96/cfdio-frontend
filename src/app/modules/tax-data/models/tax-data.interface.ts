@@ -4,10 +4,11 @@ export interface TaxData {
   rfc: string;
   legalName: string;
   taxRegime: string;
-  curp: string;
+  curp?: string;
   personType: string;
-  addressId: number;
-  contactId: number;
-  active: boolean;
-  createdAt: string;
+  addressId?: number;
+  contactId?: number;
+  active?: boolean;
+  default?: boolean;
+  createdAt?: string;
 }

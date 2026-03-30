@@ -29,4 +29,20 @@ export class TaxDataService {
       });
     });
   }
+
+  /* HTTP GET */
+  private getAllTaxData(): Observable<TaxData[]> {
+    return this.http.get<TaxData[]>(`${this.taxDataApi}`);
+  }
+
+  public getAllTaxDataAsync(): Promise<TaxData[]> {
+    return new Promise<TaxData[]>((resolve, reject) => {
+      this.getAllTaxData().subscribe({
+        next: (response: TaxData[]) => {
+          resolve(response);
+        },
+        error: (err: HttpErrorResponse) => reject(err.error),
+      });
+    });
+  }
 }

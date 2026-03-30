@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,26 +9,12 @@ import { MatTableModule } from '@angular/material/table';
 import { OutlinedIconDirective } from '../../../../shared/directives/outlined-icon.directive';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
+import { TaxDataService } from '../../services/tax-data.service';
+import { LoadingService } from '../../../../shared/services/loading.service';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { TaxData } from '../../models/tax-data.interface';
+import { PersonTypeLabelPipe } from '../../pipes/person-type-label.pipe';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-main-tax-data',
@@ -41,19 +27,44 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatSelectModule,
     MatInputModule,
     MatIconModule,
+    MatMenuModule,
     OutlinedIconDirective,
+    PersonTypeLabelPipe,
   ],
   templateUrl: './main-tax-data.html',
   styleUrl: './main-tax-data.scss',
 })
-export class MainTaxData {
+export class MainTaxData implements OnInit {
+  private readonly _toastService = inject(ToastService);
+  private readonly _loadingService = inject(LoadingService);
+  private readonly _taxDataService = inject(TaxDataService);
   readonly router = inject(Router);
   readonly route = inject(ActivatedRoute);
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['taxData', 'personType', 'actions'];
+  protected taxData: TaxData[] = [];
+  constructor() {}
 
-  openCreateTaxData() {
+  ngOnInit(): void {
+    this.getTaxData();
+  }
+
+  private async getTaxData() {
+    try {
+      this._loadingService.show();
+      this.taxData = await this._taxDataService.getAllTaxDataAsync();
+      console.log(this.taxData);
+      this._loadingService.hide();
+    } catch (error) {
+      console.error('Error al obtener los datos fiscales: ', error);
+      this._loadingService.hide();
+      this._toastService.showError(
+        'Ocurrió un error al obtener los datos fiscales, por favor intentalo de nuevo más tarde.',
+      );
+    }
+  }
+
+  protected openCreateTaxData(): void {
     this.router.navigate(['nuevo'], { relativeTo: this.route });
   }
 }

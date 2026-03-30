@@ -1,7 +1,17 @@
-@use "/animations/fade-slide-scale-in.animation" as *;
-
+@use '/animations/fade-slide-scale-in.animation' as *;
+@use 'variables' as *;
 
 .card-data-header {
-    padding: 16px 16px;
+  padding: 16px 16px;
 }
 
+ .alias {
+  font-weight: 700;
+  color: $dark-gray-500;
+}
+
+.details {
+  font-size: 14px;
+  color: $dark-gray-200;
+  font-weight: 500;
+}
