@@ -1,0 +1,26 @@
+<div class="skeleton-table px-1">
+  <div class="skeleton-header">
+    <div class="skeleton-col large"></div>
+    <div class="skeleton-col medium"></div>
+    <div class="skeleton-col small"></div>
+  </div>
+
+  @for (i of rowsArray(); track $index) {
+    <div class="skeleton-row align-items-center">
+      <div class="align-items-center flex-column large py-1">
+        <div class="w-50 skeleton-col my-1"></div>
+        <div class="w-75 skeleton-col my-1"></div>
+      </div>
+      <div class="skeleton-col medium"></div>
+      <div class="skeleton-col small"></div>
+    </div>
+  }
+
+  <div class="skeleton-row aling-items-end mt-5">
+    <div class="skeleton-col bg-transparent large"></div>
+    <div class="skeleton-col small"></div>
+    <div class="skeleton-col small"></div>
+    <div class="skeleton-col extra-small"></div>
+    <div class="skeleton-col extra-small"></div>
+  </div>
+</div>

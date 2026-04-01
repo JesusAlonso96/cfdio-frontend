@@ -1,25 +1,12 @@
 @if (emptyForm()) {
-  <div class="empty-state d-flex align-items-center justify-content-center">
-    <div class="empty-state__content">
-      <img src="./assets/images/no-data.svg" alt="No hay datos" class="empty-state__image mb-3" />
-
-      <h2 class="empty-state__title mb-4">No hay datos para mostrar</h2>
-
-      <p class="empty-state__description mb-5">
-        <span class="mb-2" style="display: block"
-          >Aún no has registrado tus <span class="fw-bold">datos fiscales</span>.</span
-        >
-        <span class="fst-italic">Completa el formulario para ver el resumen.</span>
-      </p>
-      <button
-        routerLink="/dashboard/datos-fiscales/nuevo"
-        class="empty-state__button"
-        matButton="filled"
-      >
-        <mat-icon>arrow_forward</mat-icon> Ir al formulario
-      </button>
-    </div>
-  </div>
+  <app-empty
+    [title]="'No hay datos para mostrar'"
+    [message]="'Aún no has registrado tus datos fiscales.'"
+    [secondaryMessage]="'Completa el formulario para ver el resumen.'"
+    [bigTittle]="true"
+    [actionLabel]="'Ir al formulario'"
+    [routeToRedirect]="'/dashboard/datos-fiscales/nuevo'"
+  ></app-empty>
 } @else {
   <div class="container d-flex align-items-center flex-column">
     <div class="resume-header">
@@ -45,7 +32,9 @@
 
         <div class="resume-section-content">
           <p><strong>Alias:</strong> {{ taxData.general.alias ?? 'No registrado' }}</p>
-          <p><strong>Tipo de persona:</strong> {{ taxData.general.personType | personTypeLabel }}</p>
+          <p>
+            <strong>Tipo de persona:</strong> {{ taxData.general.personType | personTypeLabel }}
+          </p>
           <p><strong>RFC:</strong> {{ taxData.general.rfc }}</p>
           <p>
             <strong>{{ isNaturalPerson() ? 'Nombre del contribuyente' : 'Razón social' }}:</strong>

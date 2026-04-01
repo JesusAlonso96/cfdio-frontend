@@ -11,6 +11,7 @@ import { CreateTaxData } from '../../models/create-tax-data.interface';
 import { TaxDataService } from '../../services/tax-data.service';
 import { LoadingService } from '../../../../shared/services/loading.service';
 import { ToastService } from '../../../../shared/services/toast.service';
+import { EmptyComponent } from '../../../../shared/components/empty/empty';
 
 @Component({
   selector: 'app-tax-data-summary',
@@ -22,6 +23,7 @@ import { ToastService } from '../../../../shared/services/toast.service';
     RouterLink,
     OutlinedIconDirective,
     PersonTypeLabelPipe,
+    EmptyComponent,
   ],
   templateUrl: './tax-data-summary.html',
   styleUrl: './tax-data-summary.scss',

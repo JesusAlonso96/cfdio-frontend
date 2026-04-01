@@ -1,0 +1,20 @@
+<div class="empty-state d-flex align-items-center justify-content-center">
+  <div class="empty-state__content flex-column d-flex align-items-center" >
+    <img src="./assets/images/no-data.svg" alt="No hay datos" class="empty-state__image mb-3" />
+
+    @if (bigTittle()) {
+      <h2 class="empty-state__title mb-4">{{ title() }}</h2>
+    } @else {
+      <h4 class="empty-state__title mb-4">{{ title() }}</h4>
+    }
+
+    <p class="empty-state__description ">
+      <span class="d-block">{{ message() }}</span>
+      <span class="fst-italic"> {{ secondaryMessage() }} </span>
+    </p>
+    <p class="empty-note mb-4"> {{note()}}</p>
+    <button [routerLink]="routeToRedirect()" class="empty-state__button" matButton="filled">
+      <mat-icon outlined>{{actionIcon()}}</mat-icon> {{actionLabel()}}
+    </button>
+  </div>
+</div>

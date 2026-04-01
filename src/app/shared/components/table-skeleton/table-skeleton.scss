@@ -1,0 +1,46 @@
+@use 'variables' as *;
+
+.skeleton-table {
+  margin-top: 20px;
+}
+.skeleton-header,
+.skeleton-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.skeleton-col {
+  height: 20px;
+  border-radius: 20px;
+  background: $medium-gray;
+  animation: shimmer 1.5s infinite;
+}
+
+.large {
+  flex: 3;
+}
+
+.medium {
+  flex: 2;
+}
+
+.small {
+  flex: 1;
+}
+
+.extra-small {
+  width: 30px;
+}
+
+@keyframes shimmer {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}

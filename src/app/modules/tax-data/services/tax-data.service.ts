@@ -4,6 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { CreateTaxData } from '../models/create-tax-data.interface';
 import { TaxData } from '../models/tax-data.interface';
+import { TaxDataResponse } from '../models/tax-data-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -30,15 +31,31 @@ export class TaxDataService {
     });
   }
 
-  /* HTTP GET */
-  private getAllTaxData(): Observable<TaxData[]> {
-    return this.http.get<TaxData[]>(`${this.taxDataApi}`);
+  /* HTTP PUT */
+  private makeTaxDataDefault(taxDataId: number): Observable<void> {
+    return this.http.put<void>(`${this.taxDataApi}/default`, { taxDataId });
   }
 
-  public getAllTaxDataAsync(): Promise<TaxData[]> {
-    return new Promise<TaxData[]>((resolve, reject) => {
+  public makeTaxDataDefaultAsync(taxDataId: number): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.makeTaxDataDefault(taxDataId).subscribe({
+        next: (response: void) => {
+          resolve(response);
+        },
+        error: (err: HttpErrorResponse) => reject(err.error),
+      });
+    });
+  }
+
+  /* HTTP GET */
+  private getAllTaxData(): Observable<TaxDataResponse> {
+    return this.http.get<TaxDataResponse>(`${this.taxDataApi}`);
+  }
+
+  public getAllTaxDataAsync(): Promise<TaxDataResponse> {
+    return new Promise<TaxDataResponse>((resolve, reject) => {
       this.getAllTaxData().subscribe({
-        next: (response: TaxData[]) => {
+        next: (response: TaxDataResponse) => {
           resolve(response);
         },
         error: (err: HttpErrorResponse) => reject(err.error),

@@ -3,10 +3,15 @@
     <div class="col-12">
       <mat-card class="mx-4">
         <div class="card-data-header w-100 d-flex justify-content-between">
-          <mat-form-field class="tables-input w-75 me-3">
-            <input matInput type="text" placeholder="Buscar" />
-            <mat-icon outlined matPrefix>search</mat-icon>
-          </mat-form-field>
+          @if ((!hasTaxData() && !isLoading()) || isLoading()) {
+            <div class="empty-search-bar w-75"></div>
+          } @else {
+            <mat-form-field class="tables-input w-75">
+              <input matInput type="text" placeholder="Buscar" />
+              <mat-icon outlined matPrefix>search</mat-icon>
+            </mat-form-field>
+          }
+
           <div>
             <button
               (click)="openCreateTaxData()"
@@ -21,65 +26,93 @@
           </div>
         </div>
         <mat-card-content>
-          <table mat-table [dataSource]="taxData" class="mat-elevation-z8">
-            <!-- Position Column -->
-            <ng-container matColumnDef="taxData">
-              <th mat-header-cell *matHeaderCellDef>Datos fiscales</th>
-              <td mat-cell *matCellDef="let element">
-                <p class="my-2">
-                  <span class="alias d-block">{{ element.alias }}</span>
-                  <span class="details"
-                    >{{ element.rfc }} - {{ element.legalName }}</span
-                  >
-                </p>
-              </td>
-            </ng-container>
+          @if (!hasTaxData() && !isLoading()) {
+            <app-empty
+              [title]="'Aún no tienes datos fiscales'"
+              [message]="
+                'Agrega tu primer perfil fiscal para comenzar a emitir facturas como persona física o moral.'
+              "
+              [bigTittle]="false"
+              [actionLabel]="'Agregar datos fiscales'"
+              [actionIcon]="'post_add'"
+              [note]="'Puedes registrar más de un perfil si facturas para diferentes RFC.'"
+              [routeToRedirect]="'/dashboard/datos-fiscales/nuevo'"
+            ></app-empty>
+          } @else {
+            @if (!isLoading()) {
+              <table mat-table [dataSource]="filteredTaxData()" class="mat-elevation-z8">
+                <!-- Position Column -->
+                <ng-container matColumnDef="taxData">
+                  <th mat-header-cell *matHeaderCellDef>Datos fiscales</th>
+                  <td style="width: 70%" mat-cell *matCellDef="let element">
+                    <p class="my-2">
+                      <span class="alias d-block">
+                        <span>{{ element.alias }} </span>
+                        @if (element.default) {
+                          <mat-icon
+                            class="default-icon"
+                            outlined
+                            matTooltip="Datos fiscales por defecto, estos se cargarán al facturar pero se pueden cambiar en cualquier momento."
+                            >kid_star</mat-icon
+                          >
+                        }
+                      </span>
 
-            <!-- Name Column -->
-            <ng-container matColumnDef="personType">
-              <th mat-header-cell *matHeaderCellDef>Tipo</th>
-              <td mat-cell class="details" style="width: 120px" *matCellDef="let element">
-                {{ element.personType | personTypeLabel }}
-              </td>
-            </ng-container>
+                      <span class="details">{{ element.rfc }} - {{ element.legalName }}</span>
+                    </p>
+                  </td>
+                </ng-container>
 
-            <!-- Weight Column -->
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef>Acciones</th>
-              <td mat-cell *matCellDef="let element">
-                <button
-                  matIconButton
-                  [matMenuTriggerFor]="menu"
-                  aria-label="tax data options"
-                >
-                  <mat-icon outlined>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                  <button mat-menu-item>
-                    <mat-icon outlined>edit_square</mat-icon>
-                    <span>Editar</span>
-                  </button>
-                  <button mat-menu-item>
-                    <mat-icon outlined>contract_delete</mat-icon>
-                    <span>Eliminar</span>
-                  </button>
-                  <button mat-menu-item>
-                    <mat-icon outlined>kid_star</mat-icon>
-                    <span>Hacer predeterminado</span>
-                  </button>
-                </mat-menu>
-              </td>
-            </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="personType">
+                  <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                  <td mat-cell class="details" style="width: 20%" *matCellDef="let element">
+                    {{ element.personType | personTypeLabel }}
+                  </td>
+                </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
-          <mat-paginator
-            [pageSizeOptions]="[5, 10, 25, 100]"
-            aria-label="Select page of users"
-          ></mat-paginator>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                  <td mat-cell *matCellDef="let element" style="width: 10%">
+                    <button matIconButton [matMenuTriggerFor]="menu" aria-label="tax data options">
+                      <mat-icon outlined>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button
+                        (click)="makeDefault(element.id)"
+                        mat-menu-item
+                        [disabled]="element.default"
+                      >
+                        <mat-icon outlined>kid_star</mat-icon>
+                        <span>Hacer predeterminado</span>
+                      </button>
+                      <button mat-menu-item>
+                        <mat-icon outlined>edit_square</mat-icon>
+                        <span>Editar</span>
+                      </button>
+                      <button mat-menu-item>
+                        <mat-icon outlined>contract_delete</mat-icon>
+                        <span>Eliminar</span>
+                      </button>
+                    </mat-menu>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+           <mat-paginator
+                [length]="total"
+                [pageSizeOptions]="[5, 10]"
+                aria-label="Select page of users"
+              ></mat-paginator>
+            } @else {
+                <app-table-skeleton [rows]="5"></app-table-skeleton>
+            }
+          }
         </mat-card-content>
-        <mat-card-actions> </mat-card-actions>
+        
       </mat-card>
     </div>
   </div>
