@@ -1,0 +1,17 @@
+@use 'variables' as *;
+@use '@angular/material' as mat;
+
+@mixin general-paginators {
+  @include mat.paginator-overrides(
+    (
+      container-text-color: $dark-gray-200,
+      form-field-container-vertical-padding: 4px,
+    )
+  );
+
+  .mat-mdc-paginator-page-size-select {
+    margin: 0px;
+    width: var(--mat-paginator-page-size-select-width, 65px);
+  }
+
+}

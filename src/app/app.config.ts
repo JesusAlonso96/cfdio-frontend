@@ -11,6 +11,8 @@ import { MAIN_ROUTES } from './app.routes';
 import { errorInterceptor } from './shared/interceptors/error-interceptor';
 import { credentialsInterceptor } from './shared/interceptors/credentials-interceptor';
 import { refreshTokenInterceptor } from './modules/auth/interceptors/refresh-token-interceptor';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginatorIntlEs } from './shared/material/mat-paginator-intl-es';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,5 +28,6 @@ export const appConfig: ApplicationConfig = {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline', floatLabel: 'always', subscriptSizing: 'fixed' },
     },
+    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlEs },
   ],
 };

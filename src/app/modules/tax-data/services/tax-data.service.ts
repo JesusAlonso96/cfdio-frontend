@@ -1,10 +1,11 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { CreateTaxData } from '../models/create-tax-data.interface';
 import { TaxData } from '../models/tax-data.interface';
 import { TaxDataResponse } from '../models/tax-data-response.interface';
+import { ItemsPerPagePaginator } from '../../../shared/enums/items-per-page-paginator.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -48,13 +49,25 @@ export class TaxDataService {
   }
 
   /* HTTP GET */
-  private getAllTaxData(): Observable<TaxDataResponse> {
-    return this.http.get<TaxDataResponse>(`${this.taxDataApi}`);
+  private getAllTaxData(
+    page: number,
+    pageSize: number,
+    search: string | null = '',
+  ): Observable<TaxDataResponse> {
+    let params = new HttpParams().set('page', page.toString()).set('pageSize', pageSize.toString());
+    if (search) {
+      params = params.set('search', search);
+    }
+    return this.http.get<TaxDataResponse>(`${this.taxDataApi}`, { params });
   }
 
-  public getAllTaxDataAsync(): Promise<TaxDataResponse> {
+  public getAllTaxDataAsync(
+    page: number = 1,
+    pageSize: number = ItemsPerPagePaginator.XtraSmall,
+    search: string | null = '',
+  ): Promise<TaxDataResponse> {
     return new Promise<TaxDataResponse>((resolve, reject) => {
-      this.getAllTaxData().subscribe({
+      this.getAllTaxData(page, pageSize, search).subscribe({
         next: (response: TaxDataResponse) => {
           resolve(response);
         },

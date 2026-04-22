@@ -3,30 +3,17 @@
     <div class="col-12">
       <mat-card class="mx-4">
         <div class="card-data-header w-100 d-flex justify-content-between">
-          @if ((!hasTaxData() && !isLoading()) || isLoading()) {
-            <div class="empty-search-bar w-75"></div>
-          } @else {
-            <mat-form-field class="tables-input w-75">
-              <input matInput type="text" placeholder="Buscar" />
-              <mat-icon outlined matPrefix>search</mat-icon>
-            </mat-form-field>
-          }
-
+          
+          <app-input-table-search class="w-75" [total]="total()" (searchEvent)="searchEvent($event)"></app-input-table-search>
           <div>
-            <button
-              (click)="openCreateTaxData()"
-              style="padding-top: 1.4rem; padding-bottom: 1.45rem; border-radius: 6px"
-              matButton="filled"
-            >
-              <mat-icon style="width: 24px; height: 24px; font-size: 24px" outlined
-                >post_add</mat-icon
-              >
+            <button (click)="openCreateTaxData()" class="btn-add" matButton="filled">
+              <mat-icon class="icon-add" outlined>post_add</mat-icon>
               Nuevo
             </button>
           </div>
         </div>
         <mat-card-content>
-          @if (!hasTaxData() && !isLoading()) {
+          @if (total() === 0 && !isLoading()) {
             <app-empty
               [title]="'Aún no tienes datos fiscales'"
               [message]="
@@ -102,17 +89,20 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
               </table>
-           <mat-paginator
-                [length]="total"
-                [pageSizeOptions]="[5, 10]"
+              <mat-paginator
+                #paginator
+                [length]="totalFiltered()"
+                [pageSizeOptions]="[2, 5, 10]"
+                [pageIndex]="pageIndex()"
+                [pageSize]="pageSize()"
+                (page)="onPageEvent($event)"
                 aria-label="Select page of users"
               ></mat-paginator>
             } @else {
-                <app-table-skeleton [rows]="5"></app-table-skeleton>
+              <app-table-skeleton [rows]="5"></app-table-skeleton>
             }
           }
         </mat-card-content>
-        
       </mat-card>
     </div>
   </div>

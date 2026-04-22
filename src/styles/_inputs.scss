@@ -1,11 +1,13 @@
-@use "variables" as *;
-@use "@angular/material" as mat;
+@use 'variables' as *;
+@use '@angular/material' as mat;
 
 @mixin general-inputs {
-    @include mat.form-field-overrides((container-text-size: 0.9rem,
-            container-text-line-height: 2,
-            container-height:45px,
-            container-vertical-padding: 6px,
-        ));
-
+  @include mat.form-field-overrides(
+    (
+      container-text-size: 0.9rem,
+      container-text-line-height: 2,
+      container-height: 45px,
+      container-vertical-padding: 6px,
+    )
+  );
 }

@@ -1,0 +1,14 @@
+<mat-form-field class="tables-input w-100">
+  <input [formControl]="searchControl" matInput type="text" placeholder="Buscar" />
+  <mat-icon outlined matPrefix>search</mat-icon>
+  @if (searchControl.value) {
+    <button
+      (click)="clearSearch()"
+      class="border-0 bg-transparent"
+      style="padding: 0 12px"
+      matSuffix
+    >
+      <mat-icon outlined>close</mat-icon>
+    </button>
+  }
+</mat-form-field>

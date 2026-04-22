@@ -2,7 +2,7 @@
 @use 'variables' as *;
 
 .card-data-header {
-  padding: 16px 16px;
+  padding: 16px;
 }
 
 .alias {
@@ -28,4 +28,16 @@
   height: 20px;
   width: 20px;
   font-weight: 900;
+}
+
+.btn-add {
+  padding-top: 1.4rem;
+  padding-bottom: 1.45rem;
+  border-radius: 6px;
+}
+
+.icon-add {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
 }

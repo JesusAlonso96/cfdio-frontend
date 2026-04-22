@@ -9,6 +9,7 @@
 @use "./selects";
 @use "./slide-toggles";
 @use "./steppers";
+@use "./paginator";
 
 /****************************** LIGHT THEME ******************************/
 // $my-custom-level: mat.m2-define-typography-level(
@@ -32,6 +33,7 @@ html {
   @include modals.general-dialogs;
   @include slide-toggles.general-slide-toggles;
   @include inputs.general-inputs;
+  @include paginator.general-paginators;
   @include tabs.general-tabs;
   @include steppers.general-steppers;
   @include selects.general-selects;
